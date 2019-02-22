@@ -4,7 +4,7 @@
     </div>
     <strong>Copyright &copy; 2019 <a href="#">Exans System</a>.</strong> All rights
     reserved.
- </footer>
+</footer>
 
   
  
