@@ -22,7 +22,7 @@
   <div class="register-box-body row">
     <p class="login-box-msg">Register a new membership</p>
     
-    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+    <form class="form-horizontal" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
     {{ csrf_field() }}
       <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }} has-feedback col-md-7">
         <label for="name">Full Name</label>

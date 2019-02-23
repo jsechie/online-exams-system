@@ -67,6 +67,44 @@
                         </button>
                       @endif</center></td>
                       </td>
+
+                      {{-- modal for course assignment --}}
+                      <div class="modal fade" id="assigned">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">Assign <i><u><b class="text-success">{{$course->name}}</b></u></i> To:</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p>
+                                <form method="post" action="{{route('course.update',$course->id)}}">
+                                  {{csrf_field()}}
+                                  {{method_field('PATCH')}}
+                                  <div class="form-group">
+                                        <label >Lecturer Name</label>
+                                        <select class="form-control" name="user_id">
+                                          <option value="">None</option>
+                                          @foreach($users as $user)
+                                              <option value="{{$user->id}}">{{$user->name}}</option>
+                                            @endforeach
+                                        </select>
+                                      </div>
+                                    </p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                  </div>
+                                </form>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+                      <!-- /.modal -->
+
                         @if($course->status == 1)
                           <td ><center class=" btn-success">Active</center></td>
                         @else
@@ -117,42 +155,6 @@
       </div>
     </section>
   </div>
-
-<div class="modal fade" id="assigned">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Assign <i><u><b class="text-success">{{$course->name}}</b></u></i> To:</h4>
-      </div>
-      <div class="modal-body">
-        <p>
-          <form method="post" action="{{route('course.update',$course->id)}}">
-            {{csrf_field()}}
-            {{method_field('PATCH')}}
-            <div class="form-group">
-                  <label >Lecturer Name</label>
-                  <select class="form-control" name="user_id">
-                    <option value="">None</option>
-                    @foreach($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
-                      @endforeach
-                  </select>
-                </div>
-              </p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-          </form>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
   	{{-- course --}}
 @endsection
 

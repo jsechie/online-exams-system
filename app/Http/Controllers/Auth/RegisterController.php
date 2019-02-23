@@ -76,7 +76,7 @@ class RegisterController extends Controller
             'index_number' => $data['index_number'],
             'student_id' => $data['student_id'],
             'year' => $data['year'],
-            'picture' => $data['picture'],
+            'picture' => $data['picture']->store('public'),
             'student_type' => $data['student_type'],
             'program_type' => $data['program_type'],
             'dep_id' => $data['department_name'],
