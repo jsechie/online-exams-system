@@ -31,5 +31,10 @@ Route::prefix('admin')->group(function(){
     Route::get('/questions/add/{id}','admin\QuestionsController@createQuestion')->name('questions.add');
     Route::get('/questions/status/{id}','admin\QuestionsController@status')->name('questions.status');
     Route::get('/course/status/{id}','admin\CourseController@status')->name('course.status');
+
+    // adminStudents Route
+    Route::get('/allStudents','admin\AdminStudentController@allStudents')->name('allStudents');
+    Route::get('/students/department/{id}','admin\AdminStudentController@depStudents')->name('department.students');
+    Route::get('/students/course/{id}','admin\AdminStudentController@courseStudents')->name('course.students');
 });
 

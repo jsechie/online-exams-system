@@ -31,7 +31,8 @@
             <li class="header">MAIN ADMIN FUNCTIONS</li>
            <li class=""><a href="{{route('department.index')}}"><i class="fa fa-dashboard"></i><span>Department</span></a></li>
           <li class=""><a href="{{route('academics.index')}}"><i class="fa fa-dashboard"></i><span>Academics Calender</span></a></li>
-          <li class=""><a href="{{route('course.index')}}"><i class="fa fa-dashboard"></i><span>Course</span></a></li><br>
+          <li class=""><a href="{{route('course.index')}}"><i class="fa fa-dashboard"></i><span>Course</span></a></li>
+          <li class=""><a href="{{route('allStudents')}}"><i class="fa fa-dashboard"></i><span>All Students</span></a></li><br>
         @endif
         <li class="header">MAIN USER FUNCTIONS</li>        
         <li class=""><a href="{{route('questions.index')}}"><i class="fa fa-dashboard"></i><span>Questions</span></a></li>

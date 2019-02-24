@@ -1,4 +1,4 @@
-<!doctype html>
+{{-- <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -86,4 +86,102 @@
             </div>
         </div>
     </body>
+</html>
+ --}}
+
+ <!--
+    Author: W3layouts
+    Author URL: http://w3layouts.com
+    License: Creative Commons Attribution 3.0 Unported
+    License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head -->
+<head>
+<title>Tutorage an Educational Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="keywords" content="Tutorage a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+{{-- <!-- menu -->
+<link type="text/css" rel="stylesheet" href="{{asset('Welcome/css/cm-overlay.css')}}" />
+//menu
+<link href="{{asset('Welcome/css/jquery.fatNav.css')}}" rel="stylesheet" type="text/css"> --}}
+<!--FlexSlider-->
+<link rel="stylesheet" href="{{asset('Welcome/css/flexslider.css')}}" type="text/css" media="screen" />
+<!--//FlexSlider-->
+<!-- custom css theme files -->
+<link rel="stylesheet" href="{{asset('Welcome/css/bootstrap.css')}}" type="text/css" media="all">
+<link rel="stylesheet" href="{{asset('Welcome/css/font-awesome.css')}}" />
+<link rel="stylesheet" href="{{asset('Welcome/css/style.css')}}" type="text/css" media="all">
+<!-- //custom css theme files -->
+<!-- google fonts -->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=cyrillic,cyrillic-ext,latin-ext,vietnamese" rel="stylesheet">
+<!-- //google fonts -->
+</head>
+<!-- Body -->
+<body>
+<!-- banner -->
+<section class="w3l-banner">
+<div class="wthree-dot">
+    <!-- //Header -->
+        <div class="container">
+            <div class="flexslider-info">
+                <section class="slider">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li>
+                            <div class="w3l-info">
+                                <h1>Start Learning For successful future</h1>
+                                <p>We have the perfect accommodation for you.</p>
+                                
+                            </div>
+                            </li>
+                            <li>
+                                <div class="w3l-info">
+                                <h2>Making best future popular education</h2>
+                                <p>We have the perfect accommodation for you.</p>
+                                
+                            </div>
+                            </li>
+                            <li>
+                                <div class="w3l-info">
+                                <h3>Start Learning For successful future</h3>
+                                <p>We have the perfect accommodation for you.</p>
+                                
+                            </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //footer -->
+<!-- Default-JavaScript-File -->
+    <script type="text/javascript" src="{{asset('Welcome/js/jquery-2.2.3.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('Welcome/js/bootstrap.js')}}"></script>
+<!-- //Default-JavaScript-File -->
+<!--menu script-->
+<script type="text/javascript" src="{{asset('Welcome/js/modernizr-2.6.2.min.js')}}"></script>
+    
+<!--Start-slider-script-->
+    <script defer src="{{asset('Welcome/js/jquery.flexslider.js')}}"></script>
+        <script type="text/javascript">
+        
+        $(window).load(function(){
+          $('.flexslider').flexslider({
+            animation: "slide",
+            start: function(slider){
+              $('body').removeClass('loading');
+            }
+          });
+        });
+      </script>
+<!--End-slider-script-->
+</body>
+<!-- //Body -->
 </html>
