@@ -7,58 +7,34 @@
     <section class="content-header">
       <h1>
         All
-        <small>Students</small> In {{ucfirst($course->name)}}
+        <small>Students</small> In {{ucfirst($department->name)}} Year {{$year}}
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="{{route('allStudents')}}"><i class="fa fa-user"> Students</i></a></li>
-        <li><a href="{{route('department.students',$course->dep_id)}}"><i class="fa fa-user"> Department</i></a></li>
-        <li class="active">{{$course->name}}</li>
+        <li><a href="{{route('department.students',$department->id)}}"><i class="fa fa-user"> {{$department->name}}</i></a></li>
+        <li class="active">Year {{$year}}</li>
       </ol>
       @include('messages.flash_messages')
     </section>
       <!-- /.content -->
 
     <section class="content">
-      {{-- <center><u><h3 class="text-warning">Select A Course To View It's Students</h3></u></center>
-      @if($courses->count() > 0)
-      
-        <hr><div class="row">
-          <div class="col-lg-2 col-md-2"></div>
-          <div class="col-lg-8 col-md-8 row">
-            @foreach($courses as $course)        
-            <a href="{{route('course.students',$course->id)}}"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-danger">
-                <div class="info-box">
-                  <span class="info-box-icon bg-green"><i class="fa fa-files-o"></i></span>
-
-                  <div class="info-box-content">
-                    <span class="info-box-text">{{$course->name}}</span>
-                    <span class="info-box-number">{{$course->code}}</span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div></a>
-            <!-- /.col -->        
-            @endforeach
-          </div>
-          <div class="col-lg-2 col-md-2"></div>
-        </div><hr>
-      @else
-        <h1 class="text-center text-danger">No Courses Available</h1>
-      @endif --}}
-
       <div class="row">
         <div class="col-xs-12">
+          @if($students->count() == 0)
+            <h1 class="text-center text-danger">No Student Has Registered From This Class</h1><br>
+          @endif
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">List Of All Students In The {{$course->name}}</h3>
+              <h3 class="box-title">List Of All Year {{$year}} Students </h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped table-responsive">
                 <thead>
                 <tr>
+                  <th><center>Picture</center></th>
                   <th><center>Name</center></th>
                   <th><center>Index Number</center></th>
                   <th><center>Student ID</center></th>
@@ -69,15 +45,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                 {{--  @foreach($students as $student)
+                  @foreach($students as $student)
                     <tr class="gradeU">
+                      <th><center><img class="img-circle" height="60px" src="{{Storage::disk('local')->url("$student->picture")}}"></center></th>
                       <td><center>{{$student->name}}</center></td>
                       <td><center>{{$student->index_number}}</center></td>
                       <td><center>{{$student->student_id}}</center></td>
                       <td><center>{{$student->year}}</center></td>
                       <td><center>{{$student->student_type}}</center></td>
                       <td><center>{{$student->program_type}}</center></td>
-                      <td><center>
+                      {{-- <td><center>
                         <form method="post" action="{{route('academics.destroy',$academic->id)}}" id="delete-form-{{$academic->id}}" style="display: none;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
@@ -93,12 +70,13 @@
                           }
                           " 
                         ><i class="glyphicon glyphicon-trash"></i></a>
-                      </center></td>
+                      </center></td> --}}
                     </tr>
-                  @endforeach --}}
+                  @endforeach
                 </tbody>
                 <tfoot>
                 <tr>
+                  <th><center>Picture</center></th>
                   <th><center>Name</center></th>
                   <th><center>Index Number</center></th>
                   <th><center>Student ID</center></th>

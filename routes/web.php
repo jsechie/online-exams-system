@@ -8,9 +8,7 @@ Auth::routes();
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('user.dashboard');
 Route::get('/users/logout', 'Auth\LoginController@userlogout')->name('user.logout');
-Route::get('/student/settings', 'HomeController@settings')->name('user.settings');
  // Route::get('/student/check-pwd', 'HomeController@ChkPassword');
-Route::match(['get','post'],'/student/update-pwd','HomeController@updatePassword');
 
 Route::prefix('admin')->group(function(){
   Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
@@ -35,6 +33,13 @@ Route::prefix('admin')->group(function(){
     // adminStudents Route
     Route::get('/allStudents','admin\AdminStudentController@allStudents')->name('allStudents');
     Route::get('/students/department/{id}','admin\AdminStudentController@depStudents')->name('department.students');
-    Route::get('/students/course/{id}','admin\AdminStudentController@courseStudents')->name('course.students');
+    Route::match(['get','post'],'/students/year/{id}','admin\AdminStudentController@yearStudents')->name('year.students');
 });
 
+//students route groups
+  Route::prefix('students')->group(function(){
+    Route::get('/settings', 'HomeController@settings')->name('user.settings');
+    Route::match(['get','post'],'/update-pwd','HomeController@updatePassword');
+    Route::get('/courses', 'student\CourseController@index')->name('student.course');
+
+  });

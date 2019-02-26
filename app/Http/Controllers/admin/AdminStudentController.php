@@ -24,15 +24,15 @@ class AdminStudentController extends Controller
 
     public function depStudents($id){
     	$students = Department::find($id)->students;
-    	$courses = Department::find($id)->courses;
+    	
     	$department= Department::find($id);
-    	return view('admin.students.depStudents',compact('courses','students','department'));
+    	return view('admin.students.depStudents',compact('students','department'));
     }
 
-     public function courseStudents($id){
-    	// $students = Department::find($id)->students;
-    	// $courses = Department::find($id)->courses;
-    	$course= Course::find($id);
-    	return view('admin.students.courseStudents',compact('course'));
+     public function yearStudents(Request $request, $id){
+        $year=$id;
+    	$department = Department::find($request->dep_id);
+        $students = Department::find($request->dep_id)->students->where('year',$id);
+        return view('admin.students.yearStudents',compact('students','department','year'));
     }
 }

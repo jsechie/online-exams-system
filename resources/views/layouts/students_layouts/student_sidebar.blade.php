@@ -31,19 +31,18 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
+        <li class="active"><a href="{{route('user.dashboard')}}"><i class="fa fa-link"></i> <span>My Dashboard</span></a></li>
+        <li><a href="{{route('student.course')}}"><i class="fa fa-link"></i> <span>My Courses</span></a></li>
+        <li><a href="#"><i class="fa fa-link"></i> <span>Take Exams</span></a></li>
+        <li><a href="#"><i class="fa fa-link"></i> <span>Check My Results</span></a></li><br><br>
+        <li class="header">SETTINGS</li>
+        <li><a href="{{route('user.settings')}}"><i class="fa fa-link"></i> <span>Profile Settings</span></a></li>
+        <li><a href="{{ route('logout') }}"
+              onclick="event.preventDefault();
+              document.getElementById('logout-form').submit();">
+            <i class="fa fa-link"></i> <span>Logout</span></a></li>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}</form>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
