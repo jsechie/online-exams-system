@@ -5,6 +5,7 @@ use App\Academic;
 use App\Questions;
 use App\Admin;
 Use App\Department;
+use App\ExamsSettings;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
@@ -24,5 +25,9 @@ class Course extends Model
 
     public function users(){
     	return $this->belongsTo(Admin::class,'assigned_to');
+    }
+
+    public function examsSettings(){
+        return $this->hasMany(ExamsSettings::class,'course_id');
     }
 }

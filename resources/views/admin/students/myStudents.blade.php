@@ -7,47 +7,43 @@
     <section class="content-header">
       <h1>
         All
-        <small>Students</small> In {{ucfirst($department->name)}}
+        <small>Students</small> Taking My Course
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('allStudents')}}"><i class="fa fa-user"> Students</i></a></li>
-        <li class="active">{{$department->name}}</li>
+        <li class="active">My Students</li>
       </ol>
       @include('messages.flash_messages')
     </section>
       <!-- /.content -->
 
     <section class="content">
-      <center><u><h3 class="text-warning">Select A Year To View It's Students</h3></u></center>
-      @if($students->count() > 0)
+      <center><u><h3 class="text-warning">Select A Course To View It's Students</h3></u></center>
+      @if($courses->count() > 0)
       
         <hr><div class="row">
           <div class="col-lg-1 col-md-1"></div>
           <div class="col-lg-10 col-md-10 row">
-            @php $years=[1,2,3,4,5,6]; @endphp
-            @foreach($years as $year) 
-              <form method="post" action="{{route('year.students',$year)}}" id="year-form-{{$year}}" style="display: none;">
-                {{csrf_field()}}
-                <input type="hidden" name="dep_id" value="{{$department->id}}">
-              </form>
-              <a href="" 
-                onclick="
-                  event.preventDefault();
-                  document.getElementById('year-form-{{$year}}').submit();
-                " 
-              ><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-danger">
-                <div class="info-box">
-                  <span class="info-box-icon bg-purple"><i class="fa  fa-calendar-o"></i></span>
+            @foreach($courses as $course) 
+              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-danger">
+                <form method="post" action="{{route('myStudentsCourse')}}">
+                  {{csrf_field()}}
+                  <input type="hidden" name="dep_id" value="{{$course->dep_id}}">
+                  <input type="hidden" name="course_id" value="{{$course->id}}">
+                  <input type="hidden" name="year" value="{{$course->year}}">
+                  <button class="btn-block" type="submit">
+                    <span class="info-box-icon bg-red"><i class="fa fa-file-archive-o"></i></span>
 
-                  <div class="info-box-content">
-                    <span class="info-box-text">Year</span>
-                    <span class="info-box-number">{{$year}}</span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div></a>
+                    <div class="info-box-content">
+                      <span class="info-box-text">{{$course->name}}</span>
+                      <span class="info-box-number">{{$course->code}}</span>
+                    </div>
+                        <!-- /.info-box-content -->
+                      <!-- /.info-box -->
+                  </button>
+                </form>
+
+              </div>
 
             {{-- <a href="{{route('year.students',{$department->id}/{$year})}}"></a> --}}
             <!-- /.col -->        
@@ -56,14 +52,14 @@
           <div class="col-lg-1 col-md-1"></div>
         </div><hr>
       @else
-        <h1 class="text-center text-danger">No Student Has Registered With This Department</h1>
+        @include('messages.course_error')
       @endif
 
-      <div class="row">
+      {{-- <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">List Of All Students In The {{$department->name}}</h3>
+              <h3 class="box-title">List Of All Students Taking My Courses</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -91,7 +87,7 @@
                       <td><center>{{$student->student_type}}</center></td>
                       <td><center>{{$student->program_type}}</center></td>
                       <td><center>
-                        {{-- <form method="post" action="{{route('academics.destroy',$academic->id)}}" id="delete-form-{{$academic->id}}" style="display: none;">
+                        <form method="post" action="{{route('academics.destroy',$academic->id)}}" id="delete-form-{{$academic->id}}" style="display: none;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
                         </form>
@@ -105,7 +101,7 @@
                             event.preventDefault();
                           }
                           " 
-                        ><i class="glyphicon glyphicon-trash"></i></a> --}}
+                        ><i class="glyphicon glyphicon-trash"></i></a> 
                       </center></td>
                     </tr>
                   @endforeach
@@ -127,7 +123,7 @@
             <!-- /.box-body -->
           </div>
         </div>
-      </div>
+      </div> --}}
     </section>
   </div>
 

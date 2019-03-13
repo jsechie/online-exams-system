@@ -109,8 +109,8 @@ class CourseController extends Controller
         if ($request->has('user_id')){
             $course = Course::find($id);
             $course->assigned_to = $request->user_id;
-            $course->update();
-            return redirect()->back()->with('flash_message_success',"$course->name Assigned Successfully");
+            $course->save();
+            return redirect(route('course.index'))->with('flash_message_success',"$course->name Assigned Successfully");
         }
         else{
              $this->validate($request,[
@@ -165,6 +165,30 @@ class CourseController extends Controller
 
             return redirect()->back()->with('flash_message_success',"$course->name Course Deactivated Successfully");
         }
+    }
+
+
+    // assigning the course
+    public function assign($id)
+    {
+        $course = Course::where('id',$id)->first();
+        $users = Admin::all();
+        return view('admin.course.assign_course',compact('course','users'));
+    }
+
+
+    public function updateAssign(Request $request, $id)
+    {
+        // assign a course to lecturer
+            $course = Course::find($id);
+            $course->assigned_to = $request->user_id;
+            $course->save();
+            if ($course->assigned_to != NULL) {
+               return redirect(route('course.index'))->with('flash_message_success',"$course->name Assigned Successfully");
+            }
+            else{
+                return redirect(route('course.index'))->with('flash_message_error',"$course->name Not Assigned To Any Lecturer");
+            }
     }
 
 }

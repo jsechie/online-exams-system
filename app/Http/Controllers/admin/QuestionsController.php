@@ -8,6 +8,7 @@ use App\Admin;
 use App\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+// use PhpOffice\PhpWord\Exception\Exception;
 
 class QuestionsController extends Controller
 {
@@ -23,9 +24,9 @@ class QuestionsController extends Controller
 	 */
 	public function index()
 	{
-		$questions = Questions::all();
+		// $questions = Questions::all();
 		$courses =  Admin::find(Auth::user()->id)->courses;
-        return view('admin.questions.index_ques',compact('questions','courses'));
+        return view('admin.questions.index_ques',compact('courses'));
 	}
 
 	/**
@@ -85,9 +86,10 @@ class QuestionsController extends Controller
 	 */
 	public function show($id)
 	{
+		$active= Questions::where([['course_id',$id],['status','1']])->count();
 		$course = Course::find($id);
 		$questions=Questions::where('course_id',"$id")->get();
-		return view('admin.questions.show_ques',compact('questions','course'));
+		return view('admin.questions.show_ques',compact('questions','course','active'));
 	}
 
 	/**
@@ -147,6 +149,10 @@ class QuestionsController extends Controller
             return redirect()->back()->with('flash_message_error',"!!!Question Active Deactivate Before Deletion");
         }
         else{
+        	$exams = Questions::find($id)->exams;
+        	foreach ($exams as $exam) {
+        		$exam->delete();
+        	}
 			Questions::where('id',$id)->delete();
 	        return redirect()->back()->with('flash_message_success',"Question Deleted Successfully");
 	    }
@@ -154,7 +160,7 @@ class QuestionsController extends Controller
 
 	public function createQuestion($id){
 		$course = Course::find($id);
-		$total = Questions::all()->count();
+		$total = Course::find($id)->questions->count();
 		return view('admin.questions.create_ques',compact('course','total'));
 	}
 
@@ -173,5 +179,105 @@ class QuestionsController extends Controller
 
 			return redirect()->back()->with('flash_message_success',"Question Deactivated Successfully");
 		}
+	}
+
+	public function activateAll($id){
+		$questions = Questions::where('course_id',$id)->get();
+		foreach ($questions as $question) {
+			$question->status = '1';
+			$question->save();
+		}
+		return redirect()->back()->with('flash_message_success',"All Questions Activated Successfully");
+	}
+
+	public function deactivateAll($id){
+		$questions = Questions::where('course_id',$id)->get();
+		foreach ($questions as $question) {
+			$question->status = '0';
+			$question->save();
+		}
+		return redirect()->back()->with('flash_message_success',"All Questions Deactivated Successfully");
+	}
+
+	public function upload(Request $request)
+	{
+		// @require_once '\PhpOffice\PhpWord\bootstrap.php';
+		// $course = Course::find($id);
+		// return view('admin.questions.upload_ques',compact('course'));
+		// return 'true';
+		// $phpWord = new \PhpOffice\PhpWord\PhpWord();
+	      // $objReader = \PhpOffice\PhpWord\IOFactory::createWriter($phpword,'Word2007');
+	      // $phpword = \PhpOffice\PhpWord\IOFactory::load('public/IOT.doc','Word2007');
+
+	      // foreach($phpWord->getSections() as $section) {
+	      //   foreach($section->getElements() as $element) {
+	      //       if(method_exists($element,'getText')) {
+	      //           echo($element->getText() . "<br>");
+	      //       }
+	      //   }
+	      // }
+	      // $newSection = $phpWord->addSection();
+	      // $newSection->addText('Fuck ooooo');
+
+	      // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord,'Word2007');
+
+	      // try{
+	      // 	$objWriter->save('C:/Users/NANA BAAH/Documents/IOT.docx');
+	      // }
+	      // catch(Exception $e){
+
+	      // }
+	      // return response()->download('C:/Users/NANA BAAH/Documents/IOT.docx');
+
+			// $objReader = \PhpOffice\PhpWord\IOFactory::createReader("Word2007");
+			// $phpWord = $objReader->load("C:/Users/NANA BAAH/Documents/IOT.docx");
+
+			// foreach($phpWord->getSections() as $section) {
+			//     foreach($section->getElements() as $element) {
+			//         if(method_exists($element,'getText')) {
+			//             return($element->getText() . "<br>");
+			//         }
+			//     }
+			// }
+						
+		// $sections = $phpWord->getSections(0);
+		// $sections = $sections[0];
+		// $arrays = $sections->getElements(0);
+		// foreach ($arrays as $value) {
+		// 	foreach ($value->getElements(0) as $element) {
+		// 		echo ($element->getText()."<br>");
+		// 	}
+		// 	// print_r($value->getElements(0)->getText());
+		// }
+
+		// print_r($sections);
+
+		$filename = 'C:/Users/NANA BAAH/Documents/IOT.docx';
+		$striped_content = '';
+	    $content = '';
+
+	    if(!$filename || !file_exists($filename)) return false;
+
+	    $zip = zip_open($filename);
+	    if (!$zip || is_numeric($zip)) return false;
+
+	    while ($zip_entry = zip_read($zip)) {
+
+	        if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
+
+	        if (zip_entry_name($zip_entry) != "word/document.xml") continue;
+
+	        $content .=zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+
+	        zip_entry_close($zip_entry);
+
+
+	    }
+	    zip_close($zip);      
+	    $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
+	    $content = str_replace('</w:r></w:p>', "\r\n", $content);
+	    $striped_content = strip_tags($content);
+	    echo "<pre>";
+	    return $striped_content;
 	}
 }

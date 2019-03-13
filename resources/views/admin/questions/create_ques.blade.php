@@ -22,13 +22,10 @@
         @include('messages.flash_messages')
       </section>
         <!-- /.content -->
-        <div class="row">
+        <div class="row"><hr>
+          <div class="col-md-4"><a class="btn btn-block btn-primary" href="{{route('questions.show',$course->id)}}">Back To All Questions</a></div>
           <div class="col-md-4"></div>
-          <div class="col-md-4">
-            <hr>
-            <a class="btn btn-block btn-primary" href="{{route('questions.show',$course->id)}}">Back To All Questions</a>
-          </div>
-          <div class="col-md-4"></div>
+          <div class="col-md-4"><a class="btn btn-block btn-warning" href="#" data-toggle="modal" data-target="#modal-default">Upload Question</a></div>
         </div>
 
       <section class="content">
@@ -101,6 +98,42 @@
             </div>
             <!-- /.box -->
         </div>
+
+      {{-- modal for the upload page --}}
+      <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Questions Upload</h4>
+            </div>
+            <div class="modal-body">
+              <form role="form" method="post" action="{{route('questions.upload')}}" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <div class="box-body">
+                  <div class="form-group">
+                    <label>Exams Title</label>
+                    <textarea class="form-control" rows="2" placeholder="Enter the Exams Title..." name="title" >{{old('title')}}</textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Upload Your Questions</label>
+                    <input type="file" name="" class="form-control" name="question">
+                  </div>
+                  <input type="hidden" name="course_id" value="{{$course->id}}">
+                <div class="box-footer">
+                  <a href="{{route('questions.show',$course->id)}}" class="btn btn-danger">Cancel</a>
+                  <button type="submit" class="btn btn-primary pull-right">Add New</button>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
     </section>
   </div>
 

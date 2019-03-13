@@ -41,7 +41,8 @@
               <table id="example1" class="table table-bordered table-striped table-responsive">
                 <thead>
                 <tr>
-                  <th><center>Lecturer ID</center></th>
+                  <th><center>Picture</center></th>
+                  <th><center>Staff ID</center></th>
                   <th><center>User Name</center></th>
                   <th><center>Email</center></th>
                   <th><center>Name</center></th>
@@ -52,6 +53,7 @@
                 <tbody>
                   @foreach($users as $user)
                     <tr class="gradeU">
+                      <th><center><img class="img-circle" height="60px" src="{{Storage::disk('local')->url("$user->picture")}}"></center></th>
                       <th><center>{{$user->lec_id}}</center></th>
                       <td><center>{{$user->username}}</center></td>
                       <td><center>{{$user->email}}</center></td>
@@ -79,7 +81,8 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th><center>User Name</center></th>
+                  <th><center>Picture</center></th>
+                  <th><center>Staff ID</center></th>
                   <th><center>User Name</center></th>
                   <th><center>Email</center></th>
                   <th><center>Name</center></th>

@@ -82,13 +82,13 @@ class AdminController extends Controller
             'name'=>"required|string",
             'email'=>"required|unique:admins,email,$id",
             'picture' => 'image',
-            'lec_id' => 'required|string',
+            // 'lec_id' => 'required|string',
         ]);
         $user = Admin::find($id);
         if ($request->hasFile('picture')){
            $user->picture =$request->picture->store('public');
         }
-        $user->lec_id = $request->lec_id;
+        // $user->lec_id = $request->lec_id;
         $user->name=$request->name;
         $user->username = $request->username;
         $user->email = $request->email;

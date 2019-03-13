@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAcademicsTable extends Migration
+class CreateExamsSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateAcademicsTable extends Migration
      */
     public function up()
     {
-        Schema::create('academics', function (Blueprint $table) {
+        Schema::create('exams_settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('year');
-            $table->string('semester');
+            $table->integer('course_id')->unsigned()->index();
+            $table->text('title');
+            $table->integer('total_questions');
+            $table->integer('total_marks');
+            $table->text('instructions');
             $table->boolean('status')->default('0');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateAcademicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('academics');
+        Schema::dropIfExists('exams_settings');
     }
 }

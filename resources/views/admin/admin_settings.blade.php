@@ -121,16 +121,16 @@
             <label for="email">Email</label>
             <input type="emal" class="form-control" id="email" placeholder="New Password" name="email" {{old('email')}} value="{{$user->email}}">
           </div>
-          <div class="form-group col-md-4">
+          {{-- <div class="form-group col-md-4">
             <label for="lec_id">Lecturer ID</label>
             <input type="text" class="form-control" id="lec_id" placeholder="Lecturer ID" name="lec_id" value="{{$user->lec_id}}">
-          </div>
+          </div> --}}
 	        <div class="form-group col-md-6">
 	          <label for="username">Username</label>
 	          <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{$user->username}}" {{old('username')}}>
 	        </div>
           <div class="form-group col-md-6">
-            <label for="picture">Upload Profile Picture</label>
+            <label for="picture">Change Profile Picture</label>
             <input type="file" class="form-control" id="picture" name="picture">
          </div>	        
 	      </div>

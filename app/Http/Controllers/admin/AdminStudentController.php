@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Department;
 use App\User;
 use App\Course;
+use Auth;
 
 class AdminStudentController extends Controller
 {
@@ -34,5 +35,18 @@ class AdminStudentController extends Controller
     	$department = Department::find($request->dep_id);
         $students = Department::find($request->dep_id)->students->where('year',$id);
         return view('admin.students.yearStudents',compact('students','department','year'));
+    }
+
+    public function myStudents(){
+        $courses = Course::where('assigned_to',Auth::user()->id)->get();
+
+        return view('admin.students.myStudents',compact('courses'));
+    }
+
+    public function myStudentsCourse(Request $request){
+        // return $request->all();
+        $students = Department::find($request->dep_id)->students->where('year',$request->year);
+        $course = Course::find($request->course_id);
+        return view('admin.students.courseStudents',compact('students','course'));
     }
 }

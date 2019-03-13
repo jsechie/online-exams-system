@@ -7,63 +7,26 @@
     <section class="content-header">
       <h1>
         All
-        <small>Students</small> In {{ucfirst($department->name)}}
+        <small>Students</small> Taking {{ucfirst($course->name)}} {{'('.$course->code.')'}}
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{route('allStudents')}}"><i class="fa fa-user"> Students</i></a></li>
-        <li class="active">{{$department->name}}</li>
+        <li><a href="{{route('myStudents')}}"><i class="fa fa-user"> Students</i></a></li>
+        <li class="active">Students</li>
       </ol>
       @include('messages.flash_messages')
     </section>
       <!-- /.content -->
 
     <section class="content">
-      <center><u><h3 class="text-warning">Select A Year To View It's Students</h3></u></center>
-      @if($students->count() > 0)
-      
-        <hr><div class="row">
-          <div class="col-lg-1 col-md-1"></div>
-          <div class="col-lg-10 col-md-10 row">
-            @php $years=[1,2,3,4,5,6]; @endphp
-            @foreach($years as $year) 
-              <form method="post" action="{{route('year.students',$year)}}" id="year-form-{{$year}}" style="display: none;">
-                {{csrf_field()}}
-                <input type="hidden" name="dep_id" value="{{$department->id}}">
-              </form>
-              <a href="" 
-                onclick="
-                  event.preventDefault();
-                  document.getElementById('year-form-{{$year}}').submit();
-                " 
-              ><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-danger">
-                <div class="info-box">
-                  <span class="info-box-icon bg-purple"><i class="fa  fa-calendar-o"></i></span>
-
-                  <div class="info-box-content">
-                    <span class="info-box-text">Year</span>
-                    <span class="info-box-number">{{$year}}</span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div></a>
-
-            {{-- <a href="{{route('year.students',{$department->id}/{$year})}}"></a> --}}
-            <!-- /.col -->        
-            @endforeach
-          </div>
-          <div class="col-lg-1 col-md-1"></div>
-        </div><hr>
-      @else
-        <h1 class="text-center text-danger">No Student Has Registered With This Department</h1>
-      @endif
-
       <div class="row">
         <div class="col-xs-12">
+          @if($students->count() == 0)
+            <h1 class="text-center text-danger">No Student Has Registered For This Course</h1><br>
+          @endif
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">List Of All Students In The {{$department->name}}</h3>
+              <h3 class="box-title">List Of All {{$course->name}} Students </h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -131,5 +94,5 @@
     </section>
   </div>
 
-  	{{-- course --}}
+    {{-- course --}}
 @endsection

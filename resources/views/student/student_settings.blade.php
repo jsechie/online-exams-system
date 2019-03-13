@@ -44,7 +44,7 @@
                 </li>
               </ul>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Edit</b></a>
+              <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#edit-profile"><b>Edit</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -64,39 +64,40 @@
                  <!-- About Me Box -->
 		          <div class="box box-primary">
 		            <div class="box-header with-border">
-		              <h3 class="box-title">About Me</h3>
+		              <h3 class="box-title">My Details</h3>
 		            </div>
 		            <!-- /.box-header -->
 		            <div class="box-body">
-		              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+		            	<strong><i class="fa fa-user margin-r-5"></i> Program Of Study</strong>
 
-		              <p class="text-muted">
-		                B.S. in Computer Science from the University of Tennessee at Knoxville
+		              <p class="text-muted text-primary">
+		                {{$department->name}}
+		              </p>
+
+		              <hr>
+		              <strong><i class="fa fa-book margin-r-5"></i> Index Number</strong>
+
+		              <p class="text-muted text-primary">
+		                {{Auth::user()->index_number}}
 		              </p>
 
 		              <hr>
 
-		              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+		              <strong><i class="fa fa-book margin-r-5"></i> Student ID</strong>
 
-		              <p class="text-muted">Malibu, California</p>
-
-		              <hr>
-
-		              <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
-
-		              <p>
-		                <span class="label label-danger">UI Design</span>
-		                <span class="label label-success">Coding</span>
-		                <span class="label label-info">Javascript</span>
-		                <span class="label label-warning">PHP</span>
-		                <span class="label label-primary">Node.js</span>
-		              </p>
+		              <p class="text-muted text-primary">{{Auth::user()->student_id}}</p>
 
 		              <hr>
 
-		              <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+		              <strong><i class="fa fa-pencil margin-r-5"></i> Nationality</strong>
 
-		              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+		              <p class="text-muted text-primary">{{Auth::user()->student_type}}</p>
+
+		              <hr>
+
+		              <strong><i class="fa fa-pencil margin-r-5"></i> Program Type</strong>
+
+		              <p class="text-muted text-primary">{{Auth::user()->program_type}}</p>
 		            </div>
 		            <!-- /.box-body -->
 		          </div>
@@ -139,63 +140,39 @@
   </div>
   <!-- /.content-wrapper -->
 
-	<!--div id="content">
-	  <div id="content-header">
-		    <div id="breadcrumb"> <a href="{{url('/home')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></a> <a href="#" class="current">Settings</a> </div>
-		    <h1>Student Settings</h1>
-
-		    {{-- message to display for password changes --}}
-		     @if(Session::has('flash_message_error'))
-		    	<div class="alert alert-error alert-block">
-		    		<button type="button" class="close" data-dismiss="alert">x</button>
-		    		<strong>{!! session('flash_message_error') !!} </strong>
-		    	</div>
-		    @endif
-
-		    @if(Session::has('flash_message_success'))
-		    	<div class="alert alert-success alert-block">
-		    		<button type="button" class="close" data-dismiss="alert">x</button>
-		    		<strong>{!! session('flash_message_success') !!} </strong>
-		    	</div>
-		    @endif
-		   
-	  </div>
-	  <div class="container-fluid"><hr>
-	      <div class="row-fluid">
-	        <div class="span12">
-	          <div class="widget-box">
-	            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-	              <h5>Password Update</h5>
-	            </div>
-	            <div class="widget-content nopadding">
-	              <form class="form-horizontal" method="post" action="{{ url('/student/update-pwd')}}" name="password_validate" id="password_validate" novalidate="novalidate">{{ csrf_field() }}
-	                <div class="control-group">
-	                  <label class="control-label">Current Password</label>
-	                  <div class="controls">
-	                    <input type="password" name="current_pwd" id="current_pwd" />
-	                  </div>
-	                </div>
-	                <div class="control-group">
-	                  <label class="control-label">New Password</label>
-	                  <div class="controls">
-	                    <input type="password" name="new_pwd" id="new_pwd" />
-	                  </div>
-	                </div>
-	                <div class="control-group">
-	                  <label class="control-label">Confirm New Password</label>
-	                  <div class="controls">
-	                    <input type="password" name="confirm_pwd" id="confirm_pwd" />
-	                  </div>
-	                </div>
-	                <div class="form-actions">
-	                  <input type="submit" value="Update" class="btn btn-success">
-	                </div>
-	              </form>
-	            </div>
-	          </div>
+	<form method="post" action="{{route('student.profile',Auth::user()->id)}}" enctype="multipart/form-data">
+  	{{csrf_field()}}
+  <div class="modal fade" id="edit-profile">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Profile Settings</h4>
+	      </div>
+	      <div class="modal-body"> 
+          <div class="form-group col-md-12">
+            <label for="email">Email</label>
+            <input type="emal" class="form-control" id="email" placeholder="New Password" name="email" {{old('email')}} value="{{Auth::user()->email}}">
+          </div>
+	        <div class="form-group col-md-6">
+	          <label for="username">Username</label>
+	          <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{Auth::user()->username}}" {{old('username')}}>
 	        </div>
+          <div class="form-group col-md-6">
+            <label for="picture">Change Profile Picture</label>
+            <input type="file" class="form-control" id="picture" name="picture">
+         </div>	        
+	      </div>
+	      <div class="modal-footer">
+	        <a class="btn btn-default pull-left" data-dismiss="modal">Close</a>
+	        <button type="submit" class="btn btn-primary">Save Changes</button>
 	      </div>
 	    </div>
+	    <!-- /.modal-content -->
 	  </div>
-	</div -->
+	  <!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+  </form>
 @endsection

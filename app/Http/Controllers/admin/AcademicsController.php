@@ -114,4 +114,23 @@ class AcademicsController extends Controller
         Academic::where('id',$id)->delete();
         return redirect()->back()->with('flash_message_success','Academic Year Deleted Successfully');
     }
+
+    public function status($id){
+        $academic = Academic::find($id);
+        if($academic->status=='0'){
+            $academics = Academic::all();
+            foreach ($academics as $value) {
+                $value->status = 0;
+                $value->save();
+            }
+            $academic->status = 1;
+            $academic->save();
+            return redirect()->back()->with('flash_message_success',"Academic Activated Successfully");
+        }
+
+        if($academic->status=='1'){
+            return redirect()->back()->with('flash_message_error',"Can't Deactivate Academic Year \n Just switch to current Academic Year of choice");
+        }
+    }
+
 }

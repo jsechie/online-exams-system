@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Session;
 use App\User;
+use App\Department;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -32,7 +33,8 @@ class HomeController extends Controller
 
     // user settings 
     public function settings(){
-        return view('student.student_settings');
+        $department = Department::find(Auth::user()->dep_id);
+        return view('student.student_settings',compact('department'));
     }
 
     // check password for updating
@@ -64,4 +66,24 @@ class HomeController extends Controller
             }
         }
     }
+
+    public function profile(Request $request, $id){
+        $this->validate($request,[
+            'username'=>"required|string|unique:admins,username,$id",
+            'email'=>"required|unique:users,email,$id",
+            'picture' => 'image',
+            // 'lec_id' => 'required|string',
+        ]);
+        $user = user::find($id);
+        if ($request->hasFile('picture')){
+           $user->picture =$request->picture->store('public');
+        }
+        // $user->lec_id = $request->lec_id;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->back()->with('flash_message_success','Details Updated Successfully');
+    }
+
 }

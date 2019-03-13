@@ -21,10 +21,10 @@
       @if($departments->count() > 0)
       <center><u><h3 class="text-warning">Select A Department To View It's Students</h3></u></center>
         <hr><div class="row">
-          <div class="col-lg-2 col-md-2"></div>
-          <div class="col-lg-8 col-md-8 row">
+          <div class="col-lg-1 col-md-1"></div>
+          <div class="col-lg-10 col-md-10 row">
             @foreach($departments as $department)        
-            <a href="{{route('department.students',$department->id)}}"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-danger">
+            <a href="{{route('department.students',$department->id)}}"><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-danger">
                 <div class="info-box">
                   <span class="info-box-icon bg-green"><i class="fa fa-files-o"></i></span>
 
@@ -39,7 +39,7 @@
             <!-- /.col -->        
             @endforeach
           </div>
-          <div class="col-lg-2 col-md-2"></div>
+          <div class="col-lg-1 col-md-1"></div>
         </div><hr>
       {{-- @else
         @include('messages.course_error') --}}

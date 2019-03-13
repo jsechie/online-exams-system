@@ -1,28 +1,19 @@
+@extends('layouts.admin_layouts.admin_design')
+
+@section('content')
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Available
-        <small>Departments</small>
+        Starter 
+        <small>Page</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Department</li>
+        <li class="active">Dashboard</li>
       </ol>
     </section>
       <!-- /.content -->
-      <div class="row">
-        <div class="col-md-4">
-          
-        </div>
-        <div class="col-md-4">
-          <hr>
-          <a class="btn btn-block btn-primary" href="{{route('department.create')}}"'" >Add New Department</a>
-        </div>
-        <div class="col-md-4">
-          
-        </div>
-      </div>
 
     <section class="content">
       <div class="row">
@@ -30,3 +21,4 @@
       </div>
     </section>
   </div>
+@endsection

@@ -54,8 +54,8 @@
                       <td><center>{{$student->year}}</center></td>
                       <td><center>{{$student->student_type}}</center></td>
                       <td><center>{{$student->program_type}}</center></td>
-                      {{-- <td><center>
-                        <form method="post" action="{{route('academics.destroy',$academic->id)}}" id="delete-form-{{$academic->id}}" style="display: none;">
+                      <td><center>
+                        {{-- <form method="post" action="{{route('academics.destroy',$academic->id)}}" id="delete-form-{{$academic->id}}" style="display: none;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
                         </form>
@@ -69,8 +69,8 @@
                             event.preventDefault();
                           }
                           " 
-                        ><i class="glyphicon glyphicon-trash"></i></a>
-                      </center></td> --}}
+                        ><i class="glyphicon glyphicon-trash"></i></a> --}}
+                      </center></td>
                     </tr>
                   @endforeach
                 </tbody>

@@ -110,6 +110,7 @@ class AdminCRUDcontroller extends Controller
         ]);
         $user = Admin::find($id);
         if ($request->hasFile('picture')){
+            
            $user->picture =$request->picture->store('public');
         }
         $user->lec_id = $request->lec_id;
