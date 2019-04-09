@@ -5,6 +5,8 @@ use App\Course;
 use App\Academic;
 use App\Department;
 use App\Admin;
+use App\ExamsSettings;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -66,6 +68,18 @@ class CourseController extends Controller
         $course->credit_hours = $request->credit_hours;
         $course->assigned_to = $request->assigned_to;
         $course->save();
+
+        $midsem = new ExamsSettings;
+        $midsem->title = 'Mid Semester Examination';
+        $midsem->course_id = $course->id;
+        $midsem->total_marks = 30;
+        $midsem->save();
+
+        $finalExam = new ExamsSettings;
+        $finalExam->title = 'End Of Semester Examination';
+        $finalExam->course_id = $course->id;
+        $finalExam->total_marks = 70;
+        $finalExam->save();
 
         return redirect(route('course.index'))->with('flash_message_success',"$course->name Added Successfully");
     }
@@ -189,6 +203,14 @@ class CourseController extends Controller
             else{
                 return redirect(route('course.index'))->with('flash_message_error',"$course->name Not Assigned To Any Lecturer");
             }
+    }
+
+     public function adminCourse()
+    {
+        // return 'Hi';
+        $courses = Admin::find(Auth::user()->id)->courses;
+        
+        return view('admin.course.my_course',compact('courses'));
     }
 
 }

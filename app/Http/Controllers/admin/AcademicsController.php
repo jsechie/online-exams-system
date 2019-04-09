@@ -20,7 +20,8 @@ class AcademicsController extends Controller
     public function index()
     {
         $academics = Academic::all();
-        return view('admin.academics.index_academics',compact('academics'));
+        $academ = Academic::where('status',1)->first();
+        return view('admin.academics.index_academics',compact('academics','academ'));
     }
 
     /**
@@ -129,7 +130,7 @@ class AcademicsController extends Controller
         }
 
         if($academic->status=='1'){
-            return redirect()->back()->with('flash_message_error',"Can't Deactivate Academic Year \n Just switch to current Academic Year of choice");
+            return redirect()->back()->with('flash_message_error',"Can't Deactivate Academic Year In Progress \n Just switch to current Academic Year of choice");
         }
     }
 

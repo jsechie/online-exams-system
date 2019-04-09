@@ -13,7 +13,8 @@
         <li class="active">Dashboard</li>
       </ol>
     </section>
-      <!-- /.content -->
+      @include('messages.errors')
+      @include('messages.flash_messages')
 
     <section class="content">
       <div class="row">

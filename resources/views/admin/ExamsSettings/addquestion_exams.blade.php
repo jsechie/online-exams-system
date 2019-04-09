@@ -13,16 +13,21 @@
         <li class="active">More Questions</li>
       </ol>
       @include('messages.flash_messages')
+       @include('messages.errors')
     </section>
       <!-- /.content -->
 
     <section class="content">
     	<div class="row">
         <div class="col-md-3 "><a class="btn btn-block btn-warning " href="{{route('examsSettings.view',$exam->id)}}">Back</a></div>
+        {{-- <div class="col-md-3 "><a class="btn btn-block btn-info " href="#">Add Randomly</a></div> --}}
+        <div class="col-md-3 pull-right"><a class="btn btn-block btn-primary " href="{{route('examsSettings.addAll',$exam->id)}}">Add All Questions</a></div>
       </div><hr>
       <div class="row col-md-offset-1">
         @foreach($courseQuestions as $question)
-          @php $status=0; @endphp
+          @php $status=0; 
+            $hasQuestion = false;
+          @endphp
           @foreach($examQuestions as $examQuestion)          	 
           	@php 
           	if($question->id == $examQuestion->id){
@@ -61,7 +66,7 @@
                         </form>
                         <a title="Add" class="btn btn-primary tip "
                           onclick="
-                          if(confirm('Are You Sure You want delete?')){
+                          if(confirm('Are You Sure You want Add?')){
                             event.preventDefault();
                             document.getElementById('delete-form-{{$question->id}}').submit();
                           }
@@ -75,10 +80,43 @@
             <div class="col-md-1"></div>
           @php endif @endphp
         @endforeach
-        @if($status == 1)
+        @if($examQuestions->count() == $courseQuestions->count())
         	@include('messages.addQuestion_error')
         @endif
       </div>
     </section>
   </div>
+
+  {{-- <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Randomly Add Questions To Exams</h4>
+            </div>
+            <div class="modal-body">
+              <form role="form" method="post" action="">
+                {{csrf_field()}}
+                <div class="box-body">
+                  <div class="form-group">
+                    <label>Total Questions To Be Added <br>Min: <span class="label label-success">1</span> </label>
+                    <input type="number" class="form-control" name="random_number" value="{{old('random_number')}}" max="{{$courseQuestions->count()-$examQuestions->count()}}" min="1">
+                    <label>Max: <span class="label label-danger"> {{$courseQuestions->count()-$examQuestions->count()}}</span></label>
+                  </div>
+                  <input type="hidden" name="course_id" value="{{$exam->id}}">
+                <div class="box-footer">
+                  <button type="submit" class="btn btn-primary pull-right">Generate</button>
+                  <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger">
+                  Cancel</button>
+                </div>
+              </div>
+              </form>
+            </div>
+            
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div> --}}
 @endsection

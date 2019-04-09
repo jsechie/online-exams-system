@@ -7,6 +7,8 @@ use Auth;
 use Session;
 use App\User;
 use App\Department;
+use App\Academic;
+use App\Course;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -28,7 +30,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('student.student_dashboard');
+        $academic = Academic::where('status',1)->first();
+        $courses = Course::where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['status',1]])->get();
+        $total_courses = $courses->count();
+        return view('student.student_dashboard',compact('academic','total_courses'));
     }
 
     // user settings 

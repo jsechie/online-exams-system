@@ -9,6 +9,7 @@
         Dashboard
         <small>Control panel</small>
       </h1>
+
       <ol class="breadcrumb">
         <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Dashboard</li>
@@ -17,7 +18,7 @@
 
     <!-- Main content -->
     <section class="content">
-
+      <div class="row col-md-8 col-md-offset-2"><h1><marquee ><span class="label label-info"> {!!"Academic Calender: $academic->year Semester $academic->semester"!!} in Progress</marquee></span></h1></div>
       <div class="row">
         <div class="col-md-12">
           <div class="box box-solid">
@@ -26,6 +27,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+
               <div class="box-group" id="accordion">
                 <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
               @if(Auth::user()->role =='Examiner')
@@ -35,7 +37,7 @@
                 <div class="panel box box-success">
                   <div class="box-header with-border">
                     <h4 class="box-title">
-                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                      <a data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
                         Graphs And Charts
                       </a>
                     </h4>

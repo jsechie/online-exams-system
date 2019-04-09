@@ -22,11 +22,11 @@
         @include('messages.flash_messages')
       </section>
         <!-- /.content -->
-        <div class="row"><hr>
+        <div class="row container col-md-offset-1 col-md-10">
           <div class="col-md-4"><a class="btn btn-block btn-primary" href="{{route('questions.show',$course->id)}}">Back To All Questions</a></div>
           <div class="col-md-4"></div>
           <div class="col-md-4"><a class="btn btn-block btn-warning" href="#" data-toggle="modal" data-target="#modal-default">Upload Question</a></div>
-        </div>
+        </div><hr>
 
       <section class="content">
         <div class="row">
@@ -83,11 +83,11 @@
                         <input name="next" type="checkbox" {{ old('next') ? 'checked' : '' }}> Add Next Question
                       </label>
                     </div>
-                    <div class="checkbox icheck">
+                    {{-- <div class="checkbox icheck">
                       <label>
                         <input name="status" type="checkbox" {{ old('status') ? 'checked' : '' }}> Make Question Active To Student
                       </label>
-                    </div>
+                    </div> --}}
                 </div>
                   <input type="hidden" name="course_id" value="{{$course->id}}">
                 <div class="box-footer">
@@ -106,24 +106,27 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Questions Upload</h4>
+              <h4 class="modal-title">Questions Upload To <span class="text-danger">{{$course->name}}</span> Course</h4>
             </div>
             <div class="modal-body">
               <form role="form" method="post" action="{{route('questions.upload')}}" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="box-body">
                   <div class="form-group">
-                    <label>Exams Title</label>
-                    <textarea class="form-control" rows="2" placeholder="Enter the Exams Title..." name="title" >{{old('title')}}</textarea>
-                  </div>
-                  <div class="form-group">
                     <label>Upload Your Questions</label>
-                    <input type="file" name="" class="form-control" name="question">
+                    <input type="file" class="form-control" name="questions">
                   </div>
                   <input type="hidden" name="course_id" value="{{$course->id}}">
+                  {{-- <div class="form-group">
+                    <div class="checkbox icheck">
+                      <label>
+                        <input name="active" type="checkbox" {{ old('active') ? 'checked' : '' }}> Make All Questions Active
+                      </label>
+                    </div>
+                </div> --}}
                 <div class="box-footer">
-                  <a href="{{route('questions.show',$course->id)}}" class="btn btn-danger">Cancel</a>
-                  <button type="submit" class="btn btn-primary pull-right">Add New</button>
+                  <a type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger">Cancel</a>
+                  <button type="submit" class="btn btn-primary pull-right">Upload</button>
                 </div>
               </form>
             </div>

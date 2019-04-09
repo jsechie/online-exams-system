@@ -1,4 +1,4 @@
-@extends('layouts.students_layouts.student_design')
+@extends('layouts.admin_layouts.admin_design')
 
 @section('content')
 
@@ -7,10 +7,10 @@
     <section class="content-header">
       <h1>
         All
-        <small>Registered </small> Courses 
+        <small>Your Assigned </small> Courses 
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{route('student.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Courses</li>
       </ol>
       @include('messages.flash_messages')
@@ -23,7 +23,7 @@
           <div class="col-xs-12 col-md-8 col-md-offset-2">
             <div class="box">
               <div class="box-header">
-                <h3 class="box-title">List Of All Registered Courses</h3>
+                <h3 class="box-title">List Of All Courses Assigned To You</h3>
               </div>
               <!-- /.box-header -->
               <div class="box-body">
@@ -33,6 +33,7 @@
                     <th><center>Name</center></th>
                     <th><center>Code</center></th>
                     <th><center>Credit Hours</center></th>
+                    <th><center>Status</center></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -41,6 +42,11 @@
                      <td><center><h4>{{$course->name}}</h4></center></td>
                      <td><center><h4><span class="label label-warning">{{$course->code}}</span></h4></center></td>
                      <td><center><h4><span class="label label-info">{{$course->credit_hours}}</span></h4></center></td>
+                     @if($course->status == 1)
+                          <td ><center class=" btn-success"><h4>Active</h4></center></td>
+                        @else
+                          <td><center class="btn-danger"><h4>Inactive</h4></center></td>
+                        @endif
                    </tr>
                    @endforeach
                   </tbody>
@@ -49,6 +55,7 @@
                     <th><center>Name</center></th>
                     <th><center>Code</center></th>
                     <th><center>Credit Hours</center></th>
+                    <th><center>Status</center></th>
                   </tr>
                   </tfoot>
                 </table>
@@ -58,7 +65,7 @@
           </div>
         </div>
       @else
-        <div class="col-md-8 col-md-offset-2 text-danger text-center"><h1>No Course Has Been Made Available To Your Department For Now</h1></div>
+        @include('messages.course_error')
       @endif
     </section>
   </div>

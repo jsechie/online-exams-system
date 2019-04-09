@@ -19,7 +19,10 @@ class CreateExamsSettingsTable extends Migration
             $table->text('title');
             $table->integer('total_questions');
             $table->integer('total_marks');
-            $table->text('instructions');
+            $table->string('exams_date')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('stop_time')->nullable();
+            $table->text('instructions')->nullable();
             $table->boolean('status')->default('0');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();

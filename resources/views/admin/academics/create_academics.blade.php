@@ -40,7 +40,7 @@
             {{csrf_field()}}
               <div class="box-body">
                 <div class="form-group">
-                  <label for="academic_year">Academics Year</label>
+                  <label for="academic_year">Academics Year (Eg: 2018/2019)</label>
                   <input type="text" class="form-control" id="academic_year" placeholder="Name" name="academic_year" value="{{old('academic_year')}}">
                 </div>                
               <div class="box-footer">

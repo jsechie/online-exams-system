@@ -10,7 +10,7 @@
         Student Profile
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{route('user.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{{route('student.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Profile</li>
       </ol>
 
@@ -120,7 +120,7 @@
 	                  <input type="password" class="form-control" id="confirm_pwd" placeholder="New Password" name="confirm_pwd">
 	                </div>               
 	              <div class="box-footer col-md-12">
-	              	<a href="{{route('admin.dashboard')}}" class="btn btn-danger">Cancel</a>
+	              	<a href="{{route('user.settings')}}" class="btn btn-danger">Cancel</a>
 	                <button type="submit" class="btn btn-primary pull-right">Confirm Change</button>
 	              </div>
 	            </form>

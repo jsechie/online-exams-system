@@ -1,7 +1,7 @@
 <div class="panel box box-primary">
   <div class="box-header with-border">
     <h4 class="box-title">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+      <a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
         System Summary
       </a>
     </h4>

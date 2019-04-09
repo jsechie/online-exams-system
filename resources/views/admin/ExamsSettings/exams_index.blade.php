@@ -14,6 +14,7 @@
         <li class="active">Questions</li>
       </ol>
       @include('messages.flash_messages')
+       @include('messages.errors')
     </section>
       <!-- /.content -->
 

@@ -19,11 +19,14 @@
       <!-- /.content -->
 
     <section class="content">
+      @if($students->count() == 0)
+          <h1 class="text-center text-danger">No Student Has Registered For This Course</h1><br>
+      @endif
+      <div class="row">
+        <div class="col-md-3"><a class="btn btn-block btn-warning" href="{{route('myStudents')}}">Back To My Courses</a></div>
+      </div><hr>
       <div class="row">
         <div class="col-xs-12">
-          @if($students->count() == 0)
-            <h1 class="text-center text-danger">No Student Has Registered For This Course</h1><br>
-          @endif
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">List Of All {{$course->name}} Students </h3>

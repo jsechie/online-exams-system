@@ -8,6 +8,7 @@ use App\Admin;
 use App\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 // use PhpOffice\PhpWord\Exception\Exception;
 
 class QuestionsController extends Controller
@@ -64,9 +65,9 @@ class QuestionsController extends Controller
         $question->option_D = $request->option_D;
         $question->option_E = $request->option_E;
         $question->answer = $request->answer;
-        if ($request->has('status')) {
-        	$question->status = 1;
-        }
+        // if ($request->has('status')) {
+        // 	$question->status = 1;
+        // }
         $question->save();
 		// return $request->all();
 		if ($request->has('next')) {
@@ -128,9 +129,9 @@ class QuestionsController extends Controller
         $question->option_D = $request->option_D;
         $question->option_E = $request->option_E;
         $question->answer = $request->answer;
-        if ($request->has('status')) {
-        	$question->status = 1;
-        }
+        // if ($request->has('status')) {
+        // 	$question->status = 1;
+        // }
         $question->update();
         $course_id=$question->course_id;
        	return redirect()->route('questions.show',$course_id)->with('flash_message_success',"Question Updated Successfully");
@@ -181,103 +182,225 @@ class QuestionsController extends Controller
 		}
 	}
 
-	public function activateAll($id){
-		$questions = Questions::where('course_id',$id)->get();
-		foreach ($questions as $question) {
-			$question->status = '1';
-			$question->save();
+	// public function activateAll($id){
+	// 	$questions = Questions::where('course_id',$id)->get();
+	// 	foreach ($questions as $question) {
+	// 		$question->status = '1';
+	// 		$question->save();
+	// 	}
+	// 	return redirect()->back()->with('flash_message_success',"All Questions Activated Successfully");
+	// }
+
+	// public function deactivateAll($id){
+	// 	$questions = Questions::where('course_id',$id)->get();
+	// 	foreach ($questions as $question) {
+	// 		$question->status = '0';
+	// 		$question->save();
+	// 	}
+	// 	return redirect()->back()->with('flash_message_success',"All Questions Deactivated Successfully");
+	// }
+
+	public function upload(Request $request){
+		$this->validate($request,[
+            'questions'=>'required|file|filled|mimes:txt',
+        ]);
+
+        if ($request->has('active')) {
+        	$status = 1;
+        }
+		$path = $request->questions->getRealPath();//get the files path on upload
+		// 	when the usser upload the question in txt form;
+		// Now it we open the test file for upload
+     	$file = file($path);//get store the file
+		$file = str_replace('Answer = A', '||A??', $file);
+		$file = str_replace('Answer = B', '||B??', $file);
+		$file = str_replace('Answer = C', '||C??', $file);
+		$file = str_replace('Answer = D', '||D??', $file);
+		$file = str_replace('Answer = E', '||E??', $file);
+		$file = str_replace('A.', '||', $file);
+		$file = str_replace('B.', '||', $file);
+		$file = str_replace('C.', '||', $file);
+		$file = str_replace('D.', '||', $file);
+		$file = str_replace('E.', '||', $file);
+		$file = str_replace("\r\n", '', $file);
+		$file = str_replace('</w:r></w:p></w:tc><w:tc>', " ",$file);
+		$combine = "";	
+		foreach ($file as $values) {
+			$combine .= $values;	
 		}
-		return redirect()->back()->with('flash_message_success',"All Questions Activated Successfully");
-	}
+		$questions = explode("??", $combine);
+		if (count($questions)>1) {
+			$counter=1;
+			foreach ($questions as $value) {
+				if ($counter == count($questions)) {
+					break;
+				}
+				$new_question = new Questions;
+				$new_question->course_id = $request->course_id;
+				if ($request->has('active')) {
+		        	$new_question->status = 1;
+		        }
+				$question= explode("||", $value);
+				$total = count($question);
+				if ($total >3) {
+					$i=1;
+					foreach ($question as $upload){
+						if ($total==4) {
+							switch ($i) {
+								case 1:
+									$new_question->question = $upload;
+									break;
+								case 2:
+									$new_question->option_A = $upload;
+									break;
+								case 3:
+									$new_question->option_B = $upload;
+									break;
 
-	public function deactivateAll($id){
-		$questions = Questions::where('course_id',$id)->get();
-		foreach ($questions as $question) {
-			$question->status = '0';
-			$question->save();
-		}
-		return redirect()->back()->with('flash_message_success',"All Questions Deactivated Successfully");
-	}
+								case 4:
+									$new_question->answer = $upload;
+									break;
+								default:
+									# code...
+									break;
+							}
+							++$i;
+						}
 
-	public function upload(Request $request)
-	{
-		// @require_once '\PhpOffice\PhpWord\bootstrap.php';
-		// $course = Course::find($id);
-		// return view('admin.questions.upload_ques',compact('course'));
-		// return 'true';
-		// $phpWord = new \PhpOffice\PhpWord\PhpWord();
-	      // $objReader = \PhpOffice\PhpWord\IOFactory::createWriter($phpword,'Word2007');
-	      // $phpword = \PhpOffice\PhpWord\IOFactory::load('public/IOT.doc','Word2007');
+						elseif ($total==5) {
+							switch ($i) {
+								case 1:
+									$new_question->question = $upload;
+									break;
+								case 2:
+									$new_question->option_A = $upload;
+									break;
+								case 3:
+									$new_question->option_B = $upload;
+									break;
 
-	      // foreach($phpWord->getSections() as $section) {
-	      //   foreach($section->getElements() as $element) {
-	      //       if(method_exists($element,'getText')) {
-	      //           echo($element->getText() . "<br>");
-	      //       }
-	      //   }
-	      // }
-	      // $newSection = $phpWord->addSection();
-	      // $newSection->addText('Fuck ooooo');
-
-	      // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord,'Word2007');
-
-	      // try{
-	      // 	$objWriter->save('C:/Users/NANA BAAH/Documents/IOT.docx');
-	      // }
-	      // catch(Exception $e){
-
-	      // }
-	      // return response()->download('C:/Users/NANA BAAH/Documents/IOT.docx');
-
-			// $objReader = \PhpOffice\PhpWord\IOFactory::createReader("Word2007");
-			// $phpWord = $objReader->load("C:/Users/NANA BAAH/Documents/IOT.docx");
-
-			// foreach($phpWord->getSections() as $section) {
-			//     foreach($section->getElements() as $element) {
-			//         if(method_exists($element,'getText')) {
-			//             return($element->getText() . "<br>");
-			//         }
-			//     }
-			// }
+								case 4:
+									$new_question->option_C = $upload;
+									break;
+								case 5:
+									$new_question->answer = $upload;
+									break;
+								default:
+									# code...
+									break;
+							}
+							++$i;
+						}
 						
-		// $sections = $phpWord->getSections(0);
-		// $sections = $sections[0];
-		// $arrays = $sections->getElements(0);
-		// foreach ($arrays as $value) {
-		// 	foreach ($value->getElements(0) as $element) {
-		// 		echo ($element->getText()."<br>");
-		// 	}
-		// 	// print_r($value->getElements(0)->getText());
-		// }
+						elseif ($total==6) {
+							switch ($i) {
+								case 1:
+									$new_question->question = $upload;
+									break;
+								case 2:
+									$new_question->option_A = $upload;
+									break;
+								case 3:
+									$new_question->option_B = $upload;
+									break;
 
-		// print_r($sections);
+								case 4:
+									$new_question->option_C = $upload;
+									break;
+								case 5:
+									$new_question->option_D = $upload;
+									break;
+								case 6:
+									$new_question->answer = $upload;
+									break;
+								default:
+									# code...
+									break;
+							}
+							++$i;
+						}
 
-		$filename = 'C:/Users/NANA BAAH/Documents/IOT.docx';
-		$striped_content = '';
-	    $content = '';
+						elseif ($total==7) {
+							switch ($i) {
+								case 1:
+									$new_question->question = $upload;
+									break;
+								case 2:
+									$new_question->option_A = $upload;
+									break;
+								case 3:
+									$new_question->option_B = $upload;
+									break;
 
-	    if(!$filename || !file_exists($filename)) return false;
+								case 4:
+									$new_question->option_C = $upload;
+									break;
+								case 5:
+									$new_question->option_D = $upload;
+									break;
+								case 6:
+									$new_question->option_E = $upload;
+									break;
+								case 7:
+									$new_question->answer = $upload;
+									break;
+								default:
+									# code...
+									break;
+							}
+							++$i;
+						}
+						
+						// echo "<li>$question[$i]</li>";
+					}
 
-	    $zip = zip_open($filename);
-	    if (!$zip || is_numeric($zip)) return false;
+					$new_question->save();
+					++$counter;
+				}
 
-	    while ($zip_entry = zip_read($zip)) {
-
-	        if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
-
-	        if (zip_entry_name($zip_entry) != "word/document.xml") continue;
-
-	        $content .=zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-
-	        zip_entry_close($zip_entry);
-
-
-	    }
-	    zip_close($zip);      
-	    $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
-	    $content = str_replace('</w:r></w:p>', "\r\n", $content);
-	    $striped_content = strip_tags($content);
-	    echo "<pre>";
-	    return $striped_content;
+				else{//let the user know its needs at least two choices
+					return redirect()->back()->with('flash_message_error',"All Questions must atleast HAVE TWO choices Please check well!!!");
+				}
+			}
+			$total = count($questions)-1;
+			return redirect()->route('questions.show',$request->course_id)->with('flash_message_success',"$total Questions Uploaded Successfully");
+		}
+		else{
+			return redirect()->back()->with('flash_message_error',"The File being uploaded is not in the FROMAT requsted Please check well!!!");
+		}
 	}
+	
+	// public function randomActivate(Request $request)
+	// {
+	// 	$this->validate($request,[
+ //            'random_number'=>"required",
+ //        ]);
+	// 	$random = DB::select("select * from questions where status = 0 order by Rand() limit $request->random_number");
+
+	// 	foreach ($random as $value) {
+	// 		$question = Questions::find($value->id);
+	// 		$question->status = 1;
+	// 		$question->update();
+	// 	}
+		
+
+ //        return redirect()->back()->with('flash_message_success',"$request->random_number Questions Activated Successfully");
+	// }
+
+	// public function randomDeactivate(Request $request)
+	// {
+	// 	$this->validate($request,[
+ //            'random_number'=>"required",
+ //        ]);
+	// 	$random = DB::select("select * from questions where status = 1 order by Rand() limit $request->random_number");
+
+	// 	foreach ($random as $value) {
+	// 		$question = Questions::find($value->id);
+	// 		$question->status = 0;
+	// 		$question->update();
+	// 	}
+		
+
+ //        return redirect()->back()->with('flash_message_success',"$request->random_number Questions Deactivated Successfully");
+	// }
 }

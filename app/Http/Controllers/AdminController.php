@@ -12,6 +12,7 @@ use App\Course;
 use App\Questions;
 use App\Academic;
 use App\User;
+use App\ExamsSettings;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 
@@ -44,7 +45,13 @@ class AdminController extends Controller
         $available=$users->count() - $available->count();
         $userCourses= Admin::find(Auth::user()->id)->courses;
         $userQuestions=Questions::whereIn('course_id', Course::select('id')->where('assigned_to',Auth::user()->id)->get())->get()->count();
-        return view('admin.admin_dashboard',compact('users','departments','courses','questions','students','assigned','available','userCourses','userQuestions'));
+        $userExams = ExamsSettings::whereIn('course_id',Course::select('id')->where('assigned_to',Auth::user()->id))->get()->count();
+        $userStudents = 0;
+        foreach ($userCourses as $value) {
+            $userStudents += User::where([['year',$value->year],['dep_id',$value->dep_id]])->get()->count();
+        }
+        $academic = Academic::where('status',1)->first();
+        return view('admin.admin_dashboard',compact('users','departments','courses','questions','students','assigned','available','userCourses','userQuestions','userExams','userStudents','academic'));
     }
 
     public function settings(){

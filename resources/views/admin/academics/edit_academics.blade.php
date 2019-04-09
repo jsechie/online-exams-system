@@ -48,7 +48,7 @@
             {{method_field('PATCH')}}
               <div class="box-body">
                 <div class="form-group">
-                  <label for="academics_year">Academics Year</label>
+                  <label for="academics_year">Academics Year (Eg: 2018/2019)</label>
                   <input type="text" class="form-control" id="academics_year" placeholder="Name" name="academics_year" value="{{$academic->year}}">
                 </div>
                 <div class="form-group">

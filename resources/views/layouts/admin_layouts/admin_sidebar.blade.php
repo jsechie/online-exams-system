@@ -34,7 +34,8 @@
           <li class=""><a href="{{route('course.index')}}"><i class="fa fa-dashboard"></i><span>Course</span></a></li>
           <li class=""><a href="{{route('allStudents')}}"><i class="fa fa-dashboard"></i><span>All Students</span></a></li><br>
         @endif
-        <li class="header">MAIN USER FUNCTIONS</li> 
+        <li class="header">MAIN USER FUNCTIONS</li>
+        <li class=""><a href="{{route('course.adminCourse')}}"><i class="fa fa-dashboard"></i><span>My Courses</span></a></li>  
         <li class=""><a href="{{route('examsSettings.index')}}"><i class="fa fa-dashboard"></i><span>Exams Settings</span></a></li>      
         <li class=""><a href="{{route('questions.index')}}"><i class="fa fa-dashboard"></i><span>Questions</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o"></i><span>Exams Results</span></a></li>

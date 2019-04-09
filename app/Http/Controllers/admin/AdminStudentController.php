@@ -39,14 +39,14 @@ class AdminStudentController extends Controller
 
     public function myStudents(){
         $courses = Course::where('assigned_to',Auth::user()->id)->get();
-
         return view('admin.students.myStudents',compact('courses'));
     }
 
-    public function myStudentsCourse(Request $request){
+    public function myStudentsCourse($id){
         // return $request->all();
-        $students = Department::find($request->dep_id)->students->where('year',$request->year);
-        $course = Course::find($request->course_id);
+        $course = Course::find($id);
+        $students = User::where([['dep_id',$course->dep_id],['year',$course->year]])->get();
+        
         return view('admin.students.courseStudents',compact('students','course'));
     }
 }

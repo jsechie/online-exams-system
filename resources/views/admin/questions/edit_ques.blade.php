@@ -75,12 +75,12 @@
                       @endforeach
                     </select>
                   </div>
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                   <label>
                     <input type="checkbox" class="flat-red" name="status" value="next" @if($question->status==1) checked=""@endif>
                     Make Question Active To Student
                   </label>
-                </div>
+                </div> --}}
                 <div class="box-footer">
                   <a href="{{route('questions.show',$question->course_id)}}" class="btn btn-danger">Cancel</a>
                   <button type="submit" class="btn btn-primary pull-right">Update</button>

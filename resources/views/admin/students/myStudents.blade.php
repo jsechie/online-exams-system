@@ -25,25 +25,19 @@
           <div class="col-lg-1 col-md-1"></div>
           <div class="col-lg-10 col-md-10 row">
             @foreach($courses as $course) 
-              <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-danger">
-                <form method="post" action="{{route('myStudentsCourse')}}">
-                  {{csrf_field()}}
-                  <input type="hidden" name="dep_id" value="{{$course->dep_id}}">
-                  <input type="hidden" name="course_id" value="{{$course->id}}">
-                  <input type="hidden" name="year" value="{{$course->year}}">
-                  <button class="btn-block" type="submit">
-                    <span class="info-box-icon bg-red"><i class="fa fa-file-archive-o"></i></span>
+              <a href="{{route('myStudentsCourse',$course->id)}}"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-danger">
+                <div class="info-box">
+                  <span class="info-box-icon bg-green"><i class="fa fa-files-o"></i></span>
 
-                    <div class="info-box-content">
-                      <span class="info-box-text">{{$course->name}}</span>
-                      <span class="info-box-number">{{$course->code}}</span>
-                    </div>
-                        <!-- /.info-box-content -->
-                      <!-- /.info-box -->
-                  </button>
-                </form>
-
-              </div>
+                  <div class="info-box-content">
+                    <span class="info-box-text">{{$course->name}}</span>
+                    <span class="info-box-number">{{$course->code}}</span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div></a>
+            <!-- /.col -->
 
             {{-- <a href="{{route('year.students',{$department->id}/{$year})}}"></a> --}}
             <!-- /.col -->        
