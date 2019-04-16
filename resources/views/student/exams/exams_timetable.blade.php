@@ -22,7 +22,7 @@
       @endphp
     <section class="content"> 
       @if($timetable->count() == 0)
-        <div class="col-md-8 col-md-offset-2 text-danger text-center"><h1>No Exams Avalable!!!<br>Since: No Course Has Been Made Available To Your Department For Now</h1></div>
+        <div class="col-md-8 col-md-offset-2 text-danger text-center"><h1>No Exams Avalable!!!</h1></div>
       @endif     
         <div class="row">
           <div class="col-xs-12">

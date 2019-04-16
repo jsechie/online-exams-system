@@ -11,6 +11,8 @@ use App\ExamsQuestions;
 use App\Department;
 use App\Questions;
 use App\StudentExamsAnswers;
+use App\StudentsResults;
+use App\Academic;
 class StudentExamController extends Controller
 {
     public function __construct()
@@ -19,14 +21,16 @@ class StudentExamController extends Controller
     }
 
     public function index(){
-    	$courses = Course::where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['status',1]])->get();
+        $academic = Academic::where('status',1)->first();
+    	$courses = Course::where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['status',1],['semester',$academic->semester]])->get();
     	return view('student.exams.index_exams_students',compact('courses'));
     }
 
     public function timetable(){
-    	$a=ExamsSettings::whereIn('course_id',Course::select('id')->where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year]]))->get()->sortby('exams_date');
+        $academic = Academic::where('status',1)->first();
+    	$a=ExamsSettings::whereIn('course_id',Course::select('id')->where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['semester',$academic->semester]]))->get()->sortby('exams_date');
 
-    	$timetable = $a;
+    	$timetable = $a->where('exams_date','>=',date('d-m-Y'));
         
     	return view('student.exams.exams_timetable',compact('timetable'));
     }
@@ -43,8 +47,8 @@ class StudentExamController extends Controller
      //       $check_date = $check_status->where('exams_date',$date)->sortby('exams_date,start_time');
      //       $take_exam = $check_status->where('stop_time','<=',$time)->sortby('exams_date,start_time')->first();
      //    }
-    	
-    	$courses = Course::where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['status',1]])->get();
+    	$academic = Academic::where('status',1)->first();
+    	$courses = Course::where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['status',1],['semester',$academic->semester]])->get();
     	return view('student.exams.take_exam',compact('courses'));
     }
 
@@ -59,9 +63,18 @@ class StudentExamController extends Controller
         $pages = $questions->perPage();
         $questions_answered = StudentExamsAnswers::where([['student_id',Auth::user()->id],['exams_id',$id]])->get();
         $questions_remaining = Questions::whereIn('id',$examQuestions)->get();
-    	if ($exam->exams_date == date('d-m-Y') && $exam->start_time <= date('G:i') && $exam->stop_time >= date('G:i') && $exam->status == 1) {
-    		return view('student.exams.show_exams_students',compact('pages','exam','questions','course','department','total','questions_remaining','questions_answered'));
-    	}
+        if ($exam->exams_date < date('d-m-Y') ||($exam->exams_date == date('d-m-Y') && $exam->stop_time < date('G:i'))){
+            return redirect()->back()->with('flash_message_error',"Exams is OVER");
+        }
+        elseif ($exam->exams_date == date('d-m-Y') && $exam->start_time < date('G:i') && $exam->stop_time > date('G:i') && $exam->status == 1) {
+            $check_status = StudentsResults::where([['exams_id',$id],['student_id',Auth::user()->id]])->count();
+            if ($check_status == 0) {
+                return view('student.exams.show_exams_students',compact('pages','exam','questions','course','department','total','questions_remaining','questions_answered'));
+            }
+            else{
+                return redirect()->back()->with('flash_message_error',"Exams Already Taken");
+            }
+        }
     	else{
     		return redirect()->back()->with('flash_message_error',"Exams hasn't being Approved Yet");
     	}
@@ -69,7 +82,7 @@ class StudentExamController extends Controller
 
     public function courseExams($id){
         $course= Course::find($id);
-        $take_exams = ExamsSettings::where('course_id',$id)->get();
+        $take_exams = ExamsSettings::where([['course_id',$id],['status',1]])->get();
         return view('student.exams.course_exam',compact('take_exams','course'));
     }
 
@@ -97,12 +110,18 @@ class StudentExamController extends Controller
     public function nextQuestion(Request $request, $id){
 
         $check_status = StudentExamsAnswers::where([['student_id',Auth::user()->id],['question_id',$id],['exams_id',$request->exam_id]])->count();
-        if ($check_status==0) {
-            return redirect()->back()->with('flash_message_error',"<h2>Current Question Needs To be Answered Before Next One is Attempted</h2>"); 
+        $total = ExamsQuestions::where('exams_id',$request->exam_id)->count();
+        if ($request->page < $total) {
+            if ($check_status==0){
+                return redirect()->back()->with('flash_message_error',"<h3>Current Question Needs To be Answered Before Next One is Attempted</h3>");
+             }
+             else{
+                $question_number = $request->page + 1;
+                return redirect("students/Exams/startExam/$request->exam_id?page=$question_number"); 
+             }
         }
         else{
-            $question_number = $request->page + 1;
-            return redirect("students/Exams/startExam/$request->exam_id?page=$question_number"); 
+            return redirect()->back()->with('flash_message_error',"<h3>This is The Last Page</h3>");
         }
     }
 
@@ -132,8 +151,65 @@ class StudentExamController extends Controller
          }
          $totalMark = round(($marks/$total)*$exam->total_marks,1); 
          // return "You got $marks/$total which is $totalMark/$exam->total_marks";
+         $academic = Academic::where('status',1)->first();
+         $result = new StudentsResults;
+         $result->student_id = Auth::user()->id;
+         $result->exams_id = $exam->id;
+         $result->course_name = $course->name;
+         $result->course_code = $course->code;
+         $result->credit_hours = $course->credit_hours;
+         $result->exams_type = $exam->title;
+         $result->marks_scored = $totalMark;
+         $result->academic_year = $academic->year;
+         $result->academic_semester = $academic->semester;
+         $result->save();
          return view('student.result.result_after_exams',compact('exam','course','total','totalMark','marks'));
     }
 
+    public function resultSearch(){
+        $academics = Academic::select('year')->distinct()->get();
+        return view('student.result.result_search_page',compact('academics'));
+    }
+
+    public function viewResult(Request $request){
+        $this->validate($request,[
+            'exams_type'=>'required',
+            'academic_year'=>'required',
+            'academic_semester'=>'required',
+        ]);
+        $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$request->exams_type],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester]])->get();
+        $academic_year = $request->academic_year;
+        $academic_sem = $request->academic_semester;
+        $exams_type = $request->exams_type;
+        if ($results->count() > 0) {
+            return view('student.result.studentResult',compact('academic_year','exams_type','academic_sem','results'));
+        }
+        else{
+            return redirect()->back()->with('flash_message_error','<h2>Result Not Found<br>Check Your Selected Options Again</h2>');
+        }
+        
+    }
+
+    public function viewResultReport(Request $request){
+        $academic_year = $request->academic_year;
+        $academic_semester = $request->academic_sem;
+        $exams_type = $request->exams_type;
+        // performance calculation
+        $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$exams_type],['academic_semester',$academic_semester],['academic_year',$academic_year]])->get();
+        if ($exams_type == "End Of Semester Examination") {
+            $pass_mark = 28;    
+        }
+        else{
+            $pass_mark = 12;
+        }
+        $pass = 0;
+        foreach ($results as $result) {
+            if ($result->marks_scored >= $pass_mark) {
+                $pass += 1;
+            }
+        }
+        $total_result = $results->count();
+       return view('student.reports.result_report',compact('academic_year','exams_type','academic_semester','pass','total_result')); 
+    }
 
 }

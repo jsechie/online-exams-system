@@ -37,7 +37,7 @@
       <div class="col-sm-6 invoice-col">
         <b>Department:</b> {{App\Department::find($course->dep_id)->name}}<br>
         <b>Year:</b> {{Auth::user()->year}}<br>
-        <b>Type:</b> {{Auth::user()->student_type}}
+        {{-- <b>Type:</b> {{Auth::user()->student_type}} --}}
       </div>
       <div class="col-xs-12 col-md-offset-2 col-md-8">
         <br><p class="lead">Result</p>
@@ -67,8 +67,8 @@
     </div>
     <div class="row no-print">
         <div class="col-xs-12">
-          <a href="#" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-          <a href="{{route('student.dashboard')}}" type="button" class="btn btn-danger pull-right"><i class="fa fa-times"></i> Close
+          <a href="#" class="btn btn-default hidden"><i class="fa fa-print"></i> Print</a>
+          <a href="{{route('student.dashboard')}}" type="button" class="btn btn-danger {{-- pull-right --}}"><i class="fa fa-times"></i> Close
           </a>
           {{-- <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
             <i class="fa fa-download"></i> Generate PDF

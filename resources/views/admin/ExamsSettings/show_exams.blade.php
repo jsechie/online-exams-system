@@ -74,7 +74,7 @@
                         @php 
                         $diff=strtotime($exams->stop_time)-strtotime($exams->start_time);
                         @endphp
-                        {{ date('g',$diff).' hrs'}} {{date('i',$diff).' mins'}}
+                        @if(date('g',$diff) > 12 || date('g',$diff)< 12){{strtoupper(date('g',$diff).' hr(s)') }}@endif @if(date('i',$diff) != 00){{strtoupper(date('i',$diff).' min(s)') }}@endif
                       @else
                         {{'Invalid'}}
                     @endif</center></td>
@@ -85,7 +85,7 @@
                       @endif
                       <td><center>{{$exams->updated_at->toFormattedDateString()}}</center></td>
                       <td><center><a title="Edit" class="btn btn-info tip"href="{{route('examsSettings.edit',$exams->id)}}"><i class="glyphicon glyphicon-edit"></i></a>
-                        <form method="post" action="{{route('examsSettings.destroy',$exams->id)}}" id="delete-form-{{$exams->id}}" style="display: none;">
+                        {{-- <form method="post" action="{{route('examsSettings.destroy',$exams->id)}}" id="delete-form-{{$exams->id}}" style="display: none;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
                         </form>
@@ -99,7 +99,7 @@
                             event.preventDefault();
                           }
                           " 
-                        ><i class="glyphicon glyphicon-trash"></i></a>
+                        ><i class="glyphicon glyphicon-trash"></i></a> --}}
                         @if($exams->status == '0')
                         <a title="Activate" class="btn btn-success tip"href="{{route('examsSettings.status',$exams->id)}}"><i class="fa fa-check-square">Activate</i></a>@endif
                         @if($exams->status == '1')

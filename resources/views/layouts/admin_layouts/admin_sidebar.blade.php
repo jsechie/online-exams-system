@@ -38,7 +38,7 @@
         <li class=""><a href="{{route('course.adminCourse')}}"><i class="fa fa-dashboard"></i><span>My Courses</span></a></li>  
         <li class=""><a href="{{route('examsSettings.index')}}"><i class="fa fa-dashboard"></i><span>Exams Settings</span></a></li>      
         <li class=""><a href="{{route('questions.index')}}"><i class="fa fa-dashboard"></i><span>Questions</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o"></i><span>Exams Results</span></a></li>
+        <li><a href="{{route('adminStudent.result')}}"><i class="fa fa-circle-o"></i><span>Exams Results</span></a></li>
         <li><a href="{{route('myStudents')}}"><i class="fa fa-circle-o"></i><span>My Students Record</span></a></li>
         <li><a href="{{url('admin/settings')}}"><i class="fa fa-user"></i><span>Profile Settings</span></a></li><br>
         @if(Auth::user()->role =='Examiner')

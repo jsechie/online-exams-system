@@ -195,7 +195,7 @@ class ExamsSettingsController extends Controller
         $exam = ExamsSettings::find($id);
         $total = ExamsSettings::find($id)->questions->count();
         if($exam->status=='0'){
-            if ($total > 0 && $exam->exams_date != NULL && $exam->start_time != NULL && $exam->stop_time != NULL) {
+            if ($total > 0 && $exam->exams_date >= date('d-m-Y') && $exam->start_time != NULL && $exam->stop_time != NULL) {
               $exam->status = 1;
               $exam->save();
 
@@ -203,7 +203,7 @@ class ExamsSettingsController extends Controller
             }
 
             else{
-              return redirect()->back()->with('flash_message_error',"<h3>NB: In order to Activate An Exams</h3><ul><li><h4>The Exams must have some Total Question greater than 0</h4></li><li><h4>The exams date and Times must be set</h4></li></ul>");
+              return redirect()->back()->with('flash_message_error',"<h3>NB: In order to Activate An Exams</h3><ul><li><h4>The Exams must have some Total Question greater than 0</h4></li><li><h4>The exams date and Times must be set</h4></li></li><li><h4>The exams date must either be TODAY or DAYS AFTER</h4></li></ul>");
             }
         }
 

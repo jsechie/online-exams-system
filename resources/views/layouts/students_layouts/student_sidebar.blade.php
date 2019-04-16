@@ -36,7 +36,7 @@
         <li><a href="{{route('student.nextExam')}}"><i class="fa fa-link"></i> <span>Take Exam</span></a></li>
         <li><a href="{{route('student.timetable')}}"><i class="fa fa-link"></i> <span>Exams TimeTable</span></a></li>
         <li><a href="{{route('student.exams.index')}}"><i class="fa fa-link"></i> <span>All Exams Per Courses</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Check My Results</span></a></li><br><br>
+        <li><a href="{{route('student.result')}}"><i class="fa fa-link"></i> <span>Check My Results</span></a></li><br><br>
         <li class="header">SETTINGS</li>
         <li><a href="{{route('user.settings')}}"><i class="fa fa-link"></i> <span>Profile Settings</span></a></li>
         <li><a href="{{ route('logout') }}"

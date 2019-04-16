@@ -28,11 +28,20 @@
       // Output the result in an element with id="demo"
       document.getElementById("demo").innerHTML = hours + "hrs "
       + minutes + "min " + seconds + "sec ";
-        
-      // If the count down is over, write some text 
-      if (distance < 0) {
+       
+      if (distance < 120001) {
+        // clearInterval(x);
+        document.getElementById("warnings").innerHTML = "You Have Less Than 2 minutes to submit Your Work" ;
+      }
+
+      if (distance < 30001) {
+        // clearInterval(x);
+        document.getElementById("warnings").innerHTML = "You Have Less Than 30 seconds to submit Your Work" ;
+      } 
+      // If the count down is over, submit 
+      if (distance < 2) {
         clearInterval(x);
-        document.getElementById("demo").innerHTML = "EXPIRED";
+        document.getElementById("submit_exams").click();
       }
     }, 1000);
   </script>
@@ -61,7 +70,7 @@
         <div class="col-md-3 pull-right"><a class="btn btn-block btn-primary " href="{{route('examsSettings.moreQuestions',$exam->id)}}">Add More Questions</a></div>
       </div><hr> --}}
       <div class="row " {{-- style="background-color: black;" --}}>
-        <div class="col-md-9 " style="background-color: yellow;">
+        <div class="col-md-9 row " style="background-color: yellow;">
           <div class="col-md-12">
             @php 
               $diff=strtotime($exam->stop_time)-strtotime($exam->start_time);
@@ -181,7 +190,7 @@
               @endforeach
               </div>
               {{-- <center>{!! $questions->render() !!}</center><br> --}}
-              <a href="{{route('submit.exams',$exam->id)}}" type="button" class="btn btn-block btn-danger btn-lg">I'm Done, I Want To Submit</a>
+              <a href="{{route('submit.exams',$exam->id)}}" type="button" class="btn btn-block btn-danger btn-lg" id="submit_exams">I'm Done, I Want To Submit</a>
 
            {{--  </tbody>
           </table> --}}
@@ -191,8 +200,8 @@
           </div>
         </div>
         {{-- @php $page=13 % $pages; @endphp --}}
-        <div class=" col-md-3" >
-          <div class="row col-sm-11 col-md-10">
+        <div class=" col-md-3 srow" >
+          <div class=" col-sm-11 col-md-10">
             {{-- <center><h5><u><span class="badge bg-yellow"> UnAnswered Question</span></u></h5></center>
             @if($questions_remaining->count()>0)
             @if($questions_answered->count()>0)                
@@ -228,9 +237,30 @@
             @endfor --}}
 
             {{-- time left for exams  --}}
-            <br><center><span class="badge bg-red"> <h1 id="demo">Calculating...</h1>Left To Submit Work</span></center>
+            <br><center><span class="badge bg-blue"> <h1 id="demo">Calculating...</h1>Left To Submit Work</span></center>
             <p ></p>
           </div>
+          <div class="col-md-12">
+            <div class="box box-default">
+              <div class="box-header with-border">
+                <i class="fa fa-bullhorn"></i>
+
+                <h3 class="box-title">Warnings And Alerts</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div class="callout callout-danger">
+                  <h4 id="warnings"></h4>
+
+                  {{-- <p id="warnings">All warnings will be seen here
+                  </p> --}}
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+        </div>
       </div>
 
     </section>

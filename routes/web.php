@@ -58,7 +58,9 @@ Route::prefix('admin')->group(function(){
     Route::match(['get','post'],'/students/year/{id}','admin\AdminStudentController@yearStudents')->name('year.students');
     Route::get('/myStudents','admin\AdminStudentController@myStudents')->name('myStudents');
      Route::get('/myStudents/course/{id}','admin\AdminStudentController@myStudentsCourse')->name('myStudentsCourse');
-
+     Route::get('/ResultSearch', 'admin\AdminStudentController@resultSearch')->name('adminStudent.result');
+     Route::match(['get','post'],'/ViewResult', 'admin\AdminStudentController@viewResult')->name('admin.viewResult');
+     Route::match(['get','post'],'/ViewResultReport', 'admin\AdminStudentController@viewResultReport')->name('admin.viewResultReport');
 
 });
 
@@ -79,5 +81,7 @@ Route::prefix('admin')->group(function(){
     Route::match(['get','post'],'/Exams/nextQuestion/{id}', 'student\StudentExamController@nextQuestion')->name('next.check');
     Route::get('/Exams/submitExams/{id}', 'student\StudentExamController@submitExams')->name('submit.exams');
     //student Exams Controller
-
+    Route::get('/ResultSearch', 'student\StudentExamController@resultSearch')->name('student.result');
+    Route::match(['get','post'],'/ViewResult', 'student\StudentExamController@viewResult')->name('student.viewResult');
+    Route::match(['get','post'],'/ViewResultReport', 'student\StudentExamController@viewResultReport')->name('student.viewResultReport');
   });

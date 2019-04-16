@@ -53,10 +53,16 @@
                             <td><center><h4><a href="#">{{ucfirst($exam->title)}}</a></h4></center></td>
                             {{-- <td><center><h4><b>{{$exam->total_marks}}</b></h4></center></td> --}}
                             <td><center><h4>
-                              @if (($exam->exams_date == date('d-m-Y')) && date('h:i A',strtotime($exam->start_time)) <= date('h:i A') && date('h:i A',strtotime($exam->stop_time)) >= date('h:i A'))
-                                <span class="label label-primary"> In Progress</span>
+                              {{-- @if($exam->exams_date == date('d-m-Y') && date('G:i',strtotime($exam->start_time)) > date('G:i'))
+                              <span class="label label-success"> Pending</span>
+                              @elseif($exam->exams_date == date('d-m-Y') && date('G:i',strtotime($exam->start_time)) <= date('G:i') && date('G:i',strtotime($exam->stop_time)) >= date('G:i'))
+                                <span class="label label-warning"> Started</span> --}}
+                              @if ($exam->exams_date >= date('d-m-Y')) 
+                              <span class="label label-success"> Pending</span>
+                              
+                              @else
+                              <span class="label label-danger"> Over</span>
                               @endif
-                              <span class="label label-danger"> New</span>
                             </h4></center></td>
                           </tr>
                         @endforeach

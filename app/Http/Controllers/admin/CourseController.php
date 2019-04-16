@@ -167,10 +167,15 @@ class CourseController extends Controller
     public function status($id){
         $course = course::find($id);
         if($course->status=='0'){
-            $course->status = 1;
-            $course->save();
+            if ($course->assigned_to != NULL) {
+                $course->status = 1;
+                $course->save();
 
-            return redirect()->back()->with('flash_message_success',"$course->name Course Activated Successfully");
+                return redirect()->back()->with('flash_message_success',"$course->name Course Activated Successfully");
+            }
+            else{
+                return redirect()->back()->with('flash_message_error',"$course->name Course has not been assigned A Lecturer");
+            }
         }
 
         if($course->status=='1'){

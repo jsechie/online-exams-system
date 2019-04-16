@@ -9,6 +9,7 @@ use App\User;
 use App\Department;
 use App\Academic;
 use App\Course;
+use App\StudentsResults;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -31,9 +32,25 @@ class HomeController extends Controller
     public function index()
     {
         $academic = Academic::where('status',1)->first();
-        $courses = Course::where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['status',1]])->get();
-        $total_courses = $courses->count();
-        return view('student.student_dashboard',compact('academic','total_courses'));
+        $total_courses = Course::where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['status',1]])->count();
+        // $total_courses = $courses->count();
+        $total_exams = StudentsResults::where('student_id',Auth::user()->id)->count();
+        $results = StudentsResults::where('student_id',Auth::user()->id)->get();
+        $pass = 0;
+        foreach ($results as $result) {
+            if ($result->exams_type == "End Of Semester Examination") {
+                if ($result->marks_scored >= 28) {
+                    $pass += 1;
+                }
+            }
+            else{
+               if ($result->marks_scored >= 12) {
+                    $pass += 1;
+                }
+            }
+        }
+        // return StudentsResults::all()->groupby('exams_id');
+        return view('student.student_dashboard',compact('academic','total_courses','total_exams','pass'));
     }
 
     // user settings 

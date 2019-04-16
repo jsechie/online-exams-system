@@ -16,12 +16,14 @@
     </section>
 
     <section class="content-fluid">
-       @include('messages.errors')
+      <div class="row">
+               @include('messages.errors')
       @include('messages.flash_messages')
       {{-- @if($check_status->count()>0) --}}
+      @if($take_exams->count()>0)
         @foreach($take_exams as $take_exam)
 
-          <div class="row col-md-offset-1 col-md-5">
+          <div class="col-md-offset-1 col-md-5">
             <!-- Widget: user widget style 1 -->
             <div class="box box-widget widget-user-2">
               <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -43,9 +45,14 @@
             <!-- /.widget-user -->
           </div>
         @endforeach
+      @else
+        <div>
+          <center><h1 class="text-danger">No Exams Available For Now</h1></center>
+        </div>
+      @endif
 
          {{-- rules and regulations guidingthe examination --}}
-      <div class="row col-md-12">
+      <div class="col-md-12">
         <div class="box box-default">
           <div class="box-header with-border">
             <i class="fa fa-bullhorn"></i>
@@ -89,6 +96,7 @@
         {{-- @else
         <div class="col-md-8 col-md-offset-2 text-danger text-center"><h1>No Exams Avalable!!!</h1></div>
       @endif --}}
+      </div>
     </section>
   </div>
 @endsection      
