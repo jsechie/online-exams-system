@@ -83,24 +83,29 @@ class AdminStudentController extends Controller
         $exams_type = $request->exams_type;
         // performance calculation
         $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+        if ($exams_type == "End Of Semester Examination") {
+            $pass_mark = 28;    
+        }
+        else{
+            $pass_mark = 12;
+        }
         $pass = 0;
         foreach ($results as $result) {
-            if ($result->exams_type == "End Of Semester Examination") {
-                if ($result->marks_scored >= 28) {
-                    $pass += 1;
-                }
-            }
-            else{
-               if ($result->marks_scored >= 12) {
-                    $pass += 1;
-                }
+            if ($result->marks_scored >= $pass_mark) {
+                $pass += 1;
             }
         }
-        $total_result = $result->count();
+        $total_result = $results->count();
         // attendace calculation
         $_course = Course::where('name',$course)->first();
         $total_student = User::where([['dep_id',$_course->dep_id],['year',$_course->year]])->count();
 
        return view('admin.reports.result_report',compact('academic_year','exams_type','course','pass','total_result','total_student')); 
+    }
+
+    public function reportSearch(){
+        $academics = Academic::select('year')->distinct()->get();
+        $courses = Course::where('assigned_to',Auth::user()->id)->get();
+        return view('admin.reports.report_search',compact('academics','courses'));
     }
 }

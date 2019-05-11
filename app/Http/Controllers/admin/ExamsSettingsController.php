@@ -11,6 +11,7 @@ use App\ExamsSettings;
 use App\ExamsQuestions;
 use App\Questions;
 use App\Department;
+use App\IncidentReport;
 
 // use App\Http\Controllers\admin\Questions; 
 
@@ -305,5 +306,47 @@ class ExamsSettingsController extends Controller
 
     //       return redirect()->back()->with('flash_message_success',"$request->random_number Questions Activated Successfully");
     // }
+
+    public function writeReport($id){
+      $exam = ExamsSettings::find($id);
+      return view('admin.ExamsSettings.write_report',compact('exam')); 
+    }
+
+    public function submitReport(Request $request, $id){
+      $this->validate($request,[
+          'report'=>'required',
+      ]);
+      
+      if ($request->has('stolen') && $request->has('cheating')) {
+        $tag = "Stolen & Cheating Cases";
+      }
+      elseif ($request->has('stolen')) {
+        $tag = "Stolen Case";
+      }
+      elseif ($request->has('cheating')) {
+        $tag = "Cheating Case";
+      }
+      else{
+        $tag = NULL;
+      }
+      $exam = ExamsSettings::find($id);
+      $checkstatus_1 = IncidentReport::where('exams_id',$id)->get();
+      $checkstatus = IncidentReport::where('exams_id',$id)->first();
+      if ($checkstatus_1->count() == 0) {
+        $report = new IncidentReport;
+        $report->report = $request->report;
+        $report->exams_id = $id;
+        $report->reporter = Auth::user()->name;
+        $report->tag = $tag;
+        $report->reported_date = date('d-m-Y',strtotime('today'));
+        $report->save();
+      }
+      else{
+        $checkstatus->report = $request->report;
+        $checkstatus->tag = $tag;
+        $checkstatus->update();
+      }
+      return redirect()->route('examsSettings.show',$exam->course_id); 
+    }
 
 }

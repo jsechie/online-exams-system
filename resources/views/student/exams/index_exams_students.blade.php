@@ -61,7 +61,7 @@
                               <span class="label label-success"> Pending</span>
                               
                               @else
-                              <span class="label label-danger"> Over</span>
+                              <span class="label label-danger"> Not Available</span>
                               @endif
                             </h4></center></td>
                           </tr>

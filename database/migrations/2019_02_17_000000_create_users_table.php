@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->integer('student_id')->unque();
             $table->integer('dep_id')->unsigned()->index();
             $table->integer('year');
-            $table->string('picture',225);
+            $table->string('picture',225)->nullable();
             $table->string('student_type');
             $table->string('program_type');
             $table->foreign('dep_id')->references('id')->on('departments')->onDelete('cascade');

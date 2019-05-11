@@ -41,7 +41,7 @@
       // If the count down is over, submit 
       if (distance < 2) {
         clearInterval(x);
-        document.getElementById("submit_exams").click();
+        document.getElementById("submit_exams").submit();
       }
     }, 1000);
   </script>
@@ -100,7 +100,8 @@
                     }
                     
                   @endphp
-                  {{-- <th> --}}<center><h2>Question {!!(($questions->currentPage()-1)*$questions->perPage())+($loop->index + 1)."/".$total !!}</h2></center>{{-- </th> --}}
+                  <?php $number = (($questions->currentPage()-1)*$questions->perPage())+($loop->index + 1); ?>
+                  {{-- <th> --}}<center><h2>Question {!!$number."/".$total !!}</h2></center>{{-- </th> --}}
                   {{-- <td > --}}<h3>{!!$question->question!!}</h3>
                     <ul class="list-unstyled">
                       <li>
@@ -182,15 +183,49 @@
                   <input type="hidden" name="page" value='{{$questions->currentPage()}}'>
                   <input type="hidden" name="exam_id" value='{{$exam->id}}'>
                 </form>
-                <center><a class="btn btn-default btn-lg"
+                <center>@if($number < $total)
+                  <a class="btn btn-default btn-lg"
                   onclick="
                     document.getElementById('next').submit();
                   " 
-                >Next Question >></a></center><br><br>
+                >Next Question >></a>@endif
+              </center>
+                <br><br>
               @endforeach
               </div>
               {{-- <center>{!! $questions->render() !!}</center><br> --}}
-              <a href="{{route('submit.exams',$exam->id)}}" type="button" class="btn btn-block btn-danger btn-lg" id="submit_exams">I'm Done, I Want To Submit</a>
+              <form method="post" action="{{route('submit.exams',$exam->id)}}" id="submit_exams" style="display: none;">
+                  {{csrf_field()}}
+                </form>
+              <a {{-- href="{{route('submit.exams',$exam->id)}}" --}} type="button" class="btn btn-block btn-danger btn-lg" id="submit_exams"
+               onclick="
+                if (<?= $number ?> < <?= $total ?> ) {
+                  if(confirm('You Have  not finished answering your questions\nDo you still want to submit?')){
+                    event.preventDefault();
+                    if(confirm('Once you submit, You can not return back to your questions')){
+                        event.preventDefault();
+                      document.getElementById('submit_exams').submit();
+                    }
+                    else{
+                      event.preventDefault();
+                    }
+                    // document.getElementById('submit_exams').submit();
+                  }
+                  else{
+                    event.preventDefault();
+                  }
+                }
+                else{
+                  if(confirm('Once you submit, You can not return back to your questions')){
+                      event.preventDefault();
+                    document.getElementById('submit_exams').submit();
+                  }
+                  else{
+                    event.preventDefault();
+                  }
+                }
+                " 
+              >I'm Done, I Want To Submit</a>
 
            {{--  </tbody>
           </table> --}}

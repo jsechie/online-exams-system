@@ -31,8 +31,10 @@ class StudentExamController extends Controller
     	$a=ExamsSettings::whereIn('course_id',Course::select('id')->where([['dep_id',Auth::user()->dep_id],['year',Auth::user()->year],['semester',$academic->semester]]))->get()->sortby('exams_date');
 
     	$timetable = $a->where('exams_date','>=',date('d-m-Y'));
+        $dep = Department::find(Auth::user()->dep_id);
+        $academic = Academic::where('status',1)->first();
         
-    	return view('student.exams.exams_timetable',compact('timetable'));
+    	return view('student.exams.exams_timetable',compact('timetable','dep','academic'));
     }
 
     public function nextExam(){
@@ -66,7 +68,7 @@ class StudentExamController extends Controller
         if ($exam->exams_date < date('d-m-Y') ||($exam->exams_date == date('d-m-Y') && $exam->stop_time < date('G:i'))){
             return redirect()->back()->with('flash_message_error',"Exams is OVER");
         }
-        elseif ($exam->exams_date == date('d-m-Y') && $exam->start_time < date('G:i') && $exam->stop_time > date('G:i') && $exam->status == 1) {
+        elseif ($exam->exams_date == date('d-m-Y') && $exam->start_time <= date('G:i') && $exam->stop_time > date('G:i') && $exam->status == 1) {
             $check_status = StudentsResults::where([['exams_id',$id],['student_id',Auth::user()->id]])->count();
             if ($check_status == 0) {
                 return view('student.exams.show_exams_students',compact('pages','exam','questions','course','department','total','questions_remaining','questions_answered'));
@@ -125,7 +127,7 @@ class StudentExamController extends Controller
         }
     }
 
-    public function submitExams($id){
+    public function submitExams(Request $request, $id){
 
         $exam = ExamsSettings::find($id);
         $course = Course::find($exam->course_id);

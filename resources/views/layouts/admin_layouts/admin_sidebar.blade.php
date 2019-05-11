@@ -13,7 +13,7 @@
         </div>
       </div>
       <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
+      {{-- <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
@@ -21,7 +21,7 @@
                 </button>
               </span>
         </div>
-      </form>
+      </form> --}}
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -40,10 +40,12 @@
         <li class=""><a href="{{route('questions.index')}}"><i class="fa fa-dashboard"></i><span>Questions</span></a></li>
         <li><a href="{{route('adminStudent.result')}}"><i class="fa fa-circle-o"></i><span>Exams Results</span></a></li>
         <li><a href="{{route('myStudents')}}"><i class="fa fa-circle-o"></i><span>My Students Record</span></a></li>
+        <li><a href="{{route('adminStudent.report')}}"><i class="fa fa-circle-o"></i><span>My Student Report</span></a></li>
         <li><a href="{{url('admin/settings')}}"><i class="fa fa-user"></i><span>Profile Settings</span></a></li><br>
         @if(Auth::user()->role =='Examiner')
-        <li class="header">ADMINS ONLY</li>
+        <li class="header">EXAMINERS ONLY</li>
         <li><a href="{{route('users.index')}}"><i class="fa fa-circle-o"></i><span>User Management</span></a></li>
+        <li><a href="{{route('examiner.report')}}"><i class="fa fa-circle-o"></i><span>Examiners Report</span></a></li>
         @endif 
       </ul>
     </section>

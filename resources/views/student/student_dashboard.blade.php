@@ -49,7 +49,7 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-12 row">
+        <div class="col-md-12 row hidden">
           <!-- DONUT CHART -->
           <div class="box box-danger">
             <div class="box-header with-border">
@@ -61,10 +61,10 @@
                 {{-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> --}}
               </div>
             </div>
-            <div class="box-body chart-responsive">
+            {{-- <div class="box-body chart-responsive">
               <div class="chart" id="performance-chart" style="height: 300px; position: relative;"></div>
               <h3>{{$total_exams}} Result(s) available, out of the {{$total_exams}} Result(s):<br>Passes: <span class="badge label-success">{{$pass}}</span>, which is {{($pass/$total_exams)*100}}% <br>Fails: <span class="badge label-danger">{{$total_exams-$pass}}</span>, which is {{(($total_exams - $pass)/$total_exams)*100}}%</h3>
-            </div>
+            </div> --}}
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
@@ -130,6 +130,21 @@
         <!-- /.col (RIGHT) -->
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
+      </div>
+
+      <br><div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <center><img src="{{asset('AdminLTE/dist/img/ico/cabinet.png')}}" class="img-circle img-responsive" width="100"><br><a href="{{route('student.course')}}" class="btn btn-success btn-lg">My Courses</a><br></center>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <center><img src="{{asset('AdminLTE/dist/img/ico/survey.png')}}" class="img-circle img-responsive" width="100"><br><a href="{{route('student.nextExam')}}" class="btn btn-success btn-lg">Take Exams</a><br></center>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <center><img src="{{asset('AdminLTE/dist/img/ico/calendar.png')}}" class="img-circle img-responsive" width="100"><br><a href="{{route('student.timetable')}}" class="btn btn-success btn-lg">Exams TimeTable</a><br></center>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-6">
+          <center><img src="{{asset('AdminLTE/dist/img/ico/book.png')}}" class="img-circle img-responsive" width="100"><br><a href="{{route('student.result')}}" class="btn btn-success btn-lg">Check Result</a><br></center>
+        </div>
       </div>
       <!-- /.row -->
     </section>

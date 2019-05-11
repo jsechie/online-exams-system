@@ -40,7 +40,7 @@
           @endphp
           	<div class="col-lg-5">
               <h3>{!!$question->question!!}</h3>
-                <ol>
+                <ul type="none">
                   <li><h4>A. {{$question->option_A}} 
                   @if($question->answer == 'A')<small><i class="fa fa-check-circle text-danger">correct answer</i></small>@endif</h4></li>
                   <li><h4>B. {{$question->option_B}}
@@ -57,7 +57,7 @@
                     <li><h4>E. {{$question->option_E}}
                     @if($question->answer == 'E')<small><i class="fa fa-check-circle text-danger">correct answer</i></small>@endif</h4></li>
                   @endif
-                </ol>
+                </ul>
               
               <footer class="pull-right">
                         <form method="post" action="{{route('examsSettings.addQuestions',$question->id)}}" id="delete-form-{{$question->id}}" style="display: none;">

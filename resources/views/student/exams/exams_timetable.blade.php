@@ -13,16 +13,16 @@
         <li class="active">TimeTable</li>
       </ol>
     </section>
-      <!-- /.content -->
-    {{-- <div class="row"><div class="col-md-2 col-md-offset-5 col-sm-offset-4 col-sm-4 col-xs-offset-2 col-xs-8"><a class="btn btn-block btn-warning" href="#" data-toggle="modal" data-target="#modal-info">View Exams TimeTable</a></div></div>
-    <div class="row col-md-offset-1 col-md-10"> --}}
-      @php 
-      $dep = App\Department::find(Auth::user()->dep_id);
-      $academic = App\Academic::where('status',1)->first();
-      @endphp
+      
     <section class="content"> 
       @if($timetable->count() == 0)
-        <div class="col-md-8 col-md-offset-2 text-danger text-center"><h1>No Exams Avalable!!!</h1></div>
+        <div class="col-md-8 col-md-offset-2 text-danger text-center"><h1>No Exams Available!!!</h1></div>
+      @else
+        <div class="row">
+          <div class="col-md-4 "></div>
+          <div class="col-md-4 "><a class="btn btn-block btn-info " href="{{route('examsTimetable.print')}}">Print Time Table</a></div>
+          <div class="col-md-4 "></div>
+      </div><hr>
       @endif     
         <div class="row">
           <div class="col-xs-12">
@@ -67,10 +67,10 @@
               </tfoot>
             </table>
           </div>
+          </div>
+            
+          </div>
         </div>
-          
-        </div>
-      </div>
     </section>
   </div>
 

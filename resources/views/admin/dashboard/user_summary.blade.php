@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <a href="{{route('course.adminCourse')}}"><div class="small-box bg-aqua">
             <div class="inner">
               <h3>{{$userCourses->count()}}</h3>
               <p>{{'Course'}}@if($userCourses->count() > 1 ||$userCourses->count() == 0 ){{'s'}} @endif{{'Assigned To You'}}</p>
@@ -22,15 +22,15 @@
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="{{route('course.adminCourse')}}" class="small-box-footer">
+            {{-- <a href="{{route('course.adminCourse')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            </a> --}}
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-green">
+          <a href="{{route('questions.index')}}"><div class="small-box bg-green">
             <div class="inner">
               <h3>{{$userQuestions}}</h3>
 
@@ -39,15 +39,15 @@
             <div class="icon">
               <i class="fa fa-th-list"></i>
             </div>
-            <a href="{{route('questions.index')}}" class="small-box-footer">
+            {{-- <a href="{{route('questions.index')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            </a> --}}
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <a href="{{route('examsSettings.index')}}"><div class="small-box bg-red">
             <div class="inner">
               <h3>{{$userExams}}</h3>
 
@@ -56,15 +56,15 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="{{route('examsSettings.index')}}" class="small-box-footer">
+            {{-- <a href="{{route('examsSettings.index')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            </a> --}}
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-navy">
+          <a href="{{route('myStudents')}}"><div class="small-box bg-navy">
             <div class="inner">
               <h3>{{$userStudents}}</h3>
 
@@ -73,10 +73,10 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="{{route('myStudents')}}" class="small-box-footer">
+            {{-- <a href="{{route('myStudents')}}" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            </a> --}}
+          </div></a>
         </div>
         <!-- ./col -->
       </div>

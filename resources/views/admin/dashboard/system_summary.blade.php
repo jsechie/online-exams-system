@@ -12,23 +12,20 @@
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <a href="{{route('users.index')}}"><div class="small-box bg-aqua">
             <div class="inner">
               <h3>{{$users->count()}}</h3>
-              <p>{{'Administrator'}}@if($users->count() > 1 ||$users->count() == 0 ){{'s'}} @endif</p>
+              <p>{{'Lecturer'}}@if($users->count() > 1 ||$users->count() == 0 ){{'s'}} @endif Available</p>
             </div>
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="{{route('users.index')}}" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-green">
+          <a href="{{route('department.index')}}"><div class="small-box bg-green">
             <div class="inner">
               <h3>{{$departments->count()}}</h3>
 
@@ -37,15 +34,12 @@
             <div class="icon">
               <i class="fa fa-th-list"></i>
             </div>
-            <a href="{{route('department.index')}}" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow">
+          <a href="{{route('course.index')}}"><div class="small-box bg-yellow">
             <div class="inner">
               <h3>{{$courses->count()}}</h3>
 
@@ -54,15 +48,13 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="{{route('course.index')}}" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <a href="{{route('lecturer.upload')}}"><div class="small-box bg-red">
             <div class="inner">
               <h3>{{$questions->count()}}</h3>
 
@@ -71,15 +63,15 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            {{-- <a href="#" class="small-box-footer">
               More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            </a> --}}
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-maroon">
+          <a href="{{route('lecturer.assignedCourses')}}"><div class="small-box bg-maroon">
             <div class="inner">
               <h3>{{$assigned->count()}}</h3>
 
@@ -88,15 +80,13 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-teal">
+          <a href="{{route('lecturer.unassignedCourses')}}"><div class="small-box bg-teal">
             <div class="inner">
               <h3>{{$courses->count() - $assigned->count()}}</h3>
 
@@ -105,15 +95,13 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            
+          </div></a>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-purple">
+          <a href="{{route('course.index')}}"><div class="small-box bg-purple">
             <div class="inner">
               @if($available==0)
               <h3>All</h3>
@@ -128,14 +116,12 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            
+          </div></a>
         </div>
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-navy">
+          <a href="{{route('allStudents')}}"><div class="small-box bg-navy">
             <div class="inner">
               <h3>{{$students->count()}}</h3>
 
@@ -144,10 +130,8 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">
-              More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
+            
+          </div></a>
         </div>
         <!-- ./col -->
       </div>

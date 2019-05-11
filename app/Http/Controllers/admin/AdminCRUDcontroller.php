@@ -50,7 +50,7 @@ class AdminCRUDcontroller extends Controller
             'email' => 'required|string|email|max:255|unique:admins,email',
             'password' => 'required|string|min:6|confirmed',
             'picture' => 'image',
-            'lec_id' => 'required|string',
+            'lec_id' => 'required|string|unique:admins,lec_id',
         ]);
 
         $users =new Admin;

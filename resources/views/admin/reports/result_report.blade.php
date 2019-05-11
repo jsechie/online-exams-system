@@ -62,7 +62,7 @@
             </div>
             <div class="box-body">
               <canvas id="performanceChart" style="height:250px"></canvas>
-              <br><h3>{{$total_result}} Result(s) available, out of the {{$total_result}} Result(s):<br>Passes: <span class="badge label-success">{{$pass}}</span>, which is {{($pass/$total_result)*100}}% <br>Fails: <span class="badge label-danger">{{$total_result-$pass}}</span>, which is {{(($total_result - $pass)/$total_result)*100}}%</h3>
+              <br><h3>{{$total_result}} Result(s) available, out of the {{$total_result}} Result(s):<br>Passes: <span class="badge label-success">{{$pass}}</span>, which is {{round(($pass/$total_result)*100,1)}}% <br>Fails: <span class="badge label-danger">{{$total_result-$pass}}</span>, which is {{round((($total_result - $pass)/$total_result)*100,1)}}%</h3>
             </div>
             <!-- /.box-body -->
           </div>
@@ -103,7 +103,7 @@
             </div>
             <div class="box-body">
               <canvas id="attendanceChart" style="height:250px"></canvas>
-              <br><h3>{{$total_student}} Student(s) Taking {{$course}}, out of the {{$total_student}} Student(s):<br>Present: <span class="badge label-success">{{$total_result}}</span>, which is {{($total_result/$total_student)*100}}% <br>Absent: <span class="badge label-danger">{{$total_student - $total_result}}</span>, which is {{(($total_student - $total_result)/$total_student)*100}}%</h3>
+              <br><h3>{{$total_student}} Student(s) Taking {{$course}}, out of the {{$total_student}} Student(s):<br>Present: <span class="badge label-success">{{$total_result}}</span>, which is {{round(($total_result/$total_student)*100,1)}}% <br>Absent: <span class="badge label-danger">{{$total_student - $total_result}}</span>, which is {{round((($total_student - $total_result)/$total_student)*100,1)}}%</h3>
             </div>
             <!-- /.box-body -->
           </div>
@@ -113,6 +113,19 @@
         </div>
         <!-- /.col (RIGHT) -->
       </div>
+      <form role="form" method="post" action="{{route('attendancePerf.print')}}">
+        {{csrf_field()}}
+        <input type="hidden" name="academic_year" value="{{$academic_year}}">
+        <input type="hidden" name="course_name" value="{{$course}}">
+        <input type="hidden" name="exams_type" value="{{$exams_type}}">
+        <div class="box-footer ">
+          <div class="col-md-10 col-md-offset-1">
+            <a href="{{route('admin.dashboard')}}" type="button" class="btn btn-danger">Cancel</a>
+            <button type="submit" class="btn btn-primary pull-right">Export PDF</button>
+          </div>
+            
+        </div>
+      </form>
       <!-- /.row -->
     </section>
   </div>

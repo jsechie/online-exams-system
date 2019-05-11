@@ -62,7 +62,7 @@
             </div>
             <div class="box-body">
               <canvas id="performanceChart" style="height:250px"></canvas>
-              <br><h3>{{$total_result}} Result(s) available, out of the {{$total_result}} Result(s):<br>Passes: <span class="badge label-success">{{$pass}}</span>, which is {{($pass/$total_result)*100}}% <br>Fails: <span class="badge label-danger">{{$total_result-$pass}}</span>, which is {{(($total_result - $pass)/$total_result)*100}}%</h3>
+              <br><h3>{{$total_result}} Result(s) available, out of the {{$total_result}} Result(s):<br>Passes: <span class="badge label-success">{{$pass}}</span>, which is {{round(($pass/$total_result)*100,1)}}% <br>Fails: <span class="badge label-danger">{{$total_result-$pass}}</span>, which is {{round((($total_result - $pass)/$total_result)*100,1)}}%</h3>
             </div>
             <!-- /.box-body -->
           </div>

@@ -104,4 +104,24 @@ class AdminController extends Controller
         return redirect()->back()->with('flash_message_success','Details Updated Successfully');
     }
 
+    public function questionsUploadStatus(){
+        $courses = Course::where('assigned_to','<>',NULL)->get();
+
+        return view('admin.users.upload_status',compact('courses'));
+    }
+
+    public function assigned()
+    {
+        $courses = Course::where('assigned_to','<>',NULL)->get();
+         $users = Admin::all()->sortByDesc('created_at');
+        return view('admin.course.index_course',compact('courses','users'));
+    }
+
+    public function unassigned()
+    {
+        $courses = Course::where('assigned_to',NULL)->get();
+         $users = Admin::all()->sortByDesc('created_at');
+        return view('admin.course.index_course',compact('courses','users'));
+    }
+
 }

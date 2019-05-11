@@ -59,9 +59,29 @@
       <!-- /.col -->
     </div>
     <br><br><div class="row no-print">
-        <div class="col-xs-12">
-          <a href="#" class="btn btn-default hidden"><i class="fa fa-print"></i> Print</a>
-          <a href="{{route('admin.dashboard')}}" type="button" class="btn btn-danger {{-- pull-right --}}"><i class="fa fa-times"></i> Close</a><br><hr>
+        <div class="col-md-12">
+          <div class="col-md-4"><a href="{{route('admin.dashboard')}}" type="button" class="btn btn-danger {{-- pull-right --}}"><i class="fa fa-times"></i> Close</a></div>
+          <div class="col-md-4"><form role="form" method="post" action="{{route('studentResult.excel')}}">
+            {{csrf_field()}}
+            <input type="hidden" name="course_name" value="{{$course}}">
+            <input type="hidden" name="exams_type" value="{{$exams_type}}">
+            <input type="hidden" name="academic_year" value="{{$academic_year}}">
+            <div >
+                <button type="submit" class="btn btn-warning pull-right"><i class="fa fa-report"></i> Export To Excel</button>
+              </div>
+
+          </form></div>
+          <div class="col-md-4"><form role="form" method="post" action="{{route('studentResult.print')}}">
+            {{csrf_field()}}
+            <input type="hidden" name="course_name" value="{{$course}}">
+            <input type="hidden" name="exams_type" value="{{$exams_type}}">
+            <input type="hidden" name="academic_year" value="{{$academic_year}}">
+            <div >
+                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-report"></i> Export To PDF</button>
+              </div>
+
+          </form></div><br><hr>
+          
           <form role="form" method="post" action="{{route('admin.viewResultReport')}}">
             {{csrf_field()}}
             <input type="hidden" name="course_name" value="{{$course}}">

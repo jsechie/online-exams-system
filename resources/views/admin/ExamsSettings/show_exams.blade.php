@@ -49,7 +49,7 @@
                   <th><center>Start Time</center></th>
                   <th><center>Duration</center></th>
                   <th><center>Status</center></th>
-                  <th><center>Last Updated</center></th>
+                  <th><center>Incident Report</center></th>
                   <th><center>Action</center></th>
                 </tr>
                 </thead>
@@ -83,7 +83,7 @@
                       @else
                         <td><center class="btn-danger">Inactive</center></td>
                       @endif
-                      <td><center>{{$exams->updated_at->toFormattedDateString()}}</center></td>
+                      <td><center><a title="Write Report For Exams" class="btn btn-primary tip"href="{{route('examsSettings.report',$exams->id)}}"><i class="glyphicon glyphicon-pencil"></i></a>{{-- {{$exams->updated_at->toFormattedDateString()}} --}}</center></td>
                       <td><center><a title="Edit" class="btn btn-info tip"href="{{route('examsSettings.edit',$exams->id)}}"><i class="glyphicon glyphicon-edit"></i></a>
                         {{-- <form method="post" action="{{route('examsSettings.destroy',$exams->id)}}" id="delete-form-{{$exams->id}}" style="display: none;">
                           {{csrf_field()}}
@@ -103,7 +103,7 @@
                         @if($exams->status == '0')
                         <a title="Activate" class="btn btn-success tip"href="{{route('examsSettings.status',$exams->id)}}"><i class="fa fa-check-square">Activate</i></a>@endif
                         @if($exams->status == '1')
-                        <a title="Deactivate" class="btn btn-warning tip"href="{{route('examsSettings.status',$exams->id)}}"><i class="fa fa-times-circle">Deactivate</i></a>@endif
+                        <a title="Deactivate" class="btn btn-warning tip" href="{{route('examsSettings.status',$exams->id)}}"><i class="fa fa-times-circle">Deactivate</i></a>@endif
                       </center></td>
                     </tr>
                   @endforeach
@@ -117,7 +117,7 @@
                   <th><center>Start Time</center></th>
                   <th><center>Duration</center></th>
                   <th><center>Status</center></th>
-                  <th><center>Last Updated</center></th>
+                  <th><center>Incident Report</center></th>
                   <th><center>Action</center></th>
                 </tr>
                 </tfoot>

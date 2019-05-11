@@ -19,7 +19,7 @@
     <section class="content">
       <div class="row">
         <div class="col-md-3 "><a class="btn btn-block btn-warning " href="{{route('examsSettings.show',$exam->course_id)}}">Back</a></div>
-        {{-- <div class="col-md-3 "><a class="btn btn-block btn-info " href="#">Remove Randomly</a></div> --}}
+        <div class="col-md-3 "><a class="btn btn-block btn-info " href="{{route('examsQuestions.print',$exam->id)}}">Print Exams Question</a></div>
         <div class="col-md-3 "><a class="btn btn-block btn-danger " href="{{route('examsSettings.removeAll',$exam->id)}}">Remove All</a></div>
         <div class="col-md-3 pull-right"><a class="btn btn-block btn-primary " href="{{route('examsSettings.moreQuestions',$exam->id)}}">Add More Questions</a></div>
       </div><hr>
