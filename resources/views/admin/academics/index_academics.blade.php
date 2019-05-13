@@ -29,7 +29,7 @@
       </div>
 
     <section class="content">
-      <div class="row col-md-8 col-md-offset-2"><h1><marquee ><span class="label label-info">{!!"$academ->year Semester $academ->semester"!!} in Progress</marquee></span></h1></div>
+      <div class="row col-md-8 col-md-offset-2"><h1><span class="label label-info">{!!"Academic Calender $academ->year Semester $academ->semester"!!} in Progress</span></h1><hr></div>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">

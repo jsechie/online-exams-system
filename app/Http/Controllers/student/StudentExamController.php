@@ -13,6 +13,7 @@ use App\Questions;
 use App\StudentExamsAnswers;
 use App\StudentsResults;
 use App\Academic;
+use App\StudentCumulativeResult;
 class StudentExamController extends Controller
 {
     public function __construct()
@@ -165,6 +166,39 @@ class StudentExamController extends Controller
          $result->academic_year = $academic->year;
          $result->academic_semester = $academic->semester;
          $result->save();
+
+         //adding to the Cumulative record database
+         $temp = StudentCumulativeResult::where([['student_id',Auth::user()->id],['course_code',$course->code]])->get();
+         if ($temp->count() == 0) {
+             $cumulative = new StudentCumulativeResult;
+             $cumulative->student_id = Auth::user()->id;
+             // $cumulative->exams_id = $exam->id;
+             $cumulative->course_name = $course->name;
+             $cumulative->course_code = $course->code;
+             $cumulative->credit_hours = $course->credit_hours;
+             // $cumulative->exams_type = $exam->title;
+             if ($exam->title == 'End Of Semester Examination') {
+                 $cumulative->end_of_sem_mark = $totalMark;
+             }
+             else{
+                $cumulative->mid_sem_mark = $totalMark;
+             }
+             $cumulative->academic_year = $academic->year;
+             $cumulative->academic_semester = $academic->semester;
+             $cumulative->save();
+
+         }
+         else{
+            $cumulative = $temp->first();
+            if ($exam->title == 'End Of Semester Examination') {
+                 $cumulative->end_of_sem_mark = $totalMark;
+             }
+             else{
+                $cumulative->mid_sem_mark = $totalMark;
+             }
+             $cumulative->update();
+
+         }
          return view('student.result.result_after_exams',compact('exam','course','total','totalMark','marks'));
     }
 

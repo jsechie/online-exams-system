@@ -35,7 +35,7 @@
                 @if($courses->count() > 0)
                   {{-- <div class="col-md-6 col-md-offset-3"> --}}
                     <!-- general form elements -->
-                    <div class="box box-primary">
+                    <div class="box box-danger">
                       <div class="box-header with-border">
                         <h3 class="box-title">Select Your Options To Generate Report</h3>
                       </div>
@@ -44,7 +44,7 @@
                       <form role="form" method="post" action="{{route('admin.attendanceReport')}}">
                          {{csrf_field()}}
                         <div class="box-body">
-                          <div class="form-group col-md-8 col-md-offset-2">
+                          <div class="form-group col-md-3">
                             <label>Course Name</label>
                             <select class="form-control" name="course_name">
                               <option value=""> --Select Course--</option>
@@ -53,7 +53,7 @@
                               @endforeach
                             </select>
                           </div>
-                         <div class="form-group col-md-8 col-md-offset-2">
+                         <div class="form-group col-md-6">
                             <label>Examination Type</label>
                             <select class="form-control" name="exams_type">
                               <option value=""> --Select Exams Type--</option>
@@ -61,7 +61,7 @@
                               <option value="End Of Semester Examination" {{old('exams_type')=='End Of Semester Examination'? 'selected':'' }}>End Of Semester Examinamtion</option>
                             </select>
                           </div>
-                          <div class="form-group col-md-8 col-md-offset-2">
+                          <div class="form-group col-md-3">
                             <label>Academic Year</label>
                             <select class="form-control" name="academic_year">
                               <option value=""> --Select Academic Year--</option>

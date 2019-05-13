@@ -19,8 +19,8 @@ class CreateStudentCumulativeResultsTable extends Migration
             $table->string('course_name');
             $table->string('course_code');
             $table->integer('credit_hours');
-            $table->double('mid_sem_mark');
-            $table->double('end_of_sem_mark');
+            $table->double('mid_sem_mark')->nullable();
+            $table->double('end_of_sem_mark')->nullable();
             $table->string('academic_year');
             $table->integer('academic_semester');
             $table->timestamps();

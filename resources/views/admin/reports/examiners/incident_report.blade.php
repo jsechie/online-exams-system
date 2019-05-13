@@ -35,7 +35,7 @@
                 <div class="user-block">
                   <span class="description">Written By:</span>
                   <span class="username"><a href="#">{{$report->reporter}}.</a></span>
-                  <span class="description">On - {{$report->updated_at->toFormattedDateString()}}</span>
+                  <span class="description">On - {{$report->reported_date}}</span>
                 </div>
                 <!-- /.user-block -->
                 <!-- /.box-tools -->
