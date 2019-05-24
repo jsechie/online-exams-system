@@ -28,7 +28,7 @@
               <tr>
                 <td class="text-center">{{$student->index_number}}</td>
                 <td class="text-center">{{$student->name}}</td>
-                <td class="text-center">{{$result->marks_scored}}</td>
+                <td class="text-center">@if($results_type == 'singles'){{$result->marks_scored}} @else {{$result->mid_sem_mark + $result->end_of_sem_mark}}@endif</td>
               </tr>
             @endforeach
             </tbody>

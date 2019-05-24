@@ -52,7 +52,7 @@
               <tr>
                 <td class="text-center">{{$student->index_number}}</td>
                 <td class="text-center">{{ucfirst($student->name)}}</td>
-                <td class="text-center">{{$record->marks_scored}}</td>
+                <td class="text-center">@if($results_type == 'singles'){{$record->marks_scored}} @else {{$record->mid_sem_mark + $record->end_of_sem_mark}}@endif</td>
                 {{-- <td class="text-center"></td> --}}
               </tr>
             @endforeach

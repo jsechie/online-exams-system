@@ -23,7 +23,7 @@
       <td style="padding-left: 10px;" >
         <b>Department:</b> {{App\Department::find($user->dep_id)->name}}<br>
         <b>Year:</b> {{$user->year}}<br>
-        <b>Type:</b> {{$user->student_type}}
+        <b>Printed On:</b> {{date('d-m-y h:i:s')}}
       </td>
     </tr></table>
     <hr>
@@ -43,7 +43,7 @@
               <td class="text-center">{{$result->course_code}}</td>
               <td class="text-center">{{$result->course_name}}</td>
               <td class="text-center">{{$result->credit_hours}}</td>
-              <td class="text-center">{{$result->marks_scored}}</td>
+              <td class="text-center">@if($results_type == 'singles'){{$result->marks_scored}} @else {{$result->mid_sem_mark + $result->end_of_sem_mark}}@endif</td>
             </tr>
             @endforeach
             </tbody>

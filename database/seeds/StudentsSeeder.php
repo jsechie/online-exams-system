@@ -21,9 +21,9 @@ class StudentsSeeder extends Seeder
 	        $student->username = $user."1";
 	        $student->index_number = rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."5";;
 	        $student->student_id = "20".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."7";;
-	        $student->dep_id = 1;
-	        $student->year = 4;
-	        // $student->picture = ;
+	        $student->dep_id = rand(1,4);
+	        $student->year = rand(1,4);
+	        $student->picture = 'public/77C1b71aGreCO1J4o5Oxn1xmFCZ9owWCGhAIGhcC.png';
 	        $student->student_type = 'Ghanaian';
 	        $student->program_type = "Regular";
 	        $student->save();

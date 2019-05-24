@@ -99,7 +99,7 @@
 <html lang="en">
 <!-- Head -->
 <head>
-<title>Tutorage an Educational Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title>Welcome</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <meta name="keywords" content="Tutorage a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -134,12 +134,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <ul class="slides">
                             <li>
                             <div class="w3l-info">
-                                <h1>Start Learning For successful future</h1>
-                                <p>We have the perfect accommodation for you.</p>
+                                <h3>get started with our online exams system.</h3>
+                                <p>We have the perfect examination system for you. Visit Your Portal.</p><br>
+                                <div class="row">
+                                    <div class="col-md-6"><a href="{{url('/login')}}" class="btn btn-danger btn-block btn-lg"><h4>Students Portal</h4></a></div>
+                                    <div class="col-md-6"><a href="{{url('admin/login')}}" class="btn btn-primary btn-block btn-lg"><h4>Lecturers Portal</h4></a></div>
+                                </div>
+                                
                                 
                             </div>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <div class="w3l-info">
                                 <h2>Making best future popular education</h2>
                                 <p>We have the perfect accommodation for you.</p>
@@ -152,7 +157,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <p>We have the perfect accommodation for you.</p>
                                 
                             </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </section>

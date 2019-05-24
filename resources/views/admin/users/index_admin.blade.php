@@ -7,11 +7,11 @@
     <section class="content-header">
       <h1>
         Available
-        <small>Users</small>
+        <small>Lecturer(s)</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{route('admin.dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Users</li>
+        <li class="active">Lecturer(s)</li>
       </ol>
     </section>
     @include('messages.flash_messages')
@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-4">
           <hr>
-          <a class="btn btn-block btn-primary" href="{{route('users.create')}}"'" >Add New User</a>
+          <a class="btn btn-block btn-primary" href="{{route('users.create')}}"'" >Add New Lecturer</a>
         </div>
         <div class="col-md-4">
           
@@ -34,7 +34,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">List Of Users Available</h3>
+              <h3 class="box-title">List Of Lecturer(s) Available</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

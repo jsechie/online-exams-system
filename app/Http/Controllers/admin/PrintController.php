@@ -9,6 +9,7 @@ use App\User;
 use App\Course;
 use App\Academic;
 use App\StudentsResults;
+use App\StudentCumulativeResult;
 use Auth;
 use App\ExamsSettings;
 use App\IncidentReport;
@@ -42,28 +43,50 @@ class PrintController extends Controller
         $course = $request->course_name;
         $exams_type = $request->exams_type;
         // performance calculation
-        $student_present = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get()->sortbydesc('marks_scored');
+        // $student_present = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get()->sortbydesc('marks_scored');
+        if ($request->exams_type == 'Cumulative') {
+            $student_present = StudentCumulativeResult::where([['academic_year',$request->academic_year],['course_name',$request->course_name]])->get()->sortbydesc('marks_scored');;
+            $results_type = 'cumulative';
+        }
+        else{
+            $student_present = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get()->sortbydesc('marks_scored');
+            $results_type = 'singles';
+        }
         if ($exams_type == "End Of Semester Examination") {
             $pass_mark = 28;
             $total_exams_marks = 70;    
+        }
+        elseif ($exams_type == "Cumulative") {
+            $pass_mark = 40;
+            $total_exams_marks = 100;    
         }
         else{
             $pass_mark = 12;
             $total_exams_marks = 30;
         }
         $pass = 0;
-        foreach ($student_present as $result) {
-            if ($result->marks_scored >= $pass_mark) {
-                $pass += 1;
+        if ($exams_type == "Cumulative") {
+            foreach ($student_present as $result) {
+                if (($result->mid_sem_mark + $result->end_of_sem_mark) >= $pass_mark) {
+                    $pass += 1;
+                }
             }
         }
+        else{
+            foreach ($student_present as $result) {
+                if ($result->marks_scored >= $pass_mark) {
+                    $pass += 1;
+                }
+            }
+        }
+        
         $total_result = $student_present->count();
         // attendace calculation
         $_course = Course::where('name',$course)->first();
         // $total_student = User::where([['dep_id',$_course->dep_id],['year',$_course->year]])->count();
         $all_students = User::where([['dep_id',$_course->dep_id],['year',$_course->year]])->get();
         $total_student = $all_students->count();
-        $pdf = PDF::loadView('admin.reports.printables.attendance_and_performance',compact('academic_year','exams_type','course','pass','total_result','total_student','student_present','all_students','pass_mark','total_exams_marks'));
+        $pdf = PDF::loadView('admin.reports.printables.attendance_and_performance',compact('academic_year','exams_type','course','pass','total_result','total_student','student_present','all_students','pass_mark','total_exams_marks','results_type'));
 		return $pdf->stream('Attendance And Performance_'.date('d-m-Y h:i'));
     }
 
@@ -108,21 +131,37 @@ class PrintController extends Controller
     }
 
     public function studentResultPrint(Request $request){
-    	$results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+    	// $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+        if ($request->exams_type == 'Cumulative') {
+            $results = StudentCumulativeResult::where([['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+            $results_type = 'cumulative';
+        }
+        else{
+            $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+            $results_type = 'singles';
+        } 
         $academic_year = $request->academic_year;
         $course = $request->course_name;
         $exams_type = $request->exams_type;
-        $pdf = PDF::loadView('admin.reports.printables.student_result',compact('academic_year','exams_type','course','results'));
+        $pdf = PDF::loadView('admin.reports.printables.student_result',compact('academic_year','exams_type','course','results','results_type'));
 		return $pdf->stream("$academic_year $course $exams_type Result");
     }
 
     public function resultPrint(Request $request){
-        $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$request->exams_type],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester]])->get();
+        if ($request->exams_type == 'Cumulative') {
+            $results = StudentCumulativeResult::where([['student_id',Auth::user()->id],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester]])->get();
+            $results_type = 'cumulative';
+        }
+        else{
+            $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$request->exams_type],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester]])->get();
+            $results_type = 'singles';
+        }
+        // $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$request->exams_type],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester]])->get();
         $academic_year = $request->academic_year;
         $academic_sem = $request->academic_semester;
         $exams_type = $request->exams_type;
         $user = User::find(Auth::user()->id);
-        $pdf = PDF::loadView('student.printables.studentResult',compact('academic_year','exams_type','academic_sem','results','user'));
+        $pdf = PDF::loadView('student.printables.studentResult',compact('academic_year','exams_type','academic_sem','results','user','results_type'));
 		return $pdf->stream("$academic_year Semester $academic_sem $exams_type Result");
         // if ($results->count() > 0) {
         //     return view('student.result.studentResult',compact('academic_year','exams_type','academic_sem','results'));

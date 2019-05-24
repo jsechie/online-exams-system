@@ -9,6 +9,7 @@ use App\User;
 use App\Course;
 use App\Academic;
 use App\StudentsResults;
+use App\StudentCumulativeResult;
 use Auth;
 
 class AdminStudentController extends Controller
@@ -64,12 +65,20 @@ class AdminStudentController extends Controller
             'academic_year'=>'required',
             'course_name'=>'required',
         ]);
-        $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+        // $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+        if ($request->exams_type == 'Cumulative') {
+            $results = StudentCumulativeResult::where([['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+            $results_type = 'cumulative';
+        }
+        else{
+            $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+            $results_type = 'singles';
+        }
         $academic_year = $request->academic_year;
         $course = $request->course_name;
         $exams_type = $request->exams_type;
         if ($results->count() > 0) {
-            return view('admin.students.result.result_page',compact('academic_year','exams_type','course','results'));
+            return view('admin.students.result.result_page',compact('academic_year','exams_type','course','results','results_type'));
         }
         else{
             return redirect()->back()->with('flash_message_error','<h2>Result Not Found<br>Check Your Selected Options Again</h2>');
@@ -82,17 +91,37 @@ class AdminStudentController extends Controller
         $course = $request->course_name;
         $exams_type = $request->exams_type;
         // performance calculation
-        $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+        // $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+        if ($request->exams_type == 'Cumulative') {
+            $results = StudentCumulativeResult::where([['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+            $results_type = 'cumulative';
+        }
+        else{
+            $results = StudentsResults::where([['exams_type',$request->exams_type],['academic_year',$request->academic_year],['course_name',$request->course_name]])->get();
+            $results_type = 'singles';
+        }
         if ($exams_type == "End Of Semester Examination") {
             $pass_mark = 28;    
+        }
+        elseif ($exams_type == "Cumulative") {
+            $pass_mark = 40;    
         }
         else{
             $pass_mark = 12;
         }
         $pass = 0;
-        foreach ($results as $result) {
-            if ($result->marks_scored >= $pass_mark) {
-                $pass += 1;
+        if ($exams_type == "Cumulative") {
+            foreach ($results as $result) {
+                if (($result->mid_sem_mark + $result->end_of_sem_mark) >= $pass_mark) {
+                    $pass += 1;
+                }
+            }   
+        }
+        else{
+            foreach ($results as $result) {
+                if ($result->marks_scored >= $pass_mark) {
+                    $pass += 1;
+                }
             }
         }
         $total_result = $results->count();
@@ -100,7 +129,7 @@ class AdminStudentController extends Controller
         $_course = Course::where('name',$course)->first();
         $total_student = User::where([['dep_id',$_course->dep_id],['year',$_course->year]])->count();
 
-       return view('admin.reports.result_report',compact('academic_year','exams_type','course','pass','total_result','total_student')); 
+       return view('admin.reports.result_report',compact('academic_year','exams_type','course','pass','total_result','total_student','results_type')); 
     }
 
     public function reportSearch(){

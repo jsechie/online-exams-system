@@ -44,6 +44,7 @@
                       <option value=""> --Select Exams Type--</option>
                       <option value="Mid Semester Examination" {{old('exams_type')=='Mid Semester Examination'? 'selected':'' }}>Mid Semester Examination</option>
                       <option value="End Of Semester Examination" {{old('exams_type')=='End Of Semester Examination'? 'selected':'' }}>End Of Semester Examinamtion</option>
+                      <option value="Cumulative" {{old('exams_type')=='Cumulative'? 'selected':'' }}>Cumulative Result</option>
                     </select>
                   </div>
                   <div class="form-group">

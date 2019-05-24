@@ -213,12 +213,20 @@ class StudentExamController extends Controller
             'academic_year'=>'required',
             'academic_semester'=>'required',
         ]);
-        $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$request->exams_type],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester]])->get();
+        if ($request->exams_type == 'Cumulative') {
+            $results = StudentCumulativeResult::where([['student_id',Auth::user()->id],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester],['mid_sem_mark','<>',Null],['end_of_sem_mark','<>',Null]])->get();
+            $results_type = 'cumulative';
+        }
+        else{
+            $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$request->exams_type],['academic_year',$request->academic_year],['academic_semester',$request->academic_semester]])->get();
+            $results_type = 'singles';
+        }
+        
         $academic_year = $request->academic_year;
         $academic_sem = $request->academic_semester;
         $exams_type = $request->exams_type;
         if ($results->count() > 0) {
-            return view('student.result.studentResult',compact('academic_year','exams_type','academic_sem','results'));
+            return view('student.result.studentResult',compact('academic_year','exams_type','academic_sem','results','results_type'));
         }
         else{
             return redirect()->back()->with('flash_message_error','<h2>Result Not Found<br>Check Your Selected Options Again</h2>');
@@ -231,19 +239,40 @@ class StudentExamController extends Controller
         $academic_semester = $request->academic_sem;
         $exams_type = $request->exams_type;
         // performance calculation
-        $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$exams_type],['academic_semester',$academic_semester],['academic_year',$academic_year]])->get();
+        
+        if ($request->exams_type == 'Cumulative') {
+            $results = StudentCumulativeResult::where([['student_id',Auth::user()->id],['academic_semester',$academic_semester],['academic_year',$academic_year],['mid_sem_mark','<>',Null],['end_of_sem_mark','<>',Null]])->get();
+            $results_type = 'cumulative';
+        }
+        else{
+            $results = StudentsResults::where([['student_id',Auth::user()->id],['exams_type',$exams_type],['academic_semester',$academic_semester],['academic_year',$academic_year]])->get();
+            $results_type = 'singles';
+        }
         if ($exams_type == "End Of Semester Examination") {
             $pass_mark = 28;    
+        }
+        elseif ($exams_type == "Cumulative") {
+            $pass_mark = 40;    
         }
         else{
             $pass_mark = 12;
         }
         $pass = 0;
-        foreach ($results as $result) {
-            if ($result->marks_scored >= $pass_mark) {
-                $pass += 1;
+        if ($exams_type == "Cumulative") {
+            foreach ($results as $result) {
+                if (($result->mid_sem_mark + $result->end_of_sem_mark) >= $pass_mark) {
+                    $pass += 1;
+                }
+            }   
+        }
+        else{
+            foreach ($results as $result) {
+                if ($result->marks_scored >= $pass_mark) {
+                    $pass += 1;
+                }
             }
         }
+        
         $total_result = $results->count();
        return view('student.reports.result_report',compact('academic_year','exams_type','academic_semester','pass','total_result')); 
     }

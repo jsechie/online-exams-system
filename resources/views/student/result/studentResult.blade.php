@@ -63,7 +63,7 @@
                   <td class="text-center">{{$result->course_code}}</td>
                   <td class="text-center">{{$result->course_name}}</td>
                   <td class="text-center">{{$result->credit_hours}}</td>
-                  <td class="text-center">{{$result->marks_scored}}</td>
+                  <td class="text-center">@if($results_type == 'singles'){{$result->marks_scored}} @else {{$result->mid_sem_mark + $result->end_of_sem_mark}}@endif</td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -85,7 +85,7 @@
             <input type="hidden" name="academic_year" value="{{$academic_year}}">
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-report"></i> Export To PDF</button>
-                <a href="{{route('admin.dashboard')}}" type="button" class="btn btn-danger {{-- pull-right --}}"><i class="fa fa-times"></i> Close</a><br><hr>
+                <a href="{{route('student.dashboard')}}" type="button" class="btn btn-danger {{-- pull-right --}}"><i class="fa fa-times"></i> Close</a><br><hr>
               </div>
 
           </form>
