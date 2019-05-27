@@ -27,7 +27,8 @@ class CourseController extends Controller
     {
         $courses = Course::all();
          $users = Admin::all()->sortByDesc('created_at');
-        return view('admin.course.index_course',compact('courses','users'));
+         $departments = Department::all();
+        return view('admin.course.index_course',compact('departments','courses','users'));
     }
 
     /**

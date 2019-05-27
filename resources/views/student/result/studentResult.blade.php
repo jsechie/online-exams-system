@@ -47,25 +47,49 @@
         <div class="col-xs-12 col-md-offset-1 col-md-10">
            <!-- Table row -->
           <br><hr><div class="row">
-            <div class="col-xs-12 table-responsive">
-              <table class="table table-striped">
+            <div class="col-xs-12 ">
+              <table class="table table-striped table-responsive">
                 <thead>
-                <tr>
-                  <th class="text-center">Course Code</th>
-                  <th class="text-center">Course Name</th>
-                  <th class="text-center">Credit Hours</th>
-                  <th class="text-center">Marks</th>
-                </tr>
+                  @if($results_type == 'singles')
+                   <tr>
+                    <th class="text-center">Index Number</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Credit Hours</th>
+                    <th class="text-center">Marks</th>
+                  </tr>
+                  @else 
+                     <tr>
+                    <th class="text-center">Index Number</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Mid Sem Mark /30</th>
+                    <th class="text-center">End Of Sem Mark /70</th>
+                    <th class="text-center">Total Marks %</th>
+                  </tr>
+                  @endif
                 </thead>
                 <tbody>
-                @foreach($results as $result)
-                  <tr>
-                  <td class="text-center">{{$result->course_code}}</td>
-                  <td class="text-center">{{$result->course_name}}</td>
-                  <td class="text-center">{{$result->credit_hours}}</td>
-                  <td class="text-center">@if($results_type == 'singles'){{$result->marks_scored}} @else {{$result->mid_sem_mark + $result->end_of_sem_mark}}@endif</td>
-                </tr>
-                @endforeach
+                  @if($results_type == 'singles')
+                    @foreach($results as $result)
+                      <?php $student = App\User::find($result->student_id); ?>
+                      <tr>
+                      <td class="text-center">{{$student->index_number}}</td>
+                      <td class="text-center">{{$student->name}}</td>
+                      <th class="text-center">{{$result->credit_hours}}</th>
+                      <td class="text-center">{{$result->marks_scored}} </td>
+                    </tr>
+                    @endforeach
+                  @else 
+                     @foreach($results as $result)
+                        <?php $student = App\User::find($result->student_id); ?>
+                        <tr>
+                        <td class="text-center">{{$student->index_number}}</td>
+                        <td class="text-center">{{$student->name}}</td>
+                        <td class="text-center">{{$result->mid_sem_mark}}</td>
+                        <td class="text-center">{{$result->end_of_sem_mark}}</td>
+                        <td class="text-center">{{$result->mid_sem_mark + $result->end_of_sem_mark}}</td>
+                      </tr>
+                    @endforeach
+                  @endif
                 </tbody>
               </table>
             </div>

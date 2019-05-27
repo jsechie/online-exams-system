@@ -37,8 +37,7 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" method="post" action="{{route('department.store')}}">
-            {{csrf_field()}}
-              <div class="box-body">
+              {{csrf_field()}}
                 <div class="form-group">
                   <label for="department_name">Deparment Name</label>
                   <input type="text" class="form-control" id="department_name" placeholder="Name" name="department_name" value="{{old('department_name')}}">

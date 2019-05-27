@@ -83,8 +83,8 @@
                       @else
                         <td><center class="btn-danger">Inactive</center></td>
                       @endif
-                      <td><center><a title="Write Report For Exams" class="btn btn-primary tip"href="{{route('examsSettings.report',$exams->id)}}"><i class="glyphicon glyphicon-pencil"></i></a>{{-- {{$exams->updated_at->toFormattedDateString()}} --}}</center></td>
-                      <td><center><a title="Edit" class="btn btn-info tip"href="{{route('examsSettings.edit',$exams->id)}}"><i class="glyphicon glyphicon-edit"></i></a>
+                      <td><center><a title="Write Report For Exams" class="btn btn-primary tip"{{-- href="{{route('examsSettings.report',$exams->id)}}" --}} data-toggle="modal" data-target="#incident-modal-{{$exams->id}}"><i class="glyphicon glyphicon-pencil"></i></a>{{-- {{$exams->updated_at->toFormattedDateString()}} --}}</center></td>
+                      <td><center><a title="Edit" class="btn btn-info tip"{{-- href="{{route('examsSettings.edit',$exams->id)}}" --}} data-toggle="modal" data-target="#edit-modal-{{$exams->id}}"><i class="glyphicon glyphicon-edit"></i></a>
                         {{-- <form method="post" action="{{route('examsSettings.destroy',$exams->id)}}" id="delete-form-{{$exams->id}}" style="display: none;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
@@ -106,6 +106,150 @@
                         <a title="Deactivate" class="btn btn-warning tip" href="{{route('examsSettings.status',$exams->id)}}"><i class="fa fa-times-circle">Deactivate</i></a>@endif
                       </center></td>
                     </tr>
+                    {{-- edit modal --}}
+                    <!-- Side Modal Top Right -->
+                    <!-- To change the direction of the modal animation change .right class -->
+                    <div class="modal fade {{-- modal-warning --}}" id="edit-modal-{{$exams->id}}" tabindex="-1" role="dialog" aria-labelledby="myEditModal-{{$exams->id}}"
+                      aria-hidden="true">
+                      <!-- Add class .modal-side and then add class .modal-top-right (or other classes from list above) to set a position to the modal -->
+                      <div class="modal-dialog {{-- modal-lg --}}" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h3 class="modal-title w-100 text-danger" id="myEditModal-{{$exams->id}}">Updating {{"$course->name $exams->title"}} Info</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form role="form" method="post" action="{{route('examsSettings.update',$exams->id)}}" enctype="multipart/form-data" id="edit-form-{{$exams->id}}">
+                                {{csrf_field()}}
+                                {{method_field('PUT')}}
+                                {{-- <div class="box-body"> --}}
+                                <div class="form-group col-md-9">
+                                  <label>Exams Title</label>
+                                  <input class="form-control" disabled name="title" value="{{"$course->name $exams->title"}}">
+                                </div>
+                                {{-- <div class="form-group">
+                                  <label>Total Marks</label>
+                                  <input type="number" class="form-control" name="marks" value="{{$exams->total_marks}}">
+                                </div> --}}
+                                <div class="form-group col-md-3">
+                                  <label>Total Questions</label>
+                                  <input type="number" class="form-control" value="{{App\ExamsSettings::find($exams->id)->questions->count()}}" disabled="">
+                                </div>
+                                <div class="form-group col-md-12">
+                                  <label>Exams Instructions</label>
+                                  <textarea class="form-control" rows="2" placeholder="Enter the Exams Instructions..." name="instructions" >{{$exams->instructions}}</textarea>
+                                </div>
+                                <div class="form-group col-md-4">
+                                  <label>Exams Start Date:</label>
+
+                                  <div class="input-group date">
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" id="datepicker" name="exams_date" value="{{date('m/d/Y',strtotime($exams->exams_date))}}">
+                                  </div>
+                                  <!-- /.input group -->
+                                </div>
+
+                                <!-- time Picker -->
+                                <div class="bootstrap-timepicker">
+                                  <div class="form-group col-md-4">
+                                    <label>Exams Start Time:</label>
+
+                                    <div class="input-group">
+                                      <input type="text" class="form-control timepicker" name="start_time" value="{{date('h:i A',strtotime($exams->start_time))}}">
+
+                                      <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                      </div>
+                                    </div>
+                                    <!-- /.input group -->
+                                  </div>
+                                  <!-- /.form group -->
+                                </div>
+                                <div class="bootstrap-timepicker">
+                                  <div class="form-group col-md-4">
+                                    <label>Exams End Time:</label>
+
+                                  <div class="input-group">
+                                    <input type="text" class="form-control timepicker" name="stop_time" value="{{date('h:i A',strtotime($exams->stop_time))}}">
+
+                                    <div class="input-group-addon">
+                                      <i class="fa fa-clock-o"></i>
+                                    </div>
+                                  </div>
+                                  <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                              </div><hr>
+                              {{-- <div class="box-footer">
+                                <a type="button" href="{{route('examsSettings.show',$exams->course_id)}}" class="btn btn-danger">
+                                Cancel</a>
+                                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                              </div> --}}
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <a type="button" class="btn btn-success" onclick="event.preventDefault();
+                              document.getElementById('edit-form-{{$exams->id}}').submit();" 
+                            >Update</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Side Modal Top Right -->
+                     {{-- Incident Report modal --}}
+                    <!-- Side Modal Top Right -->
+                    <!-- To change the direction of the modal animation change .right class -->
+                    <div class="modal fade {{-- modal-warning --}}" id="incident-modal-{{$exams->id}}" tabindex="-1" role="dialog" aria-labelledby="myIcidentModal-{{$exams->id}}"
+                      aria-hidden="true">
+                      <!-- Add class .modal-side and then add class .modal-top-right (or other classes from list above) to set a position to the modal -->
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h3 class="modal-title w-100 text-danger" id="myIcidentModal-{{$exams->id}}">Incident Report For {{"$course->name $exams->title"}}</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form role="form" method="post" action="{{route('examsSettings.submitReport',$exams->id)}}" id="incident-form-{{$exams->id}}">
+                              {{csrf_field()}}
+                              {{-- <div class="box-body "> --}}
+                                <div class="form-group">
+                                  <label for="report">Report Body</label>
+                                  <textarea class="form-control" rows="10" placeholder="Enter the Exams Instructions..." name="report" >{{-- {{$exams->instructions}} --}}</textarea>
+                                  {{-- <textarea id="editor1" name="report" rows="5" cols="80">
+                                    {{old('report')}}
+                                  </textarea> --}}
+                                </div>
+                                <div class="form-group ">
+                                  <div class="checkbox icheck">
+                                    <center><label>
+                                      <b>Tag Report</b><br>
+                                      <input name="stolen" type="checkbox" {{ old('stolen') ? 'checked' : '' }}> Stolen Case<br>
+                                      <input name="cheating" type="checkbox" {{ old('cheating') ? 'checked' : '' }}> Student Cheating
+                                    </label></center>
+                                  </div>
+                              {{-- <div class="box-footer ">
+                                <a href="{{route('examsSettings.show',$exams->course_id)}}" class="btn btn-danger">Cancel</a>
+                                <button type="submit" class="btn btn-primary pull-right">Send Report</button>
+                              </div> --}}
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <a type="button" class="btn btn-success" onclick="event.preventDefault();
+                              document.getElementById('incident-form-{{$exams->id}}').submit();" 
+                            >Update</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Side Modal Top Right -->
                   @endforeach
                 </tbody>
                 <tfoot>
@@ -128,91 +272,6 @@
         </div>
       </div>
 
-      {{-- <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title">Creating New Exams</h4>
-            </div>
-            <div class="modal-body">
-              <form role="form" method="post" action="{{route('examsSettings.store')}}" enctype="multipart/form-data">
-                {{csrf_field()}}
-                <div class="box-body">
-                  <div class="form-group">
-                    <label>Exams Title</label>
-                    <input type="text" class="form-control" placeholder="Enter the Exams Title..." name="title" value="{{old('title')}}">
-                  </div>
-                  <div class="form-group">
-                    <label>Total Marks</label>
-                    <input type="number" class="form-control" name="marks" {{old('marks')}}>
-                  </div>
-                  <div class="form-group">
-                    <label>Exams Instructions</label>
-                    <textarea class="form-control" rows="2" placeholder="Enter the Exams Instructions..." name="instructions" >{{old('instructions')}}</textarea>
-                  </div>
-                  <!-- Date -->
-                  <div class="form-group">
-                    <label>Exams Start Date:</label>
-
-                    <div class="input-group date">
-                      <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                      <input type="text" class="form-control pull-right" id="datepicker" name="exams_date" value="{{old('exams_date')}}">
-                    </div>
-                    <!-- /.input group -->
-                  </div>
-
-                  <!-- time Picker -->
-                  <div class="bootstrap-timepicker">
-                    <div class="form-group">
-                      <label>Exams Start Time:</label>
-
-                      <div class="input-group">
-                        <input type="text" class="form-control timepicker" name="start_time" value="{{old('start_time')}}">
-
-                        <div class="input-group-addon">
-                          <i class="fa fa-clock-o"></i>
-                        </div>
-                      </div>
-                      <!-- /.input group -->
-                    </div>
-                    <!-- /.form group -->
-                  </div>
-                  <div class="bootstrap-timepicker">
-                    <div class="form-group">
-                      <label>Exams End Time:</label>
-
-                      <div class="input-group">
-                        <input type="text" class="form-control timepicker" name="stop_time" value="{{old('stop_time')}}">
-
-                        <div class="input-group-addon">
-                          <i class="fa fa-clock-o"></i>
-                        </div>
-                      </div>
-                      <!-- /.input group -->
-                    </div>
-                    <!-- /.form group -->
-                  </div>
-                  
-                  <input type="hidden" name="course_id" value="{{$course->id}}">
-                  <div class="box-footer">
-                    <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-danger">
-                    Cancel</button>
-                    <button type="submit" class="btn btn-primary pull-right">Add New</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-            
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div> --}}
-
     </section>
   </div>
   	{{-- course --}}
@@ -228,6 +287,13 @@
   <script src="{{asset('AdminLTE/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
   <script type="text/javascript">
     $(function () {
+      // Replace the <textarea id="editor1"> with a CKEditor
+      // instance, using default configuration.
+      CKEDITOR.replace('editor1')
+      //bootstrap WYSIHTML5 - text editor
+      $('.textarea').wysihtml5()
+    });
+    $(function () {
      //Date picker
       $('#datepicker').datepicker({
         autoclose: true
@@ -236,6 +302,7 @@
       $('.timepicker').timepicker({
         showInputs: false
       })
-    })
+    });
+    
   </script>
 @endsection

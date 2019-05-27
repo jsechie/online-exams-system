@@ -28,26 +28,50 @@
     </tr></table>
     <hr>
       <div class="container">
-          <table class="table table-striped table-responsive table-bordered">
-            <thead>
-            <tr>
-              <th class="text-center">Course Code</th>
-              <th class="text-center">Course Name</th>
-              <th class="text-center">Credit Hours</th>
-              <th class="text-center">Marks</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($results as $result)
-              <tr>
-              <td class="text-center">{{$result->course_code}}</td>
-              <td class="text-center">{{$result->course_name}}</td>
-              <td class="text-center">{{$result->credit_hours}}</td>
-              <td class="text-center">@if($results_type == 'singles'){{$result->marks_scored}} @else {{$result->mid_sem_mark + $result->end_of_sem_mark}}@endif</td>
-            </tr>
-            @endforeach
-            </tbody>
-          </table>
+          <table class="table table-striped table-responsive">
+                <thead>
+                  @if($results_type == 'singles')
+                   <tr>
+                    <th class="text-center">Index Number</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Credit Hours</th>
+                    <th class="text-center">Marks</th>
+                  </tr>
+                  @else 
+                     <tr>
+                    <th class="text-center">Index Number</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Mid Sem</th>
+                    <th class="text-center">End Of Sem</th>
+                    <th class="text-center">Total Marks %</th>
+                  </tr>
+                  @endif
+                </thead>
+                <tbody>
+                  @if($results_type == 'singles')
+                    @foreach($results as $result)
+                      <?php $student = App\User::find($result->student_id); ?>
+                      <tr>
+                      <td class="text-center">{{$student->index_number}}</td>
+                      <td class="text-center">{{$student->name}}</td>
+                      <th class="text-center">{{$result->credit_hours}}</th>
+                      <td class="text-center">{{$result->marks_scored}} </td>
+                    </tr>
+                    @endforeach
+                  @else 
+                     @foreach($results as $result)
+                        <?php $student = App\User::find($result->student_id); ?>
+                        <tr>
+                        <td class="text-center">{{$student->index_number}}</td>
+                        <td class="text-center">{{$student->name}}</td>
+                        <td class="text-center">{{$result->mid_sem_mark}}</td>
+                        <td class="text-center">{{$result->end_of_sem_mark}}</td>
+                        <td class="text-center">{{$result->mid_sem_mark + $result->end_of_sem_mark}}</td>
+                      </tr>
+                    @endforeach
+                  @endif
+                </tbody>
+              </table>
       </div>
   </div>
 @endsection

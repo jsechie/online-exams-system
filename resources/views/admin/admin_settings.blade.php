@@ -117,7 +117,7 @@
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="{{$user->name}}" {{old('name')}}>
           </div> 
-          <div class="form-group col-md-8">
+          <div class="form-group col-md-12">
             <label for="email">Email</label>
             <input type="emal" class="form-control" id="email" placeholder="New Password" name="email" {{old('email')}} value="{{$user->email}}">
           </div>

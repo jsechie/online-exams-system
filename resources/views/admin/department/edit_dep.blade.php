@@ -37,8 +37,8 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" method="post" action="{{route('department.update',$department->id)}}">
-            {{csrf_field()}}
-		    {{method_field('PATCH')}}
+              {{csrf_field()}}
+		          {{method_field('PATCH')}}
               <div class="box-body">
                 <div class="form-group">
                   <label for="department_name">Department Name</label>

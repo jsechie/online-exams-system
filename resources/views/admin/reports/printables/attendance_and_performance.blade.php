@@ -39,23 +39,46 @@
         <center><h3><u>Results Of Students Who Took The Exam</u></h3></center>
         <table class="table-responsive table-bordered table-striped">
           <thead>
-            <tr>
-              <th class="text-center">Index Number</th>
-              <th class="text-center">Name</th>
-              <th class="text-center">Marks/{{$total_exams_marks}}</th>
-              {{-- <th class="text-center">Status</th> --}}
-            </tr>    
-          </thead>
-          <tbody>
-            @foreach($student_present as $record)
-              <?php $student = App\User::find($record->student_id); ?>
+            @if($results_type == 'singles')
               <tr>
-                <td class="text-center">{{$student->index_number}}</td>
-                <td class="text-center">{{ucfirst($student->name)}}</td>
-                <td class="text-center">@if($results_type == 'singles'){{$record->marks_scored}} @else {{$record->mid_sem_mark + $record->end_of_sem_mark}}@endif</td>
-                {{-- <td class="text-center"></td> --}}
+                <th class="text-center">Index Number</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Marks/{{$total_exams_marks}}</th>
               </tr>
-            @endforeach
+              @else 
+                <tr>
+                  <th class="text-center">Index Number</th>
+                  <th class="text-center">Name</th>
+                  <th class="text-center">Mid Sem</th>
+                  <th class="text-center">End Of Sem</th>
+                  <th class="text-center">Total Marks %</th>
+                </tr>
+              @endif
+            </thead>
+            <tbody>
+              @if($results_type == 'singles')
+                @foreach($student_present as $record)
+                  <?php $student = App\User::find($record->student_id); ?>
+                  <tr>
+                    <td class="text-center">{{$student->index_number}}</td>
+                    <td class="text-center">{{ucfirst($student->name)}}</td>
+                    <td class="text-center">{{$record->marks_scored}}</td>
+                    {{-- <td class="text-center"></td> --}}
+                  </tr>
+                @endforeach
+              @else 
+                @foreach($student_present as $record)
+                  <?php $student = App\User::find($record->student_id); ?>
+                  <tr>
+                    <td class="text-center">{{$student->index_number}}</td>
+                    <td class="text-center">{{ucfirst($student->name)}}</td>
+                    <td class="text-center">{{$record->mid_sem_mark}}</td>
+                    <td class="text-center">{{$record->end_of_sem_mark}}</td>
+                    <td class="text-center">{{$record->mid_sem_mark + $record->end_of_sem_mark}}</td>
+                    {{-- <td class="text-center"></td> --}}
+                  </tr>
+                @endforeach
+              @endif
           </tbody>
         </table>
         <div class="page-break"></div>

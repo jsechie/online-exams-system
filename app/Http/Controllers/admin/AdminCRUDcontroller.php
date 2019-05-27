@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use App\Role;
 use App\Admin;
+use App\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -134,7 +135,12 @@ class AdminCRUDcontroller extends Controller
      */
     public function destroy($id)
     {
-         Admin::where('id',$id)->delete();
+        $courses = Course::where('assigned_to',$id)->get();
+        foreach ($courses as $course) {
+            $course->assigned_to = Null;
+            $course->update();
+        }
+        Admin::where('id',$id)->delete();
         return redirect()->back()->with('flash_message_error','User Deleted Successfully');
     }
 }

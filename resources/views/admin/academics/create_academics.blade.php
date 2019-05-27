@@ -37,12 +37,11 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" method="post" action="{{route('academics.store')}}">
-            {{csrf_field()}}
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="academic_year">Academics Year (Eg: 2018/2019)</label>
-                  <input type="text" class="form-control" id="academic_year" placeholder="Name" name="academic_year" value="{{old('academic_year')}}">
-                </div>                
+              {{csrf_field()}}
+              <div class="form-group">
+                <label for="academic_year">Academics Year (Eg: 2018/2019)</label>
+                <input type="text" class="form-control" id="academic_year" placeholder="Name" name="academic_year" value="{{old('academic_year')}}">
+              </div>                
               <div class="box-footer">
               	<a href="{{route('academics.index')}}" class="btn btn-danger">Cancel</a>
                 <button type="submit" class="btn btn-primary pull-right">Add New</button>
