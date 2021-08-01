@@ -62,7 +62,7 @@
       @include('messages.flash_messages')
     </section> --}}
       <!-- /.content -->
-    <section class="content">
+    <section class="content container-fluid">
       {{-- <div class="row">
         <div class="col-md-3 "><a class="btn btn-block btn-warning " href="{{route('examsSettings.show',$exam->course_id)}}">Back</a></div>
         <div class="col-md-3 "><a class="btn btn-block btn-info " href="#">Remove Randomly</a></div>
@@ -272,7 +272,7 @@
             @endfor --}}
 
             {{-- time left for exams  --}}
-            <br><center><span class="badge bg-blue"> <h1 id="demo">Calculating...</h1>Left To Submit Work</span></center>
+            <br><center><span class="badge bg-blue"> <h1 id="demo">Calculating...</h1>Tine Left</span></center>
             <p ></p>
           </div>
           <div class="col-md-12">

@@ -1,6 +1,16 @@
 @extends('layouts.admin_layouts.admin_design')
 
 @section('content')
+      @php
+        $courses = App\Course::all();
+        $checker = 0;
+        foreach ($courses as $course) {
+          if ($course->assigned_to == Auth::user()->id) {
+            $checker = 1;
+            break;
+          }
+        }
+      @endphp
 	<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -33,7 +43,9 @@
               @if(Auth::user()->role =='Examiner')
                 @include('admin.dashboard.system_summary')
               @endif
+              @if(Auth::user()->role =='Lecturer' || $checker == 1)
                 @include('admin.dashboard.user_summary')
+              @endif
                 {{-- <div class="panel box box-success">
                   <div class="box-header with-border">
                     <h4 class="box-title">

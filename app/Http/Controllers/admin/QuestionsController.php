@@ -217,6 +217,11 @@ class QuestionsController extends Controller
 		$file = str_replace('Answer = C', '||C??', $file);
 		$file = str_replace('Answer = D', '||D??', $file);
 		$file = str_replace('Answer = E', '||E??', $file);
+		$file = str_replace('ANSWER = A', '||A??', $file);
+		$file = str_replace('ANSWER = B', '||B??', $file);
+		$file = str_replace('ANSWER = C', '||C??', $file);
+		$file = str_replace('ANSWER = D', '||D??', $file);
+		$file = str_replace('ANSWER = E', '||E??', $file);
 		$file = str_replace('A.', '||', $file);
 		$file = str_replace('B.', '||', $file);
 		$file = str_replace('C.', '||', $file);

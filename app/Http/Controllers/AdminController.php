@@ -112,16 +112,18 @@ class AdminController extends Controller
 
     public function assigned()
     {
+        $departments=department::all();
         $courses = Course::where('assigned_to','<>',NULL)->get();
          $users = Admin::all()->sortByDesc('created_at');
-        return view('admin.course.index_course',compact('courses','users'));
+        return view('admin.course.index_course',compact('courses','users','departments'));
     }
 
     public function unassigned()
     {
+        $departments=department::all();
         $courses = Course::where('assigned_to',NULL)->get();
          $users = Admin::all()->sortByDesc('created_at');
-        return view('admin.course.index_course',compact('courses','users'));
+        return view('admin.course.index_course',compact('courses','users','departments'));
     }
 
 }

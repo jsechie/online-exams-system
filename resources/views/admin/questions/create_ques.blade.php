@@ -28,7 +28,7 @@
           <div class="col-md-4"><a class="btn btn-block btn-warning" href="#" data-toggle="modal" data-target="#modal-default">Upload Question</a></div>
         </div><hr>
 
-      <section class="content">
+      <section class="content container-fluid">
         <div class="row">
           <div class="col-md-10 col-md-offset-1">
             <!-- general form elements -->

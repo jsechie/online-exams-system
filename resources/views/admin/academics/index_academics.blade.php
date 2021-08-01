@@ -28,7 +28,7 @@
         </div>
       </div>
 
-    <section class="content">
+    <section class="content container-fluid">
       <div class="row col-md-8 col-md-offset-2"><h1><span class="label label-info">{!!"Academic Calender $academ->year Semester $academ->semester"!!} in Progress</span></h1><hr></div>
       <div class="row">
         <div class="col-xs-12">

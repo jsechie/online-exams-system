@@ -147,7 +147,7 @@
                                       <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input type="text" class="form-control pull-right" id="datepicker1" name="report_start_date" value="{{date('m/d/Y',strtotime('today'))}}">
+                                      <input type="text" class="form-control pull-right" id="datepicker1" name="report_start_date" value="{{date('m/d/Y',strtotime('-1 week'))}}">
                                     </div>
                                     <!-- /.input group -->
                                   </div>
@@ -158,7 +158,7 @@
                                       <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                       </div>
-                                      <input type="text" class="form-control pull-right" id="datepicker1" name="report_end_date" value="{{date('m/d/Y',strtotime('+1 week'))}}">
+                                      <input type="text" class="form-control pull-right" id="datepicker1" name="report_end_date" value="{{date('m/d/Y',strtotime('today'))}}">
                                     </div>
                                     <!-- /.input group -->
                                   </div>
@@ -286,7 +286,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right" id="datepicker" name="start_date" value="{{date('m/d/Y',strtotime('today'))}}">
+                            <input type="text" class="form-control pull-right" id="datepicker" name="start_date" value="{{date('m/d/Y',strtotime('-1 week'))}}">
                           </div>
                           <!-- /.input group -->
                         </div>
@@ -297,7 +297,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right" id="datepicker1" name="end_date" value="{{date('m/d/Y',strtotime('+1 week'))}}">
+                            <input type="text" class="form-control pull-right" id="datepicker" name="end_date" value="{{date('m/d/Y',strtotime('today'))}}">
                           </div>
                           <!-- /.input group -->
                         </div>                

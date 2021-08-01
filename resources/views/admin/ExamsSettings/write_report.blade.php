@@ -17,7 +17,7 @@
     </section>
       <!-- /.content -->
 
-    <section class="content">
+    <section class="content container-fluid">
       <hr>
       <div class="row" >
         <div class="col-md-10 col-md-offset-1">

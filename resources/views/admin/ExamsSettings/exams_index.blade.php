@@ -18,7 +18,7 @@
     </section>
       <!-- /.content -->
 
-    <section class="content">
+    <section class="content container-fluid">
       @if($courses->count() > 0)
       <center><h3 class="text-warning"><u>Select A Course To Change Your Exams Settings</u></h3></center>
         <hr><div class="row">

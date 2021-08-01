@@ -171,13 +171,13 @@
                       @else
                         <td><center class="btn-danger">Inactive</center></td>
                       @endif --}}
-                      <td><center><a title="Edit" class="btn btn-info tip"href="{{route('questions.edit',$question->id)}}"><i class="glyphicon glyphicon-edit"></i></a>
+                      <td><center><a title="Edit" class="btn btn-info tip"{{-- href="{{route('questions.edit',$question->id)}}" --}} data-target="#edit-modal-{{$question->id}}" data-toggle="modal"><i class="glyphicon glyphicon-edit"></i></a>
                         <form method="post" action="{{route('questions.destroy',$question->id)}}" id="delete-form-{{$question->id}}" style="display: none;">
                           {{csrf_field()}}
                           {{method_field('DELETE')}}
                         </form>
-                        <a title="Delete" class="btn btn-danger tip "
-                          onclick="
+                        <a title="Delete" class="btn btn-danger tip " data-toggle="modal" data-target="#delete-modal-{{$question->id}}"
+                          {{-- onclick="
                           if(confirm('Are You Sure You want delete?')){
                             event.preventDefault();
                             document.getElementById('delete-form-{{$question->id}}').submit();
@@ -185,7 +185,7 @@
                           else{
                             event.preventDefault();
                           }
-                          " 
+                          "  --}}
                         ><i class="glyphicon glyphicon-trash"></i></a>
                         {{-- @if($question->status == '0')
                         <a title="Activate" class="btn btn-success tip"href="{{route('questions.status',$question->id)}}"><i class="fa fa-check-square">Activate</i></a>@endif
@@ -193,6 +193,109 @@
                         <a title="Deactivate" class="btn btn-warning tip"href="{{route('questions.status',$question->id)}}"><i class="fa fa-times-circle">Deactivate</i></a>@endif --}}
                       </center></td>
                     </tr>
+                    {{-- delete modal --}}
+                        <!-- Side Modal Top Right -->
+                        <!-- To change the direction of the modal animation change .right class -->
+                        <div class="modal fade {{-- modal-warning --}}" id="delete-modal-{{$question->id}}" tabindex="-1" role="dialog" aria-labelledby="myDeleteModal-{{$question->id}}"
+                          aria-hidden="true">
+                          <!-- Add class .modal-side and then add class .modal-top-right (or other classes from list above) to set a position to the modal -->
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h3 class="modal-title w-100 text-danger" id="myDeleteModal-{{$question->id}}">Are You Sure You Want To Delete This Question?</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <h4>Deleting this Question <b>will remove it from all exams it appears in.</b></h4>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                <a type="button" class="btn btn-danger" onclick="event.preventDefault();
+                                  document.getElementById('delete-form-{{$question->id}}').submit();" 
+                                >Yes, Delete</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Side Modal Top Right -->
+                        {{-- edit modal --}}
+                        <!-- Side Modal Top Right -->
+                        <!-- To change the direction of the modal animation change .right class -->
+                        <div class="modal fade {{-- modal-warning --}}" id="edit-modal-{{$question->id}}" tabindex="-1" role="dialog" aria-labelledby="myEditModal-{{$question->id}}"
+                          aria-hidden="true">
+                          <!-- Add class .modal-side and then add class .modal-top-right (or other classes from list above) to set a position to the modal -->
+                          <div class="modal-dialog {{-- modal-lg --}}" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h3 class="modal-title w-100 text-danger" id="myEditModal-{{$question->id}}">Updating Question</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form role="form" method="post" action="{{route('questions.update',$question->id)}}" id="edit-form-{{$question->id}}">
+                                  {{csrf_field()}}
+                                  {{method_field('PUT')}}
+                                  {{-- <div class="box-body"> --}}
+                                    <div class="form-group">
+                                      <textarea class="form-control" name="question" rows="5" cols="10">
+                                        {!!$question->question!!}
+                                      </textarea>
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Option A.</label>
+                                      <textarea class="form-control" rows="2" placeholder="Enter Option A Required..." name="option_A" >{{$question->option_A}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Option B.</label>
+                                      <textarea class="form-control" rows="2" placeholder="Enter Option B Required ..." name="option_B">{{$question->option_B}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Option C.</label>
+                                      <textarea class="form-control" rows="2" placeholder="Ignore if question has only 2 option" name="option_C" id="optionC">{{$question->option_C}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Option D.</label>
+                                      <textarea class="form-control" rows="2" placeholder="Ignore if question has only 3 option" name="option_D">{{$question->option_D}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Option E.</label>
+                                      <textarea class="form-control" rows="2" placeholder="Ignore if question has only 4 option" name="option_E">{{$question->option_E}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                      <label>Select Answer</label>
+                                      <select class="form-control" name="answer">
+                                        <option value="">---Select An Answer---</option>
+                                        @php $answers=['A','B','C','D','E']; @endphp
+                                        @foreach($answers as $answer)
+                                          <option value="{{$answer}}" {{old('answer')==$answer? 'selected':'' }} @if($question->answer == $answer) selected="selected" @endif>{{$answer}}</option>
+                                        @endforeach
+                                      </select>
+                                    </div>
+                                    {{-- <div class="form-group">
+                                    <label>
+                                      <input type="checkbox" class="flat-red" name="status" value="next" @if($question->status==1) checked=""@endif>
+                                      Make Question Active To Student
+                                    </label>
+                                  </div> --}}
+                                  {{-- <div class="box-footer">
+                                    <a href="{{route('questions.show',$question->course_id)}}" class="btn btn-danger">Cancel</a>
+                                    <button type="submit" class="btn btn-primary pull-right">Update</button>
+                                  </div> --}}
+                                </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <a type="button" class="btn btn-success" onclick="event.preventDefault();
+                                  document.getElementById('edit-form-{{$question->id}}').submit();" 
+                                >Update</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Side Modal Top Right -->
                   @endforeach
                 </tbody>
                 <tfoot>

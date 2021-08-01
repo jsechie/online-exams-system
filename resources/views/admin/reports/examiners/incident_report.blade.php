@@ -28,26 +28,27 @@
             <!-- Table row -->
       <div class="row">
         @foreach($reports as $report)
+          @php
+            $exam = App\ExamsSettings::find($report->exams_id);
+            $course = App\Course::find($exam->course_id);
+          @endphp
           <div class="col-md-12">
           
             <div class="box box-widget">
               <div class="box-header with-border">
-                <div class="user-block">
-                  <span class="description">Written By:</span>
-                  <span class="username"><a href="#">{{$report->reporter}}.</a></span>
-                  <span class="description">On - {{$report->reported_date}}</span>
-                </div>
+                <center><u><i><b>Incident Report For {{"$course->name $exam->title"}}</b></i></u>
+                  <p class="text-center">{!! $report->report !!}</p></center>
                 <!-- /.user-block -->
                 <!-- /.box-tools -->
               </div>
               <!-- /.box-header -->
               <div class="box-body col-md-10 col-md-offset-1">
                 <!-- post text -->
-                
-                  <p >{!! $report->report !!}</p>
-                
-
-                
+                <div class="user-block">
+                  <span class="description">Written By:</span>
+                  <span class="username"><a href="#">{{$report->reporter}}.</a></span>
+                  <span class="description">On - {{$report->reported_date}}</span><hr><hr>
+                </div>                
                 </div>
                 <!-- /.box-comment -->
               </div><br>

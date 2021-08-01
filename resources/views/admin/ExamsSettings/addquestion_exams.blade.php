@@ -17,7 +17,7 @@
     </section>
       <!-- /.content -->
 
-    <section class="content">
+    <section class="content container-fluid">
     	<div class="row">
         <div class="col-md-3 "><a class="btn btn-block btn-warning " href="{{route('examsSettings.view',$exam->id)}}">Back</a></div>
         {{-- <div class="col-md-3 "><a class="btn btn-block btn-info " href="#">Add Randomly</a></div> --}}

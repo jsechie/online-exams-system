@@ -2,7 +2,7 @@
   <div class="box-header with-border">
     <h4 class="box-title">
       <a data-toggle="collapse" data-parent="#accordion2" href="#collapseUser">
-        User Summary
+        Lecturer's Summary
       </a>
     </h4>
   </div>

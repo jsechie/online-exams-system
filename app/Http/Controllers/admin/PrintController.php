@@ -28,14 +28,14 @@ class PrintController extends Controller
     	$exams = [];
     	if ($request->end_date!= null) {
     		$end_date = date('d-m-Y',strtotime($request->end_date));
-    		$exams = ExamsSettings::whereBetween('exams_date',[$start_date,$end_date])->get()->sortby('start_time');
+    		$exams = ExamsSettings::whereBetween('exams_date',[$start_date,$end_date])->get()->sortby('exams_date');
     	}
     	else{
     		$end_date = Null;
-    		$exams = ExamsSettings::where('exams_date',$start_date)->get()->sortby('start_time');	
+    		$exams = ExamsSettings::where('exams_date',$start_date)->get()->sortby('exams_date');	
     	}
 		$pdf = PDF::loadView('admin.reports.printables.exams_history',compact('start_date','exams','academic','end_date'))->setPaper('a4', 'landscape');
-		return $pdf->stream('Exams Schedule'.date('d-m-Y h:i'));
+		return $pdf->download('Exams Schedule'.date('d-m-Y h:i'));
     }
 
     public function attendancePerfPrint(Request $request){
@@ -87,7 +87,7 @@ class PrintController extends Controller
         $all_students = User::where([['dep_id',$_course->dep_id],['year',$_course->year]])->get();
         $total_student = $all_students->count();
         $pdf = PDF::loadView('admin.reports.printables.attendance_and_performance',compact('academic_year','exams_type','course','pass','total_result','total_student','student_present','all_students','pass_mark','total_exams_marks','results_type'));
-		return $pdf->stream('Attendance And Performance_'.date('d-m-Y h:i'));
+		return $pdf->download('Attendance And Performance_'.date('d-m-Y h:i'));
     }
 
     public function incidentReportPrint(Request $request){
@@ -127,7 +127,7 @@ class PrintController extends Controller
     		$heading = "Incident Report Tagged with $tag_name";
     	}
     	$pdf = PDF::loadView('admin.reports.printables.incident_report',compact('reports','heading','tag_name','lecturers_name','start_date','end_date','exams_id'));
-		return $pdf->stream('Incident Report_'.date('d-m-Y h:i:s'));
+		return $pdf->download('Incident Report_'.date('d-m-Y h:i:s'));
     }
 
     public function studentResultPrint(Request $request){
@@ -144,7 +144,7 @@ class PrintController extends Controller
         $course = $request->course_name;
         $exams_type = $request->exams_type;
         $pdf = PDF::loadView('admin.reports.printables.student_result',compact('academic_year','exams_type','course','results','results_type'));
-		return $pdf->stream("$academic_year $course $exams_type Result");
+		return $pdf->download("$academic_year $course $exams_type Result");
     }
 
     public function resultPrint(Request $request){
@@ -162,7 +162,7 @@ class PrintController extends Controller
         $exams_type = $request->exams_type;
         $user = User::find(Auth::user()->id);
         $pdf = PDF::loadView('student.printables.studentResult',compact('academic_year','exams_type','academic_sem','results','user','results_type'));
-		return $pdf->stream("$academic_year Semester $academic_sem $exams_type Result");
+		return $pdf->download("$academic_year Semester $academic_sem $exams_type Result");
         // if ($results->count() > 0) {
         //     return view('student.result.studentResult',compact('academic_year','exams_type','academic_sem','results'));
         // }
@@ -179,7 +179,7 @@ class PrintController extends Controller
         $department = Department::find($course->dep_id);
         $questions = Questions::whereIn('id',$examQuestions)->get();
         $pdf = PDF::loadView('admin.reports.printables.examsQuestionsPrint',compact('exam','questions','course','department'));
-		return $pdf->stream("$course->name $exam->title Questions");
+		return $pdf->download("$course->name $exam->title Questions");
         
     }
 
@@ -191,8 +191,8 @@ class PrintController extends Controller
         $dep = Department::find(Auth::user()->dep_id);
         $academic = Academic::where('status',1)->first();
         $pdf = PDF::loadView('student.printables.timeTablePrint',compact('timetable','dep','academic'))->setPaper('a4', 'landscape');
-		// return $pdf->stream("$dep->name ".Auth::user()->year." Exams TimeTable");
-		return $pdf->stream("$dep->name ".Auth::user()->year." Exams TimeTable");
+		// return $pdf->download("$dep->name ".Auth::user()->year." Exams TimeTable");
+		return $pdf->download("$dep->name ".Auth::user()->year." Exams TimeTable");
     	// return view('student.printables.timeTablePrint',compact('timetable','dep','academic'));
     }
 }

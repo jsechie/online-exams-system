@@ -10,9 +10,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(AdminSeeder::class);
-        // $this->call(DepartmentSeeder::class);
+        $this->call(AdminSeeder::class);
+        $this->call(DepartmentSeeder::class);
         $this->call(StudentsSeeder::class);
-        // $this->call(AcademicSeeder::class);
+        $this->call(AcademicSeeder::class);
     }
 }

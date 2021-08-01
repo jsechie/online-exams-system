@@ -28,19 +28,20 @@
     </tr></table>
     <hr>
       <div class="container">
-          <table class="table table-striped table-responsive">
+          <table class="table table-striped table-responsive table-bordered">
                 <thead>
                   @if($results_type == 'singles')
                    <tr>
-                    <th class="text-center">Index Number</th>
-                    <th class="text-center">Name</th>
+                    <th class="text-center">Course Code</th>
+                    <th class="text-center">Course Name</th>
                     <th class="text-center">Credit Hours</th>
                     <th class="text-center">Marks</th>
                   </tr>
                   @else 
                      <tr>
-                    <th class="text-center">Index Number</th>
-                    <th class="text-center">Name</th>
+                    <th class="text-center">Course Code</th>
+                    <th class="text-center">Course Name</th>
+                    <th class="text-center">Credit Hours</th>
                     <th class="text-center">Mid Sem</th>
                     <th class="text-center">End Of Sem</th>
                     <th class="text-center">Total Marks %</th>
@@ -52,8 +53,9 @@
                     @foreach($results as $result)
                       <?php $student = App\User::find($result->student_id); ?>
                       <tr>
-                      <td class="text-center">{{$student->index_number}}</td>
-                      <td class="text-center">{{$student->name}}</td>
+                      <td class="text-center">{{$result->course_code}}</td>
+                      <td class="text-center">{{$result->course_name}}</td>
+                      {{-- <th class="text-center">{{$result->credit_hours}}</th> --}}
                       <th class="text-center">{{$result->credit_hours}}</th>
                       <td class="text-center">{{$result->marks_scored}} </td>
                     </tr>
@@ -62,8 +64,9 @@
                      @foreach($results as $result)
                         <?php $student = App\User::find($result->student_id); ?>
                         <tr>
-                        <td class="text-center">{{$student->index_number}}</td>
-                        <td class="text-center">{{$student->name}}</td>
+                        <td class="text-center">{{$result->course_code}}</td>
+                        <td class="text-center">{{$result->course_name}}</td>
+                        <th class="text-center">{{$result->credit_hours}}</th>
                         <td class="text-center">{{$result->mid_sem_mark}}</td>
                         <td class="text-center">{{$result->end_of_sem_mark}}</td>
                         <td class="text-center">{{$result->mid_sem_mark + $result->end_of_sem_mark}}</td>

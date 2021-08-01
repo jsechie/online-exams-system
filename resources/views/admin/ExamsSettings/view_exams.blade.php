@@ -16,7 +16,7 @@
     </section>
       <!-- /.content -->
 
-    <section class="content">
+    <section class="content container-fluid">
       <div class="row">
         <div class="col-md-3 "><a class="btn btn-block btn-warning " href="{{route('examsSettings.show',$exam->course_id)}}">Back</a></div>
         <div class="col-md-3 "><a class="btn btn-block btn-info " href="{{route('examsQuestions.print',$exam->id)}}">Print Exams Question</a></div>
@@ -29,7 +29,7 @@
             @php 
               $diff=strtotime($exam->stop_time)-strtotime($exam->start_time);
             @endphp
-            <h2><center><br>KWAME NKRUMAH UNIVERSITY OF SCIENCE AND TECHNOLOGY<br>COLLEGE OF SCIENCE<br>DEPARTMENT OF {{strtoupper($department->name)}}<br><br>{{strtoupper("$exam->title, ".date('F Y',strtotime($exam->exams_date)))}}<br>BSC {{strtoupper("$department->name (YEAR $course->year)")}}<br><br>{{strtoupper("$course->code: $course->name")}}</center></h2><br>
+            <h3><center><br>KWAME NKRUMAH UNIVERSITY OF SCIENCE AND TECHNOLOGY<br>COLLEGE OF SCIENCE<br>DEPARTMENT OF {{strtoupper($department->name)}}<br><br>{{strtoupper("$exam->title, ".date('F Y',strtotime($exam->exams_date)))}}<br>BSC {{strtoupper("$department->name (YEAR $course->year)")}}<br><br>{{strtoupper("$course->code: $course->name")}}</center></h3><br>
             <h3><div class="row"><div class="col-md-8">TIME ALLOWED: @if(date('g',$diff) > 12 || date('g',$diff)< 12){{strtoupper(date('g',$diff).' hour(s)') }}@endif @if(date('i',$diff) != 00){{strtoupper(date('i',$diff).' minute(s)') }}@endif</div><div class="pull-right col-md-4 text-right">{{"($exam->total_marks Marks Total)"}}</div></div></h3><br>
             <h3>INSTRUCTIONS: <span><u>{{$exam->instructions}}</u></span></h3><hr>
           </div>

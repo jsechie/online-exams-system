@@ -27,7 +27,7 @@
     </section>
       <!-- /.content -->
 
-    <section class="content">
+    <section class="content container-fluid">
       <div class="row col-md-10 col-md-offset-1">
         <form role="form" method="post" action="{{route('examsSettings.update',$exam->id)}}" enctype="multipart/form-data">
         {{csrf_field()}}

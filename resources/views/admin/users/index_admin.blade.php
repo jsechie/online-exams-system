@@ -123,7 +123,7 @@
                                 <form role="form" method="post" action="{{route('users.update',$user->id)}}" enctype="multipart/form-data" id="edit-form-{{$user->id}}">
                                   {{csrf_field()}}
                                   {{method_field('PUT')}}
-                                  <div class="box-body">
+                                  {{-- <div class="box-body"> --}}
                                     <div class="form-group col-md-12">
                                       <label for="name">Name</label>
                                       <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="{{$user->name}}">
@@ -195,8 +195,7 @@
         </div>
       </div>
     </section>
-  </div>
-  {{-- creating new lecturer modal  --}}
+    {{-- creating new lecturer modal  --}}
   <!-- Side Modal Top Right -->
     <!-- To change the direction of the modal animation change .right class -->
     <div class="modal fade {{-- modal-warning --}}" id="newLecturer" tabindex="-1" role="dialog" aria-labelledby="myNewLecturer" aria-hidden="true">
@@ -263,5 +262,7 @@
         </div>
       </div>
     </div>
+  </div>
+  
 @endsection
 

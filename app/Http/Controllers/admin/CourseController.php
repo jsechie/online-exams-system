@@ -69,7 +69,7 @@ class CourseController extends Controller
         $course->credit_hours = $request->credit_hours;
         $course->assigned_to = $request->assigned_to;
         $course->save();
-
+        // echo $course->id;
         $midsem = new ExamsSettings;
         $midsem->title = 'Mid Semester Examination';
         $midsem->course_id = $course->id;

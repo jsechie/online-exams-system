@@ -24,29 +24,46 @@
       </form> --}}
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
+
+      @php
+        $courses = App\Course::all();
+        $checker = 0;
+        foreach ($courses as $course) {
+          if ($course->assigned_to == Auth::user()->id) {
+            $checker = 1;
+            break;
+          }
+        }
+      @endphp
+
+
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">SYSTEM FUNCTIONS</li>
-          <li class="active"><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li><br>
-          @if(Auth::user()->role =='Examiner')
-            <li class="header">MAIN ADMIN FUNCTIONS</li>
-           <li class=""><a href="{{route('department.index')}}"><i class="fa fa-dashboard"></i><span>Department</span></a></li>
-          <li class=""><a href="{{route('academics.index')}}"><i class="fa fa-dashboard"></i><span>Academics Calender</span></a></li>
-          <li class=""><a href="{{route('course.index')}}"><i class="fa fa-dashboard"></i><span>Course</span></a></li>
-          <li class=""><a href="{{route('allStudents')}}"><i class="fa fa-dashboard"></i><span>All Students</span></a></li><br>
-        @endif
-        <li class="header">MAIN USER FUNCTIONS</li>
-        <li class=""><a href="{{route('course.adminCourse')}}"><i class="fa fa-dashboard"></i><span>My Courses</span></a></li>  
-        <li class=""><a href="{{route('examsSettings.index')}}"><i class="fa fa-dashboard"></i><span>Exams Settings</span></a></li>      
-        <li class=""><a href="{{route('questions.index')}}"><i class="fa fa-dashboard"></i><span>Questions</span></a></li>
-        <li><a href="{{route('adminStudent.result')}}"><i class="fa fa-circle-o"></i><span>Exams Results</span></a></li>
-        <li><a href="{{route('myStudents')}}"><i class="fa fa-circle-o"></i><span>My Students Record</span></a></li>
-        <li><a href="{{route('adminStudent.report')}}"><i class="fa fa-circle-o"></i><span>My Student Report</span></a></li>
-        <li><a href="{{url('admin/settings')}}"><i class="fa fa-user"></i><span>Profile Settings</span></a></li><br>
+          <li class="active"><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
         @if(Auth::user()->role =='Examiner')
-        <li class="header">EXAMINERS ONLY</li>
-        <li><a href="{{route('users.index')}}"><i class="fa fa-circle-o"></i><span>User Management</span></a></li>
-        <li><a href="{{route('examiner.report')}}"><i class="fa fa-circle-o"></i><span>Examiners Report</span></a></li>
-        @endif 
+          <li class="header">MAIN EXAMINER FUNCTIONS</li>
+          <li class=""><a href="{{route('department.index')}}"><i class="fa fa-hospital-o"></i><span>Department</span></a></li>
+          <li class=""><a href="{{route('academics.index')}}"><i class="fa fa-calendar-plus-o"></i><span>Academics Calender</span></a></li>
+          <li class=""><a href="{{route('course.index')}}"><i class="fa fa-balance-scale"></i><span>Course</span></a></li>
+          <li class=""><a href="{{route('allStudents')}}"><i class="fa fa-users"></i><span>All Students</span></a></li>
+        @endif
+        @if(Auth::user()->role =='Lecturer' || $checker == 1)
+          <li class="header">MAIN USER FUNCTIONS</li>
+          <li class=""><a href="{{route('course.adminCourse')}}"><i class="fa fa-balance-scale"></i><span>My Courses</span></a></li>  
+          <li class=""><a href="{{route('examsSettings.index')}}"><i class="fa fa-gear"></i><span>Exams Settings</span></a></li>      
+          <li class=""><a href="{{route('questions.index')}}"><i class="fa fa-dropbox"></i><span>Questions</span></a></li>
+          <li><a href="{{route('adminStudent.result')}}"><i class="fa fa-file-text-o"></i><span>Students Exams Results</span></a></li>
+          <li><a href="{{route('myStudents')}}"><i class="fa fa-users"></i><span>My Students</span></a></li>
+          <li><a href="{{route('adminStudent.report')}}"><i class="fa fa-bar-chart"></i><span>My Student Report</span></a></li>
+        @endif
+        @if(Auth::user()->role =='Examiner')
+          <li class="header">EXAMINERS ONLY</li>
+          <li><a href="{{route('users.index')}}"><i class="fa fa-users"></i><span>Lecturer Management</span></a></li>
+          <li><a href="{{route('examiner.report')}}"><i class="fa fa-bar-chart"></i><span>Examiners Report</span></a></li>
+        @endif
+        <li class="header">Settings</li>
+        <li><a href="{{url('admin/settings')}}"><i class="fa fa-user"></i><span>Profile Settings</span></a></li>
+        <li><a href="{{route('admin.logout')}}"><i class="fa fa-user-times"></i> Sign out</a></li> 
       </ul>
     </section>
     <!-- /.sidebar -->

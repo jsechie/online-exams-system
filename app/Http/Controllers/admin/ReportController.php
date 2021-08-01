@@ -72,19 +72,21 @@ class ReportController extends Controller
     	$start_date = date('d-m-Y',strtotime($request->start_date));
     	$academic = Academic::where('status',1)->first();
     	// $exams = [];
-    	if ($request->has('end_date')) {
+    	if ($request->end_date != Null) {
     		$end_date = date('d-m-Y',strtotime($request->end_date));
-    		$exams = ExamsSettings::whereBetween('exams_date',[$start_date,$end_date])->get()->sortby('start_time');
+    		$exams = ExamsSettings::whereBetween('exams_date',[$start_date,$end_date])->get()->sortby('exams_date');
+            $error = "No Exams Available from $start_date to $end_date";
     	}
     	else{
     		$end_date = Null;
-    		$exams = ExamsSettings::where('exams_date',$start_date)->get()->sortby('start_time');	
+    		$exams = ExamsSettings::where('exams_date',$start_date)->get()->sortby('exams_date');
+            $error = "No Exams Available On $start_date";	
     	}
 		if ($exams->count()>0) {
 			return view('admin.reports.examiners.exams_history',compact('exams','start_date','end_date','academic'));
 		}
 		else{
-        	return redirect()->back()->with('flash_message_error',"<h3>No Exams Available On $start_date</h3>");
+        	return redirect()->back()->with('flash_message_error',"<h3>$error</h3>");
     	}
     }
 

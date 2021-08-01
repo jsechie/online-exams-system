@@ -17,7 +17,7 @@
     </section>
       <!-- /.content -->
 
-    <section class="content">
+    <section class="content container-fluid">
       @if($courses->count() > 0)
         <div class="row">
           <div class="col-xs-12 col-md-8 col-md-offset-2">

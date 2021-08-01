@@ -13,11 +13,11 @@ class AdminSeeder extends Seeder
     {
     	$examiner = new Admin;
         $examiner->lec_id = '000001';
-        $examiner->username = 'examiner1';
-        $examiner->name = 'examiner';
-        $examiner->email = 'examiner@gmail.com';
+        $examiner->username = 'admin';
+        $examiner->name = 'admin';
+        $examiner->email = 'admin@gmail.com';
         $examiner->role = 'Examiner';
-        $examiner->password = bcrypt('examiner');
+        $examiner->password = bcrypt('admin123');
 
         $examiner->save();
     }
