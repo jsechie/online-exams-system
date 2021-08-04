@@ -17,7 +17,7 @@ class CreateExamsSettingsTable extends Migration
             $table->increments('id');
             $table->integer('course_id')->unsigned()->index();
             $table->text('title');
-            $table->integer('total_questions');
+            $table->integer('total_questions')->nullable();
             $table->integer('total_marks');
             $table->string('exams_date')->nullable();
             $table->string('start_time')->nullable();

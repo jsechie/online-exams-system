@@ -30,7 +30,7 @@
         <div class="col-md-3"><a class="btn btn-block btn-danger" href="{{route('examsSettings.index')}}">Back To My Courses</a></div>
         <div class="col-md-3"><a class="btn btn-block btn-primary" href="{{route('examsSettings.addMSE',$course->id)}}">Add Mid Semester Exams</a></div>
         <div class="col-md-3"><a class="btn btn-block btn-warning" href="{{route('examsSettings.addESE',$course->id)}}">Add End of Semester Exams</a></div>
-        <div class="col-md-3 pull-right"><a class="btn btn-block btn-info" href="{{route('questions.show',$course->id)}}">Go To My Questions</a></div>
+        <div class="col-md-3 "><a class="btn btn-block btn-info" href="{{route('questions.show',$course->id)}}">Go To My Questions</a></div>
         {{-- <div class="col-md-3 pull-right"><a class="btn btn-block btn-primary" href="#" data-toggle="modal" data-target="#modal-default" >Add New Exam</a></div> --}}
       </div><hr>
       <div class="row">

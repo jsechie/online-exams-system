@@ -359,6 +359,7 @@ class ExamsSettingsController extends Controller
         $midsem->title = 'Mid Semester Examination';
         $midsem->course_id = $id;
         $midsem->total_marks = 30;
+        $midsem->total_questions = 0;
         $midsem->save();
         return redirect()->back()->with('flash_message_success',"Mid Semester Exams Added Successfully <br>Proceed with addition of <br>-instructions and duration");
       }
@@ -375,8 +376,9 @@ class ExamsSettingsController extends Controller
       if ($exist->count() == 0){
         $finalExam = new ExamsSettings;
         $finalExam->title = 'End Of Semester Examination';
-        $finalExam->course_id = $course->id;
+        $finalExam->course_id = $id;
         $finalExam->total_marks = 70;
+        $finalExam->total_questions = 0;
         $finalExam->save();
         return redirect()->back()->with('flash_message_success',"End Of Semester Examination Added Successfully<br>Proceed with addition of <br>-instructions and duration");
       }
