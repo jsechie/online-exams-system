@@ -51,6 +51,7 @@ class ExamsSettingsController extends Controller
      */
     public function store(Request $request)
     {
+      echo "string";
       // $this->validate($request,[
       //     'title'=>'required',
       //     'marks'=>'required',
@@ -347,6 +348,41 @@ class ExamsSettingsController extends Controller
         $checkstatus->update();
       }
       return redirect()->route('examsSettings.show',$exam->course_id); 
+    }
+
+    public function addMSE($id)
+    {
+      $exist = ExamsSettings::where([['title','Mid Semester Examination'],['course_id',$id]])->get();
+
+      if ($exist->count() == 0){
+        $midsem = new ExamsSettings;
+        $midsem->title = 'Mid Semester Examination';
+        $midsem->course_id = $id;
+        $midsem->total_marks = 30;
+        $midsem->save();
+        return redirect()->back()->with('flash_message_success',"Mid Semester Exams Added Successfully <br>Proceed with addition of <br>-instructions and duration");
+      }
+      else{
+        return redirect()->back()->with('flash_message_error',"Can't create <br>Mid Semester Exams Already Exist");
+      }
+
+      
+    }
+    public function addESE($id)
+    {
+      $exist = ExamsSettings::where([['title','End Of Semester Examination'],['course_id',$id]])->get();
+
+      if ($exist->count() == 0){
+        $finalExam = new ExamsSettings;
+        $finalExam->title = 'End Of Semester Examination';
+        $finalExam->course_id = $course->id;
+        $finalExam->total_marks = 70;
+        $finalExam->save();
+        return redirect()->back()->with('flash_message_success',"End Of Semester Examination Added Successfully<br>Proceed with addition of <br>-instructions and duration");
+      }
+      else{
+        return redirect()->back()->with('flash_message_error',"Can't create <br>End Of Semester Examination Already Exist");
+      }
     }
 
 }

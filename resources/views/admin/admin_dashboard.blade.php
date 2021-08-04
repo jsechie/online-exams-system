@@ -28,7 +28,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="row col-md-8 col-sm-12 col-md-offset-2"><marquee><h1><span class="label label-info"> {!!"Academic Calender: $academic->year Semester $academic->semester"!!} in Progress</span></h1><hr></marquee></div>
+      <div class="row col-md-8 col-sm-12 col-md-offset-2"><center><h1><span class="label label-info"> {!!"$academic->year Semester $academic->semester"!!} in Progress</span></h1><hr></center></div>
       <div class="row">
         <div class="col-md-12">
           <div class="box box-solid">

@@ -11,6 +11,21 @@ class StudentsSeeder extends Seeder
      */
     public function run()
     {
+        $student = new User;
+            $user = 'Test';
+            $student->name = $user." Student";
+            $student->email = "student@gmail.com";
+            $student->password = bcrypt('student123');
+            $student->username = "student1";
+            $student->index_number = rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."5";;
+            $student->student_id = "20".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."7";;
+            $student->dep_id = rand(1,3);
+            $student->year = rand(1,4);
+            // $student->picture = 'public/77C1b71aGreCO1J4o5Oxn1xmFCZ9owWCGhAIGhcC.png';
+            $student->student_type = 'Ghanaian';
+            $student->program_type = "Regular";
+            $student->save();
+            
         $faker = Faker\Factory::create();
         for ($i=0; $i < 5; $i++) { 
         	$student = new User;
@@ -23,7 +38,7 @@ class StudentsSeeder extends Seeder
 	        $student->student_id = "20".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."7";;
 	        $student->dep_id = rand(1,3);
 	        $student->year = rand(1,4);
-	        $student->picture = 'public/77C1b71aGreCO1J4o5Oxn1xmFCZ9owWCGhAIGhcC.png';
+	        // $student->picture = 'public/77C1b71aGreCO1J4o5Oxn1xmFCZ9owWCGhAIGhcC.png';
 	        if($i % 2 == 0){
                 $student->student_type = 'Ghanaian';
             }

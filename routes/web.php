@@ -54,6 +54,8 @@ Route::prefix('admin')->group(function(){
     Route::get('/examsSettings/addMoreQuestions/{id}','admin\ExamsSettingsController@moreQuestions')->name('examsSettings.moreQuestions');
     Route::get('/examsSettings/addAll/{id}','admin\ExamsSettingsController@addAll')->name('examsSettings.addAll');
     Route::get('/examsSettings/WriteReport/{id}','admin\ExamsSettingsController@writeReport')->name('examsSettings.report');
+    Route::get('/examsSettings/addMSE/{id}','admin\ExamsSettingsController@addMSE')->name('examsSettings.addMSE');
+    Route::get('/examsSettings/addESE/{id}','admin\ExamsSettingsController@addESE')->name('examsSettings.addESE');
     Route::match(['get','post'],'/examsSettings/submitReport/{id}','admin\ExamsSettingsController@submitReport')->name('examsSettings.submitReport');
      Route::match(['get','post'],'/examsSettings/addQuestions/{id}','admin\ExamsSettingsController@addQuestions')->name('examsSettings.addQuestions');
 

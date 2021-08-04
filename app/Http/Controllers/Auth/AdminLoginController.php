@@ -31,7 +31,7 @@ class AdminLoginController extends Controller
     }
     else{
      //if unsuccessful, then redirect back to the login with the form data
-      return redirect()->back()->withInput($request->only('email','remember'))->with('flash_message_error',"User not found Email or Password Error");
+      return redirect()->back()->withInput($request->only('email','remember'))->with('flash_message_error',"User not found <br> Email or Password Error");
     }
   }
 

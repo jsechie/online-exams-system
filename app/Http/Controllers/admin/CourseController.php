@@ -70,17 +70,17 @@ class CourseController extends Controller
         $course->assigned_to = $request->assigned_to;
         $course->save();
         // echo $course->id;
-        $midsem = new ExamsSettings;
-        $midsem->title = 'Mid Semester Examination';
-        $midsem->course_id = $course->id;
-        $midsem->total_marks = 30;
-        $midsem->save();
+        // $midsem = new ExamsSettings;
+        // $midsem->title = 'Mid Semester Examination';
+        // $midsem->course_id = $course->id;
+        // $midsem->total_marks = 30;
+        // $midsem->save();
 
-        $finalExam = new ExamsSettings;
-        $finalExam->title = 'End Of Semester Examination';
-        $finalExam->course_id = $course->id;
-        $finalExam->total_marks = 70;
-        $finalExam->save();
+        // $finalExam = new ExamsSettings;
+        // $finalExam->title = 'End Of Semester Examination';
+        // $finalExam->course_id = $course->id;
+        // $finalExam->total_marks = 70;
+        // $finalExam->save();
 
         return redirect(route('course.index'))->with('flash_message_success',"$course->name Added Successfully");
     }
