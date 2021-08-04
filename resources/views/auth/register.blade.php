@@ -87,7 +87,7 @@
       <div class="form-group {{ $errors->has('department_name') ? ' has-error' : '' }} col-md-8 has-feedback">
         <label >Department Name</label>
         <select class="form-control" name="department_name">
-          <?php $departments = App/Department::all(); ?>
+          <?php $departments = App\Department::all(); ?>
           <option value="">---Select Department---</option>
           @foreach($departments as $department)
               <option value="{{$department->id}}" {{old('department_name')==$department->id? 'selected':'' }}>{{$department->name}}</option>
