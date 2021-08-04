@@ -84,11 +84,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => $postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["host"],
-            'port' => $postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["port"],
-            'database' => ltrim($postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["path"], "/"),
-            'username' => $postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["user"],
-            'password' => $postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["pass"],
+            'host' => postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["host"],
+            'port' => postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["port"],
+            'database' => ltrim(postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["path"], "/"),
+            'username' => postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["user"],
+            'password' => postgres://pcqmdgfxlcalfk:6c868a503425df2dd7f788d603b10f61f8462e586da63fee9639c3a7f98d44ec@ec2-54-145-185-178.compute-1.amazonaws.com:5432/d37edgj0k43too["pass"],
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
