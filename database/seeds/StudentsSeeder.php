@@ -14,7 +14,7 @@ class StudentsSeeder extends Seeder
         $student = new User;
             $user = 'Test';
             $student->name = $user." Student";
-            $student->email = "student@gmail.com";
+            $student->email = "student1@gmail.com";
             $student->password = bcrypt('student123');
             $student->username = "student1";
             $student->index_number = rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."".rand(1,4)."5";;

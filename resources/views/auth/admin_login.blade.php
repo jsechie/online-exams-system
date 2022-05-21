@@ -47,7 +47,7 @@
     <form action="{{route('admin.login')}}" method="post">
       {{csrf_field()}}
       <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="Email" value="{{old('email')}}">
+        <input type="email" class="form-control" name="email" placeholder="Email" value= "{{'admin@gmail.com'}}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         @if ($errors->has('email'))
             <span class="help-block">
@@ -56,7 +56,7 @@
         @endif
       </div>
       <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
-        <input type="password" class="form-control" name="password" placeholder="Password">
+        <input type="password" class="form-control" name="password" placeholder="Password" value= "{{'admin123'}}">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         @if ($errors->has('password'))
           <span class="help-block">
