@@ -47,7 +47,7 @@
     <form action="{{route('admin.login')}}" method="post">
       {{csrf_field()}}
       <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="Email" value= "{{'admin@gmail.com'}}">
+        <input type="email" class="form-control" name="email" placeholder="Email" value= "{{'admin@admin.com'}}">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         @if ($errors->has('email'))
             <span class="help-block">
